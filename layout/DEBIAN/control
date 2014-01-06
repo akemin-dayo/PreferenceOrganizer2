@@ -1,6 +1,6 @@
 Package: com.eliz.preferenceorganizer7
 Name: PreferenceOrganizer7
-Version: 0.0.1
+Version: 0.0.2
 Architecture: iphoneos-arm
 Description: Group preferences on iOS 7 Settings App.
 Homepage: http://github.com/elizzk/preferenceorganizer/

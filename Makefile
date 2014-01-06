@@ -1,6 +1,7 @@
 TWEAK_NAME = PreferenceOrganizer
 PreferenceOrganizer_FILES = Tweak.xm
 PreferenceOrganizer_PRIVATE_FRAMEWORKS = UIKit Preferences
+THEOS_DEVICE_IP = iphone
 
 TARGET := iphone:7.0:5.0
 ARCHS := armv7 arm64
@@ -19,3 +20,6 @@ sync: stage
 distclean: clean
 	- rm -f $(THEOS_PROJECT_DIR)/$(APP_ID)*.deb
 	- rm -f $(THEOS_PROJECT_DIR)/.theos/packages/*
+
+after-install::
+	install.exec "killall -9 SpringBoard"

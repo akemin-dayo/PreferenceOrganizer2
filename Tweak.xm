@@ -125,9 +125,9 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
             [SocialSpecifiers removeObjectAtIndex:0];
             PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Social" target:self set:NULL get:NULL
                                                                             detail:[SocialSpecifiersController class]
-                                                                              cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-            [socialSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.facebook.Facebook" 
-                                        format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
+                                                                              cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];            
+            [socialSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Applications/Preferences.app/FacebookSettings.png"] 
+                                        forKey:@"iconImage"];
             [specifiers addObject:socialSpecifier];
         }
         if (CydiaSpecifiers.count > 0) {
@@ -137,8 +137,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
                                                                          detail:[CydiaSpecifiersController class]
                                                                            cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
             [cydiaSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.saurik.Cydia"
-                                                                                   format:0 scale:[UIScreen mainScreen].scale]
-                                 forKey:@"iconImage"];
+                                        format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
             [specifiers addObject:cydiaSpecifier];
         }
         if (AppStoreSpecifiers.count > 0) {
