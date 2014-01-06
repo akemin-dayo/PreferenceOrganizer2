@@ -1,9 +1,9 @@
-TWEAK_NAME = ShowCase
-ShowCase_OBJCC_FILES = Tweak.xm
-ShowCase_CFLAGS = -F$(SYSROOT)/System/Library/CoreServices
+TWEAK_NAME = PreferenceOrganizer
+PreferenceOrganizer_FILES = Tweak.xm
+PreferenceOrganizer_PRIVATE_FRAMEWORKS = UIKit Preferences
 
-TARGET := iphone:7.0:3.0
-ARCHS := armv6 arm64
+TARGET := iphone:7.0:5.0
+ARCHS := armv7 arm64
 
 # NOTE: The following is needed until logos is updated to not generate
 #       unnecessary 'ungrouped' objects.
