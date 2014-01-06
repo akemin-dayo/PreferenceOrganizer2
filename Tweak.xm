@@ -74,6 +74,7 @@ static NSMutableArray *AppleSpecifiers;
 CHDeclareClass(PrefsListController)
 CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
 {
+//    NSLog(@"specifiers class");
     NSMutableArray *specifiers = CHSuper(0, PrefsListController, specifiers);
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -157,6 +158,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
 CHOptimizedMethod(0, self, void, PrefsListController, refresh3rdPartyBundles)
 {
     CHSuper(0, PrefsListController, refresh3rdPartyBundles);
+//    CHSuper(0, PrefsListController, reloadSpecifiers);
     NSMutableArray *savedSpecifiers = [NSMutableArray array];
     BOOL go = NO;
     for (PSSpecifier *s in CHIvar(self, _specifiers, NSMutableArray *)) {
@@ -175,6 +177,11 @@ CHOptimizedMethod(0, self, void, PrefsListController, refresh3rdPartyBundles)
     [AppStoreSpecifiers release];
     AppStoreSpecifiers = [savedSpecifiers retain];
 }
+CHOptimizedMethod(0, self, void, PrefsListController, reloadSpecifiers) {
+ //   CHSuper(0, PrefsListController, reloadSpecifiers);
+ //   NSLog(@"Reload specifiers");
+ //   CHSuper(0, PrefsListController, specifiers);
+}
 
 CHConstructor
 {
@@ -182,5 +189,6 @@ CHConstructor
         CHLoadLateClass(PrefsListController);
         CHHook(0, PrefsListController, specifiers);
         CHHook(0, PrefsListController, refresh3rdPartyBundles);
+        CHHook(0, PrefsListController, reloadSpecifiers);
     }
 }

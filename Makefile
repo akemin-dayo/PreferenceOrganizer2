@@ -21,5 +21,8 @@ distclean: clean
 	- rm -f $(THEOS_PROJECT_DIR)/$(APP_ID)*.deb
 	- rm -f $(THEOS_PROJECT_DIR)/.theos/packages/*
 
+after-clean::
+	- rm -f $(THEOS_PROJECT_DIR)/$(APP_ID)*.deb
+
 after-install::
 	install.exec "killall -9 SpringBoard"
