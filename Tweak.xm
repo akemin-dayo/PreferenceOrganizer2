@@ -2,9 +2,9 @@
 //  PreferenceOrganizer.xm
 //  PreferenceOrganizer
 //
-//  Created by Qusic on 19/4/13.
-//  Modified by Eliz on 6/1/13
-//  Copyright (c) 2013 Qusic. All rights reserved.
+//  Created by Qusic & iLendSoft on 4/19/13.
+//  Modified by Eliz on 6/1/14
+//  Copyright (c) 2014 Eliz. All rights reserved.
 //
 
 // CaptainHook by Ryan Petrich
