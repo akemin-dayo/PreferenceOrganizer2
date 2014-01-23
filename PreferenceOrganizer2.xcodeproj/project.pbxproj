@@ -1,0 +1,355 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9C00CA74188B656700BA1D83 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C00CA73188B656700BA1D83 /* Foundation.framework */; };
+		9C00CA7E188B656700BA1D83 /* PreferenceOrganizer2.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9C00CA7D188B656700BA1D83 /* PreferenceOrganizer2.mm */; };
+		9C00CA8A188B667000BA1D83 /* libsubstrate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C00CA89188B667000BA1D83 /* libsubstrate.dylib */; };
+		9C2BA1CA188FAFF700092C7F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2BA1C9188FAFF700092C7F /* UIKit.framework */; };
+		9C2BA1CC188FB02000092C7F /* Preferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2BA1CB188FB02000092C7F /* Preferences.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9C00CA70188B656700BA1D83 /* PreferenceOrganizer2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = PreferenceOrganizer2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C00CA73188B656700BA1D83 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		9C00CA79188B656700BA1D83 /* control */ = {isa = PBXFileReference; lastKnownFileType = text; name = control; path = Package/DEBIAN/control; sourceTree = "<group>"; };
+		9C00CA7B188B656700BA1D83 /* PackageVersion.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PackageVersion.plist; sourceTree = "<group>"; };
+		9C00CA7C188B656700BA1D83 /* PreferenceOrganizer2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PreferenceOrganizer2-Prefix.pch"; sourceTree = "<group>"; };
+		9C00CA7D188B656700BA1D83 /* PreferenceOrganizer2.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PreferenceOrganizer2.mm; sourceTree = "<group>"; };
+		9C00CA82188B656700BA1D83 /* PreferenceOrganizer2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = PreferenceOrganizer2.plist; path = Package/Library/MobileSubstrate/DynamicLibraries/PreferenceOrganizer2.plist; sourceTree = "<group>"; };
+		9C00CA89188B667000BA1D83 /* libsubstrate.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsubstrate.dylib; path = ../../../../opt/iOSOpenDev/lib/libsubstrate.dylib; sourceTree = "<group>"; };
+		9C2BA1C9188FAFF700092C7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		9C2BA1CB188FB02000092C7F /* Preferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Preferences.framework; path = System/Library/PrivateFrameworks/Preferences.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9C00CA6C188B656700BA1D83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C00CA8A188B667000BA1D83 /* libsubstrate.dylib in Frameworks */,
+				9C00CA74188B656700BA1D83 /* Foundation.framework in Frameworks */,
+				9C2BA1CC188FB02000092C7F /* Preferences.framework in Frameworks */,
+				9C2BA1CA188FAFF700092C7F /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9C00CA66188B656700BA1D83 = {
+			isa = PBXGroup;
+			children = (
+				9C00CA75188B656700BA1D83 /* PreferenceOrganizer2 */,
+				9C00CA72188B656700BA1D83 /* Frameworks */,
+				9C00CA71188B656700BA1D83 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9C00CA71188B656700BA1D83 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA70188B656700BA1D83 /* PreferenceOrganizer2.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C00CA72188B656700BA1D83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C2BA1CB188FB02000092C7F /* Preferences.framework */,
+				9C2BA1C9188FAFF700092C7F /* UIKit.framework */,
+				9C00CA89188B667000BA1D83 /* libsubstrate.dylib */,
+				9C00CA73188B656700BA1D83 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9C00CA75188B656700BA1D83 /* PreferenceOrganizer2 */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA7D188B656700BA1D83 /* PreferenceOrganizer2.mm */,
+				9C00CA76188B656700BA1D83 /* Package */,
+				9C00CA7A188B656700BA1D83 /* Supporting Files */,
+			);
+			path = PreferenceOrganizer2;
+			sourceTree = "<group>";
+		};
+		9C00CA76188B656700BA1D83 /* Package */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA77188B656700BA1D83 /* DEBIAN */,
+				9C00CA7F188B656700BA1D83 /* Library */,
+			);
+			name = Package;
+			sourceTree = "<group>";
+		};
+		9C00CA77188B656700BA1D83 /* DEBIAN */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA79188B656700BA1D83 /* control */,
+			);
+			name = DEBIAN;
+			sourceTree = "<group>";
+		};
+		9C00CA7A188B656700BA1D83 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA7B188B656700BA1D83 /* PackageVersion.plist */,
+				9C00CA7C188B656700BA1D83 /* PreferenceOrganizer2-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9C00CA7F188B656700BA1D83 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA80188B656700BA1D83 /* MobileSubstrate */,
+			);
+			name = Library;
+			sourceTree = "<group>";
+		};
+		9C00CA80188B656700BA1D83 /* MobileSubstrate */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA81188B656700BA1D83 /* DynamicLibraries */,
+			);
+			name = MobileSubstrate;
+			sourceTree = "<group>";
+		};
+		9C00CA81188B656700BA1D83 /* DynamicLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				9C00CA82188B656700BA1D83 /* PreferenceOrganizer2.plist */,
+			);
+			name = DynamicLibraries;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		9C00CA6D188B656700BA1D83 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		9C00CA6F188B656700BA1D83 /* PreferenceOrganizer2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C00CA85188B656700BA1D83 /* Build configuration list for PBXNativeTarget "PreferenceOrganizer2" */;
+			buildPhases = (
+				9C00CA6B188B656700BA1D83 /* Sources */,
+				9C00CA6C188B656700BA1D83 /* Frameworks */,
+				9C00CA6D188B656700BA1D83 /* Headers */,
+				9C00CA6E188B656700BA1D83 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PreferenceOrganizer2;
+			productName = PreferenceOrganizer2;
+			productReference = 9C00CA70188B656700BA1D83 /* PreferenceOrganizer2.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9C00CA67188B656700BA1D83 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = 9C00CA6A188B656700BA1D83 /* Build configuration list for PBXProject "PreferenceOrganizer2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9C00CA66188B656700BA1D83;
+			productRefGroup = 9C00CA71188B656700BA1D83 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9C00CA6F188B656700BA1D83 /* PreferenceOrganizer2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9C00CA6E188B656700BA1D83 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/opt/iOSOpenDev/bin/iosod --xcbp";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9C00CA6B188B656700BA1D83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C00CA7E188B656700BA1D83 /* PreferenceOrganizer2.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9C00CA83188B656700BA1D83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(iOSOpenDevPath)/frameworks/**",
+					"$(SDKROOT)/System/Library/PrivateFrameworks",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(iOSOpenDevPath)/include/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(iOSOpenDevPath)/lib/**";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = NO;
+				iOSOpenDevPath = /opt/iOSOpenDev;
+			};
+			name = Debug;
+		};
+		9C00CA84188B656700BA1D83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = YES;
+				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.gch (*) .DS_Store CVS .svn .git .hg *.xcodeproj *.xcode *.pbproj *.pbxproj";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(iOSOpenDevPath)/frameworks/**",
+					"$(SDKROOT)/System/Library/PrivateFrameworks",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "$(iOSOpenDevPath)/include/**";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(iOSOpenDevPath)/lib/**";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				iOSOpenDevPath = /opt/iOSOpenDev;
+			};
+			name = Release;
+		};
+		9C00CA86188B656700BA1D83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PreferenceOrganizer2/PreferenceOrganizer2-Prefix.pch";
+				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/iOSOpenDev/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				iOSOpenDevBuildPackageOnAnyBuild = NO;
+				iOSOpenDevCopyOnBuild = NO;
+				iOSOpenDevDevice = "";
+				iOSOpenDevInstallOnAnyBuild = NO;
+				iOSOpenDevInstallOnProfiling = YES;
+				iOSOpenDevRespringOnInstall = YES;
+				iOSOpenDevUsePackageVersionPList = YES;
+			};
+			name = Debug;
+		};
+		9C00CA87188B656700BA1D83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PreferenceOrganizer2/PreferenceOrganizer2-Prefix.pch";
+				INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/iOSOpenDev/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				iOSOpenDevBuildPackageOnAnyBuild = NO;
+				iOSOpenDevCopyOnBuild = NO;
+				iOSOpenDevDevice = "";
+				iOSOpenDevInstallOnAnyBuild = NO;
+				iOSOpenDevInstallOnProfiling = YES;
+				iOSOpenDevRespringOnInstall = YES;
+				iOSOpenDevUsePackageVersionPList = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9C00CA6A188B656700BA1D83 /* Build configuration list for PBXProject "PreferenceOrganizer2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C00CA83188B656700BA1D83 /* Debug */,
+				9C00CA84188B656700BA1D83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C00CA85188B656700BA1D83 /* Build configuration list for PBXNativeTarget "PreferenceOrganizer2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C00CA86188B656700BA1D83 /* Debug */,
+				9C00CA87188B656700BA1D83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9C00CA67188B656700BA1D83 /* Project object */;
+}

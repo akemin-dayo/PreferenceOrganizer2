@@ -1,0 +1,11 @@
+Package: com.eliz.preferenceorganizer7
+Name: PreferenceOrganizer 2
+Architecture: iphoneos-arm
+Description: A simple and free alternative to PreferenceFolders, compatible with iOS 6 and 7. PreferenceOrganizer 2 organises your Settings app into separate categories: Apple, Social, App Store, and Cydia.
+Homepage: http://cydia.angelxwind.net/
+Depiction: http://cydia.angelxwind.net/?page/com.eliz.preferenceorganizer7
+Author: Eliz, Karen, and ilendemli <angelXwind@angelxwind.net>
+Section: Tweaks
+Depends: mobilesubstrate, preferenceloader, firmware (>= 6.0)
+Version: 1.0-2
+Maintainer: Karen Tsai (angelXwind) <angelXwind@angelxwind.net>
