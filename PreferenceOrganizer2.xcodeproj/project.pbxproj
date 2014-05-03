@@ -23,6 +23,8 @@
 		9C00CA7D188B656700BA1D83 /* PreferenceOrganizer2.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PreferenceOrganizer2.mm; sourceTree = "<group>"; };
 		9C00CA82188B656700BA1D83 /* PreferenceOrganizer2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = PreferenceOrganizer2.plist; path = Package/Library/MobileSubstrate/DynamicLibraries/PreferenceOrganizer2.plist; sourceTree = "<group>"; };
 		9C00CA89188B667000BA1D83 /* libsubstrate.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsubstrate.dylib; path = ../../../../opt/iOSOpenDev/lib/libsubstrate.dylib; sourceTree = "<group>"; };
+		9C156E961914B498006DBB00 /* Tweaks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tweaks.png; sourceTree = "<group>"; };
+		9C156E971914B498006DBB00 /* Tweaks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tweaks@2x.png"; sourceTree = "<group>"; };
 		9C2BA1C9188FAFF700092C7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9C2BA1CB188FB02000092C7F /* Preferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Preferences.framework; path = System/Library/PrivateFrameworks/Preferences.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -109,6 +111,7 @@
 		9C00CA7F188B656700BA1D83 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9C156E951914B498006DBB00 /* PreferenceOrganizer2 */,
 				9C00CA80188B656700BA1D83 /* MobileSubstrate */,
 			);
 			name = Library;
@@ -128,6 +131,16 @@
 				9C00CA82188B656700BA1D83 /* PreferenceOrganizer2.plist */,
 			);
 			name = DynamicLibraries;
+			sourceTree = "<group>";
+		};
+		9C156E951914B498006DBB00 /* PreferenceOrganizer2 */ = {
+			isa = PBXGroup;
+			children = (
+				9C156E961914B498006DBB00 /* Tweaks.png */,
+				9C156E971914B498006DBB00 /* Tweaks@2x.png */,
+			);
+			name = PreferenceOrganizer2;
+			path = Package/Library/PreferenceOrganizer2;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
