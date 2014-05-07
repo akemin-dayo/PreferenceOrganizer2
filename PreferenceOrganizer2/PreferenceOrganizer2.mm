@@ -2,10 +2,7 @@
 //  PreferenceOrganizer2.mm
 //  PreferenceOrganizer 2
 //
-//  Created by Qusic & iLendSoft on 4/19/13.
-//  Modified by Eliz on 6/1/14
-//  Modified by Karen on 2014/01/19
-//  Copyright (c) 2014 Eliz/Karen. All rights reserved.
+//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, iLendSoft. All rights reserved.
 //
 
 // CaptainHook by Ryan Petrich
@@ -16,17 +13,12 @@
 #import <Preferences/Preferences.h>
 #import "CaptainHook/CaptainHook.h"
 
-// Objective-C runtime hooking using CaptainHook:
-//   1. declare class using CHDeclareClass()
-//   2. load class using CHLoadClass() or CHLoadLateClass() in CHConstructor
-//   3. hook method using CHOptimizedMethod()
-//   4. register hook using CHHook() in CHConstructor
-//   5. (optionally) call old method using CHSuper()
-
 static NSMutableArray *TweakSpecifiers;
 static NSMutableArray *AppStoreAppSpecifiers;
 static NSMutableArray *SocialAppSpecifiers;
 static NSMutableArray *AppleAppSpecifiers;
+
+NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"];
 
 @interface UIImage (Private)
 +(UIImage *)_applicationIconImageForBundleIdentifier:(NSString *)bundleIdentifier format:(int)format scale:(CGFloat)scale;
@@ -97,15 +89,11 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
         [AppleAppSpecifiers addObjectsFromArray:[savedSpecifiers objectForKey:[NSNumber numberWithInteger:4]]];
         SocialAppSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:5]]retain];
         AppStoreAppSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group]]retain];
-        if ([[[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group-1]][1] identifier]isEqualToString:@"DEVELOPER_SETTINGS"]) {
-            [AppleAppSpecifiers addObjectsFromArray:[savedSpecifiers objectForKey:[NSNumber numberWithInteger:7]]];
-            if (group-2 >= 6) {
-                TweakSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group-2]]retain];
-            }
-        } else {
-            if (group-1 >= 6) {
-                TweakSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group-1]]retain];
-            }
+        
+        if (group-2 >= 6) {
+            TweakSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group-2]]retain];
+        } else if (group-1 >= 6) {
+            TweakSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group-1]]retain];
         }
         
         [specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
