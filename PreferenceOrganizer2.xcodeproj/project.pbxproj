@@ -25,6 +25,8 @@
 		9C00CA89188B667000BA1D83 /* libsubstrate.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsubstrate.dylib; path = ../../../../opt/iOSOpenDev/lib/libsubstrate.dylib; sourceTree = "<group>"; };
 		9C156E961914B498006DBB00 /* Tweaks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tweaks.png; sourceTree = "<group>"; };
 		9C156E971914B498006DBB00 /* Tweaks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Tweaks@2x.png"; sourceTree = "<group>"; };
+		9C156E9A191B31CC006DBB00 /* PreferenceOrganizer2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PreferenceOrganizer2.plist; sourceTree = "<group>"; };
+		9C156E9D191B4400006DBB00 /* postinst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = postinst; path = Package/DEBIAN/postinst; sourceTree = "<group>"; };
 		9C2BA1C9188FAFF700092C7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9C2BA1CB188FB02000092C7F /* Preferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Preferences.framework; path = System/Library/PrivateFrameworks/Preferences.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				9C00CA79188B656700BA1D83 /* control */,
+				9C156E9D191B4400006DBB00 /* postinst */,
 			);
 			name = DEBIAN;
 			sourceTree = "<group>";
@@ -111,6 +114,7 @@
 		9C00CA7F188B656700BA1D83 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				9C156E98191B31CC006DBB00 /* PreferenceLoader */,
 				9C156E951914B498006DBB00 /* PreferenceOrganizer2 */,
 				9C00CA80188B656700BA1D83 /* MobileSubstrate */,
 			);
@@ -141,6 +145,23 @@
 			);
 			name = PreferenceOrganizer2;
 			path = Package/Library/PreferenceOrganizer2;
+			sourceTree = "<group>";
+		};
+		9C156E98191B31CC006DBB00 /* PreferenceLoader */ = {
+			isa = PBXGroup;
+			children = (
+				9C156E99191B31CC006DBB00 /* Preferences */,
+			);
+			name = PreferenceLoader;
+			path = Package/Library/PreferenceLoader;
+			sourceTree = "<group>";
+		};
+		9C156E99191B31CC006DBB00 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				9C156E9A191B31CC006DBB00 /* PreferenceOrganizer2.plist */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -109,6 +109,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
             TweakSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group-1]]retain];
         }
         
+        NSLog(@"-karen pops out from her hiding hole-");
         [specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
         if (showAppleApps == 1) {
             if (AppleAppSpecifiers.count > 0) {
