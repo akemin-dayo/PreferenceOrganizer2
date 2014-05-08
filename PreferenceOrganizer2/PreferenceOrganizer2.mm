@@ -18,7 +18,19 @@ static NSMutableArray *AppStoreAppSpecifiers;
 static NSMutableArray *SocialAppSpecifiers;
 static NSMutableArray *AppleAppSpecifiers;
 
-NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"];
+NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/User/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"];
+
+id appleAppsValue = [settings objectForKey:@"ShowAppleApps"];
+bool showAppleApps = (appleAppsValue ? [appleAppsValue boolValue] : YES);
+
+id tweaksValue = [settings objectForKey:@"ShowTweaks"];
+bool showTweaks = (tweaksValue ? [tweaksValue boolValue] : YES);
+
+id appStoreAppsValue = [settings objectForKey:@"ShowAppStoreApps"];
+bool showAppStoreApps = (appStoreAppsValue ? [appStoreAppsValue boolValue] : YES);
+
+id socialAppsValue = [settings objectForKey:@"ShowSocialApps"];
+bool showSocialApps = (socialAppsValue ? [socialAppsValue boolValue] : YES);
 
 @interface UIImage (Private)
 +(UIImage *)_applicationIconImageForBundleIdentifier:(NSString *)bundleIdentifier format:(int)format scale:(CGFloat)scale;
@@ -85,6 +97,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
                 [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group]]addObject:s];
             }
         }
+        
         AppleAppSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:3]]retain];
         [AppleAppSpecifiers addObjectsFromArray:[savedSpecifiers objectForKey:[NSNumber numberWithInteger:4]]];
         SocialAppSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:5]]retain];
@@ -97,46 +110,54 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
         }
         
         [specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
-        if (AppleAppSpecifiers.count > 0) {
-            [specifiers removeObjectsInArray:AppleAppSpecifiers];
-            [AppleAppSpecifiers removeObjectAtIndex:0];
-            PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Apple Apps" target:self set:NULL get:NULL
-                                                                         detail:[AppleAppSpecifiersController class]
-                                                                           cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-            [appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari"
-                                                                                   format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
-            [specifiers addObject:appleSpecifier];
+        if (showAppleApps == 1) {
+            if (AppleAppSpecifiers.count > 0) {
+                [specifiers removeObjectsInArray:AppleAppSpecifiers];
+                [AppleAppSpecifiers removeObjectAtIndex:0];
+                PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Apple Apps" target:self set:NULL get:NULL
+                                                                             detail:[AppleAppSpecifiersController class]
+                                                                               cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+                [appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari"
+                                                                                       format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
+                [specifiers addObject:appleSpecifier];
+            }
         }
-        if (SocialAppSpecifiers.count > 0) {
-            [specifiers removeObjectsInArray:SocialAppSpecifiers];
-            [SocialAppSpecifiers removeObjectAtIndex:0];
-            PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Social Apps" target:self set:NULL get:NULL
-                                                                          detail:[SocialAppSpecifiersController class]
-                                                                            cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-            [socialSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Applications/Preferences.app/FacebookSettings.png"]
-                                  forKey:@"iconImage"];
-            [specifiers addObject:socialSpecifier];
+        if (showSocialApps == 1) {
+            if (SocialAppSpecifiers.count > 0) {
+                [specifiers removeObjectsInArray:SocialAppSpecifiers];
+                [SocialAppSpecifiers removeObjectAtIndex:0];
+                PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Social Apps" target:self set:NULL get:NULL
+                                                                              detail:[SocialAppSpecifiersController class]
+                                                                                cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+                [socialSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Applications/Preferences.app/FacebookSettings.png"]
+                                      forKey:@"iconImage"];
+                [specifiers addObject:socialSpecifier];
+            }
         }
-        if (TweakSpecifiers.count > 0) {
-            [specifiers removeObjectsInArray:TweakSpecifiers];
-            [TweakSpecifiers removeObjectAtIndex:0];
-            PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Tweaks" target:self set:NULL get:NULL
-                                                                         detail:[TweakSpecifiersController class]
-                                                                           cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-            [cydiaSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceOrganizer2/Tweaks.png"]
-                                 forKey:@"iconImage"];
-            [specifiers addObject:cydiaSpecifier];
+        if (showTweaks == 1) {
+            if (TweakSpecifiers.count > 0) {
+                [specifiers removeObjectsInArray:TweakSpecifiers];
+                [TweakSpecifiers removeObjectAtIndex:0];
+                PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Tweaks" target:self set:NULL get:NULL
+                                                                             detail:[TweakSpecifiersController class]
+                                                                               cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+                [cydiaSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceOrganizer2/Tweaks.png"]
+                                     forKey:@"iconImage"];
+            [   specifiers addObject:cydiaSpecifier];
+            }
         }
-        if (AppStoreAppSpecifiers.count > 0) {
-            [specifiers removeObjectsInArray:AppStoreAppSpecifiers];
-            [AppStoreAppSpecifiers removeObjectAtIndex:0];
-            PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:@"App Store Apps" target:self set:NULL get:NULL
-                                                                            detail:[AppStoreAppSpecifiersController class]
-                                                                              cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-            [appstoreSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.AppStore"
-                                                                                      format:0 scale:[UIScreen mainScreen].scale]
-                                    forKey:@"iconImage"];
-            [specifiers addObject:appstoreSpecifier];
+        if (showAppStoreApps == 1) {
+            if (AppStoreAppSpecifiers.count > 0) {
+                [specifiers removeObjectsInArray:AppStoreAppSpecifiers];
+                [AppStoreAppSpecifiers removeObjectAtIndex:0];
+                PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:@"App Store Apps" target:self set:NULL get:NULL
+                                                                                detail:[AppStoreAppSpecifiersController class]
+                                                                                  cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+                [appstoreSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.AppStore"
+                                                                                          format:0 scale:[UIScreen mainScreen].scale]
+                                        forKey:@"iconImage"];
+                [specifiers addObject:appstoreSpecifier];
+            }
         }
     });
     return specifiers;
