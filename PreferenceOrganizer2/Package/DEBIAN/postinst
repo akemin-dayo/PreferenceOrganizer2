@@ -1,0 +1,5 @@
+#!/bin/sh
+#karen was here o u o
+echo Killing Preferences...
+killall Preferences
+echo Preferences killed.

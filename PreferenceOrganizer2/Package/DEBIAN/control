@@ -9,5 +9,4 @@ Section: Tweaks
 Depends: mobilesubstrate, preferenceloader, firmware (>= 6.0)
 Version: 1.1-1
 Maintainer: Karen Tsai (angelXwind) <angelXwind@angelxwind.net>
-Conflicts: org.ilendsoft.preferenceorganizer, com.eliz.preferenceorganizer7
 Replaces: org.ilendsoft.preferenceorganizer, com.eliz.preferenceorganizer7
