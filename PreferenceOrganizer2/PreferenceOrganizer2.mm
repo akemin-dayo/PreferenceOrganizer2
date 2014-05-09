@@ -2,7 +2,7 @@
 //  PreferenceOrganizer2.mm
 //  PreferenceOrganizer 2
 //
-//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, iLendSoft. All rights reserved.
+//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, ilendemli. All rights reserved.
 //
 
 // CaptainHook by Ryan Petrich
