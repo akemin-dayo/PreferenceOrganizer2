@@ -123,7 +123,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
         
         NSLog(@"-karen pops out from her hiding hole-");
         [specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
-        if (showAppleApps == 1) {
+        if (showAppleApps) {
             if (AppleAppSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:AppleAppSpecifiers];
                 [AppleAppSpecifiers removeObjectAtIndex:0];
@@ -135,7 +135,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
                 [specifiers addObject:appleSpecifier];
             }
         }
-        if (showSocialApps == 1) {
+        if (showSocialApps) {
             if (SocialAppSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:SocialAppSpecifiers];
                 [SocialAppSpecifiers removeObjectAtIndex:0];
@@ -147,7 +147,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
                 [specifiers addObject:socialSpecifier];
             }
         }
-        if (showTweaks == 1) {
+        if (showTweaks) {
             if (TweakSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:TweakSpecifiers];
                 [TweakSpecifiers removeObjectAtIndex:0];
@@ -159,7 +159,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
             [   specifiers addObject:cydiaSpecifier];
             }
         }
-        if (showAppStoreApps == 1) {
+        if (showAppStoreApps) {
             if (AppStoreAppSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:AppStoreAppSpecifiers];
                 [AppStoreAppSpecifiers removeObjectAtIndex:0];
