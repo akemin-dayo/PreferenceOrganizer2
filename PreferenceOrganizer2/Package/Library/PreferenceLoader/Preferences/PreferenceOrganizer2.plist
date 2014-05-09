@@ -44,8 +44,6 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
-			<key>default</key>
-			<string>Apple Apps</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
@@ -80,8 +78,6 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
-			<key>default</key>
-			<string>Social Apps</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
@@ -116,12 +112,10 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
-			<key>default</key>
-			<string>Tweaks</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
-			<string>AppleAppsName</string>
+			<string>TweaksName</string>
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
@@ -152,8 +146,6 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
-			<key>default</key>
-			<string>Apple Store Apps</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
@@ -161,7 +153,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Apple Store Apps</string>
+			<string>App Store Apps</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
