@@ -33,16 +33,16 @@ id socialAppsValue = [settings objectForKey:@"ShowSocialApps"];
 bool showSocialApps = (socialAppsValue ? [socialAppsValue boolValue] : YES);
 
 id appleAppsName = [settings objectForKey:@"AppleAppsName"];
-NSString *appleAppsLabel = (appleAppsName ? [appleAppsName stringValue] : @"Apple Apps");
+NSString *appleAppsLabel = (appleAppsName ?: @"Apple Apps");
 
 id tweaksName = [settings objectForKey:@"TweaksName"];
-NSString *tweaksLabel = (tweaksName ? [tweaksName stringValue] : @"Tweaks");
+NSString *tweaksLabel = (tweaksName ?: @"Tweaks");
 
 id appStoreAppsName = [settings objectForKey:@"AppStoreAppsName"];
-NSString *appStoreAppsLabel = (appStoreAppsName ? [appStoreAppsName stringValue] : @"App Store Apps");
+NSString *appStoreAppsLabel = (appStoreAppsName ?: @"App Store Apps");
 
 id socialAppsName = [settings objectForKey:@"SocialAppsName"];
-NSString *socialAppsLabel = (socialAppsName ? [socialAppsName stringValue] : @"Social Apps");
+NSString *socialAppsLabel = (socialAppsName ?: @"Social Apps");
 
 @interface UIImage (Private)
 +(UIImage *)_applicationIconImageForBundleIdentifier:(NSString *)bundleIdentifier format:(int)format scale:(CGFloat)scale;
