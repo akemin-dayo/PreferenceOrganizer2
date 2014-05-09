@@ -23,14 +23,26 @@ NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/User/Libr
 id appleAppsValue = [settings objectForKey:@"ShowAppleApps"];
 bool showAppleApps = (appleAppsValue ? [appleAppsValue boolValue] : YES);
 
+id appleAppsName = [settings objectForKey:@"AppleAppsName"];
+NSString *appleAppsLabel = appleAppsName;
+
 id tweaksValue = [settings objectForKey:@"ShowTweaks"];
 bool showTweaks = (tweaksValue ? [tweaksValue boolValue] : YES);
+
+id tweaksName = [settings objectForKey:@"TweaksName"];
+NSString *tweaksLabel = tweaksName;
 
 id appStoreAppsValue = [settings objectForKey:@"ShowAppStoreApps"];
 bool showAppStoreApps = (appStoreAppsValue ? [appStoreAppsValue boolValue] : YES);
 
+id appStoreAppsName = [settings objectForKey:@"AppStoreAppsName"];
+NSString *appStoreAppsLabel = appStoreAppsName;
+
 id socialAppsValue = [settings objectForKey:@"ShowSocialApps"];
 bool showSocialApps = (socialAppsValue ? [socialAppsValue boolValue] : YES);
+
+id socialAppsName = [settings objectForKey:@"SocialAppsName"];
+NSString *socialAppsLabel = socialAppsName;
 
 @interface UIImage (Private)
 +(UIImage *)_applicationIconImageForBundleIdentifier:(NSString *)bundleIdentifier format:(int)format scale:(CGFloat)scale;
@@ -115,7 +127,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
             if (AppleAppSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:AppleAppSpecifiers];
                 [AppleAppSpecifiers removeObjectAtIndex:0];
-                PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Apple Apps" target:self set:NULL get:NULL
+                PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsName target:self set:NULL get:NULL
                                                                              detail:[AppleAppSpecifiersController class]
                                                                                cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
                 [appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari"
@@ -127,7 +139,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
             if (SocialAppSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:SocialAppSpecifiers];
                 [SocialAppSpecifiers removeObjectAtIndex:0];
-                PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Social Apps" target:self set:NULL get:NULL
+                PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:socialAppsName target:self set:NULL get:NULL
                                                                               detail:[SocialAppSpecifiersController class]
                                                                                 cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
                 [socialSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Applications/Preferences.app/FacebookSettings.png"]
@@ -139,7 +151,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
             if (TweakSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:TweakSpecifiers];
                 [TweakSpecifiers removeObjectAtIndex:0];
-                PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Tweaks" target:self set:NULL get:NULL
+                PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:tweaksName target:self set:NULL get:NULL
                                                                              detail:[TweakSpecifiersController class]
                                                                                cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
                 [cydiaSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceOrganizer2/Tweaks.png"]
@@ -151,7 +163,7 @@ CHOptimizedMethod(0, self, NSMutableArray *, PrefsListController, specifiers)
             if (AppStoreAppSpecifiers.count > 0) {
                 [specifiers removeObjectsInArray:AppStoreAppSpecifiers];
                 [AppStoreAppSpecifiers removeObjectAtIndex:0];
-                PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:@"App Store Apps" target:self set:NULL get:NULL
+                PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:appStoreAppsName target:self set:NULL get:NULL
                                                                                 detail:[AppStoreAppSpecifiersController class]
                                                                                   cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
                 [appstoreSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.AppStore"
