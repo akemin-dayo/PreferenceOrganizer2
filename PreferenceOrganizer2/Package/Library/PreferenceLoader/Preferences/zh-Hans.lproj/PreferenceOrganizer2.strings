@@ -1,0 +1,12 @@
+"App Store Apps" = "App Store应用";
+"Apple Apps" = "Apple应用";
+"Enabled" = "启用";
+"Help" = "帮助";
+"iCloud Settings crashing? Disable Apple Apps." = "iCloud设置闪退？请禁用 Apple应用。";
+"If PreferenceOrganizer 2 doesn't work, or things are appearing in the wrong sections, check to see if you have the tweak \"Cloaky\" installed. If so, turn off all options in that tweak that modify the Settings app." = "如果PreferenceOrganizer 2不起作用或出现错位等情况，请检查您是有安装“Cloaky”。如果有，请在其中关闭对于设置程序的修改。";
+"Kill the Settings app from the multitasking switcher for changes to take effect." = "在应用程序切换器中关闭设置程序以应用更改";
+"Name" = "名称";
+"Social Apps" = "社交应用";
+"Tweaks" = "插件";
+"© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli" = "简体中文：Hintay\n© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli";
+
