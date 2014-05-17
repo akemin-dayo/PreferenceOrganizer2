@@ -74,7 +74,7 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSMutableDictionary *savedSpecifiers = [NSMutableDictionary dictionary];
+        NSMutableDictionary *savedSpecifiers = [[NSMutableDictionary alloc] init];
         NSInteger group = -1;
 
         for (PSSpecifier *s in specifiers) {
@@ -82,12 +82,12 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
                 group++;
 
                 if (group >= 3) {
-                    [savedSpecifiers setObject:@[] forKey:@(group)];
+                    [savedSpecifiers setObject:[[NSMutableArray alloc] init] forKey:@(group)];
                 } 
             }
 
             else if (group >= 3) {
-                [[savedSpecifiers objectForKey:@(group)] addObject:s];
+                [savedSpecifiers[@(group)] addObject:s];
             }
         }
         
@@ -136,7 +136,7 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
                 [TweakSpecifiers removeObjectAtIndex:0];
               
                 PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:tweaksLabel target:self set:NULL get:NULL detail:[TweakSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-                [cydiaSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceOrganizer2/Tweaks.png"] forKey:@"iconImage"];
+                [cydiaSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/POPreferences.bundle/Tweaks.png"] forKey:@"iconImage"];
                 [specifiers addObject:cydiaSpecifier];
             }
         }
@@ -159,8 +159,8 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
 - (void)refresh3rdPartyBundles {
     %orig();
 
-    NSMutableArray *savedSpecifiers = [NSMutableArray array];
-    BOOL go = NO;
+    NSMutableArray *savedSpecifiers = [[NSMutableArray alloc] init];
+    BOOL go = NO; // really? :p
     
     for (PSSpecifier *s in MSHookIvar<NSArray *>(self, "_specifiers")) { // from PSListController
         if (!go && [s.identifier isEqualToString:@"App Store"]) {
@@ -178,6 +178,7 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
 
     [savedSpecifiers removeObjectAtIndex:0];
     [AppStoreAppSpecifiers release];
+
     AppStoreAppSpecifiers = [savedSpecifiers retain];
 }
 

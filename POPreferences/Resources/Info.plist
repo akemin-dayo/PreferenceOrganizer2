@@ -23,6 +23,6 @@
 	<key>MinimumOSVersion</key>
 	<string>7.0</string>
 	<key>NSPrincipalClass</key>
-	<string>PSListController</string>
+	<string>POListController</string>
 </dict>
 </plist>

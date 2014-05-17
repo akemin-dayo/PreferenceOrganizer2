@@ -2,7 +2,7 @@
     entry = {
 		bundle = POPreferences;
 		cell = PSLinkCell;
-		detail = PSListController;
+		detail = POListController;
 		icon = "Tweaks.png";
 		isController = 1;
 		label = "PreferenceOrganizer2";
