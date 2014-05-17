@@ -14,3 +14,14 @@
 }
 
 @end
+
+@interface POEditTextCell : PSEditableTableCell
+@end
+
+@implementation POEditTextCell
+
+- (BOOL)textFieldShouldReturn:(id)arg1 {
+	return YES;
+}
+
+@end

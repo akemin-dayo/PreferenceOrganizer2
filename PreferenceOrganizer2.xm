@@ -12,18 +12,26 @@
 #import "PreferenceOrganizer2.h"
 
 // Static specifier-overriding arrays (used when populating PSListController/etc)
-static NSMutableArray *TweakSpecifiers, *AppStoreAppSpecifiers, *SocialAppSpecifiers, *AppleAppSpecifiers;
+static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifiers, *AppStoreAppSpecifiers;
 
-// Local preferences-specific variables, used when configuring at load
-NSDictionary *settings;
-BOOL showAppleApps, showTweaks, showAppStoreApps, showSocialApps; 
-NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
-
+// Sneaky implementations of vanilla PSListControllers with the proper hidden specifiers
 @implementation AppleAppSpecifiersController
 
 - (NSArray *)specifiers {
     if (!_specifiers) {
         self.specifiers = AppleAppSpecifiers;
+    }
+
+    return _specifiers;
+}
+
+@end
+
+@implementation SocialAppSpecifiersController
+
+- (NSArray *)specifiers {
+    if (!_specifiers) {
+        self.specifiers = SocialAppSpecifiers; 
     }
 
     return _specifiers;
@@ -55,17 +63,16 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
 
 @end
 
-@implementation SocialAppSpecifiersController
-
-- (NSArray *)specifiers {
-    if (!_specifiers) {
-        self.specifiers = SocialAppSpecifiers; 
+// Static function that chooses the first parameter if it's a non-nil, non-empty string, the second otherwise
+static NSString * poValidNameForDefault(NSString *name, NSString *def) {
+    if (name && [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
+        return name;
     }
 
-    return _specifiers;
+    else {
+        return def;
+    }
 }
-
-@end
 
 %hook PrefsListController
 
@@ -74,6 +81,27 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        // Read preferences....
+        NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/User/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"];
+
+        NSNumber *appleAppsValue = settings[@"ShowAppleApps"];
+        BOOL showAppleApps = (appleAppsValue ? [appleAppsValue boolValue] : YES);
+
+        NSNumber *tweaksValue = settings[@"ShowTweaks"];
+        BOOL showTweaks = (tweaksValue ? [tweaksValue boolValue] : YES);
+
+        NSNumber *appStoreAppsValue = settings[@"ShowAppStoreApps"];
+        BOOL showAppStoreApps = (appStoreAppsValue ? [appStoreAppsValue boolValue] : YES);
+
+        NSNumber *socialAppsValue = settings[@"ShowSocialApps"];
+        BOOL showSocialApps = (socialAppsValue ? [socialAppsValue boolValue] : YES);
+
+        NSString *appleAppsLabel = poValidNameForDefault(settings[@"AppleAppsName"], @"Apple Apps");
+        NSString *socialAppsLabel = poValidNameForDefault(settings[@"SocialAppsName"], @"Social Apps");
+        NSString *tweaksLabel = poValidNameForDefault(settings[@"TweaksName"], @"Cydia Tweaks");
+        NSString *appStoreAppsLabel = poValidNameForDefault(settings[@"AppStoreAppsName"], @"App Store Apps");
+
+        // Okay, let's start pushing paper.
         NSMutableDictionary *organizableSpecifiers = [[NSMutableDictionary alloc] init];
         NSString *currentOrganizableGroup = nil;
 
@@ -245,32 +273,3 @@ NSString *appleAppsLabel, *tweaksLabel, *appStoreAppsLabel, *socialAppsLabel;
 }
 
 %end
-
-%ctor {
-    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/User/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"];
-    NSLog(@"-loaded settings at launch of prefs: %@-", settings);
-
-    NSNumber *appleAppsValue = settings[@"ShowAppleApps"];
-    showAppleApps = (appleAppsValue ? [appleAppsValue boolValue] : YES);
-
-    NSNumber *tweaksValue = settings[@"ShowTweaks"];
-    showTweaks = (tweaksValue ? [tweaksValue boolValue] : YES);
-
-    NSNumber *appStoreAppsValue = settings[@"ShowAppStoreApps"];
-    showAppStoreApps = (appStoreAppsValue ? [appStoreAppsValue boolValue] : YES);
-
-    NSNumber *socialAppsValue = settings[@"ShowSocialApps"];
-    showSocialApps = (socialAppsValue ? [socialAppsValue boolValue] : YES);
-
-    NSString *appleAppsName = settings[@"AppleAppsName"];
-    appleAppsLabel = (appleAppsName ?: @"Apple Apps");
-
-    NSString *tweaksName = settings[@"TweaksName"];
-    tweaksLabel = (tweaksName ?: @"Tweaks");
-
-    NSString *appStoreAppsName = settings[@"AppStoreAppsName"];
-    appStoreAppsLabel = (appStoreAppsName ?: @"App Store Apps");
-
-    NSString *socialAppsName = settings[@"SocialAppsName"];
-    socialAppsLabel = (socialAppsName ?: @"Social Apps");
-}

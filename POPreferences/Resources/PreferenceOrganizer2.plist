@@ -38,6 +38,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
+			<key>cellClass</key>
+			<string>POEditTextCell</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
@@ -75,6 +77,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
+			<key>cellClass</key>
+			<string>POEditTextCell</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
@@ -112,6 +116,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
+			<key>cellClass</key>
+			<string>POEditTextCell</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
@@ -149,6 +155,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
+			<key>cellClass</key>
+			<string>POEditTextCell</string>
 			<key>defaults</key>
 			<string>net.angelxwind.preferenceorganizer2</string>
 			<key>key</key>
