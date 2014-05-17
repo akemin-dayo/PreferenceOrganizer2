@@ -2,15 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>entry</key>
-	<dict>
-		<key>cell</key>
-		<string>PSLinkCell</string>
-		<key>icon</key>
-		<string>/Library/PreferenceOrganizer2/Tweaks.png</string>
-		<key>label</key>
-		<string>PreferenceOrganizer 2</string>
-	</dict>
 	<key>items</key>
 	<array>
 		<dict>
@@ -19,6 +10,7 @@
 			<key>footerText</key>
 			<string>Kill the Settings app from the multitasking switcher for changes to take effect.</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -27,6 +19,7 @@
 			<key>footerText</key>
 			<string>iCloud Settings crashing? Disable Apple Apps.</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
@@ -41,6 +34,7 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
@@ -55,12 +49,14 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Social Apps</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
@@ -75,6 +71,7 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
@@ -89,12 +86,14 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Tweaks</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
@@ -109,6 +108,7 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
@@ -123,12 +123,14 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>App Store Apps</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
@@ -143,6 +145,7 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSEditTextCell</string>
@@ -157,6 +160,7 @@
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -165,11 +169,12 @@
 			<key>footerText</key>
 			<string>If PreferenceOrganizer 2 doesn&apos;t work, or things are appearing in the wrong sections, check to see if you have the tweak &quot;Cloaky&quot; installed. If so, turn off all options in that tweak that modify the Settings app.</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli</string>
+			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli, insanj</string>
 		</dict>
 	</array>
 	<key>title</key>
