@@ -96,10 +96,10 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
         NSNumber *socialAppsValue = settings[@"ShowSocialApps"];
         BOOL showSocialApps = (socialAppsValue ? [socialAppsValue boolValue] : YES);
 
-        NSString *appleAppsLabel = poValidNameForDefault(settings[@"AppleAppsName"], @"Apple");
-        NSString *socialAppsLabel = poValidNameForDefault(settings[@"SocialAppsName"], @"Social");
+        NSString *appleAppsLabel = poValidNameForDefault(settings[@"AppleAppsName"], @"Apple Apps");
+        NSString *socialAppsLabel = poValidNameForDefault(settings[@"SocialAppsName"], @"Social Apps");
         NSString *tweaksLabel = poValidNameForDefault(settings[@"TweaksName"], @"Tweaks");
-        NSString *appStoreAppsLabel = poValidNameForDefault(settings[@"AppStoreAppsName"], @"App Store");
+        NSString *appStoreAppsLabel = poValidNameForDefault(settings[@"AppStoreAppsName"], @"App Store Apps");
 
         // Okay, let's start pushing paper.
         NSMutableDictionary *organizableSpecifiers = [[NSMutableDictionary alloc] init];

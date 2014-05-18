@@ -5,6 +5,6 @@
 		detail = POListController;
 		icon = "Tweaks.png";
 		isController = 1;
-		label = "PreferenceOrganizer2";
+		label = "PreferenceOrganizer 2";
     };
 }
