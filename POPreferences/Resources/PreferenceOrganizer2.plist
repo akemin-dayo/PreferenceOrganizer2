@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Kill the Settings app from the multitasking switcher for changes to take effect.</string>
+			<string>Remove the Settings app from the app switcher to apply changes.</string>
 		</dict>
 
 		<dict>
@@ -17,7 +17,7 @@
 			<key>label</key>
 			<string>Apple Apps</string>
 			<key>footerText</key>
-			<string>iCloud Settings crashing? Disable Apple Apps.</string>
+			<string>iCloud Settings crashing? Disable this group.</string>
 		</dict>
 
 		<dict>
@@ -47,7 +47,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Apple Apps</string>
+			<string>Apple</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -86,7 +86,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Social Apps</string>
+			<string>Social</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -164,7 +164,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>App Store Apps</string>
+			<string>App Store</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -182,7 +182,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli, insanj</string>
+			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli, insanj. Source available online.</string>
 		</dict>
 	</array>
 	<key>title</key>
