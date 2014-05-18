@@ -115,7 +115,7 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
             NSString *identifier = s.identifier ?: @"";
 
             // If we're not a group cell...
-            if (s.cellType != 0) {
+            if (s->cellType != 0) {
 
                 // If we're hitting the Developer settings area, regardless of position, we need to steal 
                 // its group specifier from the previous group and leave it out of everything.
@@ -167,7 +167,7 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
             }
 
             // If we've already encountered groups before, but THIS specifier is a group specifier, then it COULDN'T
-            // have been any previously encountered group, but is still important to PrefernceOrganizer's organization.
+            // have been any previously encountered group, but is still important to PreferenceOrganizer's organization.
             // So, it must either be the Tweaks or Apps section.
             else if (currentOrganizableGroup) {
                 NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
@@ -195,14 +195,14 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
         SocialAppSpecifiers = [organizableSpecifiers[@"SOCIAL_ACCOUNTS"] retain];
 
         NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
-        if (((PSSpecifier *)tweaksGroup[0]).cellType == 0 && ((PSSpecifier *)tweaksGroup[1]).cellType == 0) {
+        if (((PSSpecifier *)tweaksGroup[0])->cellType == 0 && ((PSSpecifier *)tweaksGroup[1])->cellType == 0) {
             [tweaksGroup removeObjectAtIndex:0];
         }
         TweakSpecifiers = [tweaksGroup retain];
 
         AppStoreAppSpecifiers = [organizableSpecifiers[@"APPS"] retain];
         
-        // Time to being the shuffling!
+        // Time to begin the shuffling!
         NSLog(@"-karen pops out from her hiding hole-");
 
         // Make a group section for our special organized groups
@@ -253,7 +253,7 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
     // Loop through, starting at the bottom, every specifier in the FINAL Settings group
     // (the App Store apps), until we reach a group. Then we know we must be encountering
     // either the Developer or Tweak areas, so we should bust out right away.
-    for (int i = unorganizedSpecifiers.count - 1; ((PSSpecifier *)unorganizedSpecifiers[i]).cellType != 0; i--) {
+    for (int i = unorganizedSpecifiers.count - 1; ((PSSpecifier *)unorganizedSpecifiers[i])->cellType != 0; i--) {
         [organizableSpecifiers addObject:unorganizedSpecifiers[i]];
     }
 
