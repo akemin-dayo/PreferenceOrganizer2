@@ -20,3 +20,8 @@ DerivedData
 PreferenceOrganizer2.xccheckout
 build/*
 */build/*
+.theos
+theos
+_
+obj
+debs

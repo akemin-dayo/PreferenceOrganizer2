@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'PreferenceOrganizer2' target in the 'PreferenceOrganizer2' project
-//
-
-#ifdef __OBJC__
-    #import <Foundation/Foundation.h>
-#endif
