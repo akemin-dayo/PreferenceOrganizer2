@@ -6,6 +6,7 @@ include $(THEOS)/makefiles/common.mk
 BUNDLE_NAME = POPreferences
 POPreferences_FILES = POPreferences.xm
 POPreferences_INSTALL_PATH = /Library/PreferenceBundles
+POPreferences_FRAMEWORKS = UIKit
 POPreferences_PRIVATE_FRAMEWORKS = Preferences
 
 include $(THEOS_MAKE_PATH)/bundle.mk
