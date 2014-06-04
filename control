@@ -7,7 +7,7 @@ Depiction: http://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2
 Author: Karen, Eliz, ilendemli, insanj <angelXwind@angelxwind.net>
 Section: Tweaks
 Depends: mobilesubstrate, preferenceloader, firmware (>= 6.0)
-Version: 1.6
+Version: 1.7
 Maintainer: Karen Tsai (angelXwind) <angelXwind@angelxwind.net>
 Replaces: org.ilendsoft.preferenceorganizer, com.eliz.preferenceorganizer7
 Icon: file:///Library/PreferenceBundles/POPreferences.bundle/Tweaks@2x.png

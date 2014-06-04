@@ -19,7 +19,7 @@
 			<key>label</key>
 			<string>Apple Apps</string>
 			<key>footerText</key>
-			<string>iCloud Settings crashing? Disable this group.</string>
+			<string>If your iCloud settings are crashing, go to Apple Apps, Mail, then iCloud to change iCloud settings. Alternatively, you can also just turn the Apple Apps section off.</string>
 		</dict>
 
 		<dict>
