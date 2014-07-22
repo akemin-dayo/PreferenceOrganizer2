@@ -4,11 +4,10 @@ Architecture: iphoneos-arm
 Description: A simple and free alternative to PreferenceFolders, compatible with iOS 6 and 7. PreferenceOrganizer 2 organises your Settings app into 4 toggleable categories: Apple Apps, Social Apps, Tweaks, and App Store Apps.
 Homepage: http://cydia.angelxwind.net/
 Depiction: http://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2
-Author: Karen, Eliz, and ilendemli <angelXwind@angelxwind.net>
+Author: Karen, Eliz, ilendemli, insanj <angelXwind@angelxwind.net>
 Section: Tweaks
 Depends: mobilesubstrate, preferenceloader, firmware (>= 6.0)
-Version: 1.4
+Version: 1.7
 Maintainer: Karen Tsai (angelXwind) <angelXwind@angelxwind.net>
 Replaces: org.ilendsoft.preferenceorganizer, com.eliz.preferenceorganizer7
-Conflicts: org.thebigboss.guestmode
 Icon: file:///Library/PreferenceBundles/POPreferences.bundle/Tweaks@2x.png

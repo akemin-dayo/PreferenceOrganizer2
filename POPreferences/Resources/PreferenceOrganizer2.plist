@@ -6,9 +6,11 @@
 	<array>
 		<dict>
 			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Remove the Settings app from the app switcher to apply changes.</string>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>killPreferences</string>
+			<key>label</key>
+			<string>Apply</string>
 		</dict>
 
 		<dict>
@@ -17,7 +19,7 @@
 			<key>label</key>
 			<string>Apple Apps</string>
 			<key>footerText</key>
-			<string>iCloud Settings crashing? Disable this group.</string>
+			<string>If your iCloud settings are crashing, go to Apple Apps, Mail, then iCloud to change iCloud settings. Alternatively, you can also just turn the Apple Apps section off.</string>
 		</dict>
 
 		<dict>
@@ -47,7 +49,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Apple</string>
+			<string>Apple Apps</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -86,7 +88,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Social</string>
+			<string>Social Apps</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -164,7 +166,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>App Store</string>
+			<string>App Store Apps</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -182,7 +184,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli, insanj. Source available online.</string>
+			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli, insanj.</string>
 		</dict>
 	</array>
 	<key>title</key>
