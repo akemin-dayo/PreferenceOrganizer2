@@ -11,6 +11,45 @@
 
 #import "PreferenceOrganizer2.h"
 
+%hook PreferencesAppController
+
+%new - (void)preferenceOrganizerOpenTweakPane:(NSString *)name {
+    // this is where I'd put a method if I had one
+}
+
+// Parses the given URL to check if it's in a PreferenceOrganizer2-API conforming format, that is to say,
+// it has a root=Tweaks, and a &path= cooresponding to a tweak name. At the moment, simply strips the URL
+// and launches Preferences into the Tweaks pane (even if they've renamed it), since the method by which
+// Apple discovers and pushes PSListControllers by name (Info.plist information) is still unknown.
+- (void)applicationOpenURL:(NSURL *)url {
+    NSString *parsableURL = [url absoluteString];
+
+    if (parsableURL.length >= 11 && [parsableURL rangeOfString:@"root=Tweaks"].location != NSNotFound) {
+        NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/User/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"];
+        NSString *tweaksAreaName = @"Tweaks";
+        if (settings) {
+            tweaksAreaName = settings[@"TweaksName"] ?: tweaksAreaName;
+        }
+
+        NSString *truncatedPrefsURL = [@"prefs:root=" stringByAppendingString:tweaksAreaName];
+        url = [NSURL URLWithString:truncatedPrefsURL];
+
+        %orig(url);
+
+        NSRange tweakPathRange = [parsableURL rangeOfString:@"path="];
+        if (tweakPathRange.location != NSNotFound) {
+            NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
+            [self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]];
+        }
+    }
+
+    else {
+        %orig(url);
+    }
+}
+
+%end
+
 // Static specifier-overriding arrays (used when populating PSListController/etc)
 static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifiers, *AppStoreAppSpecifiers;
 
