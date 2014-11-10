@@ -4,3 +4,4 @@ debs/*
 *.deb
 *.dylib
 */.theos/*
+*.sublime-workspace

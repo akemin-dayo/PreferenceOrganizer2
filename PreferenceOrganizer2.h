@@ -2,8 +2,7 @@
 //  PreferenceOrganizer2.h
 //  PreferenceOrganizer 2
 //
-//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, ilendemli. All rights reserved.
-//  Fork Copyright (c) 2014 Julian Weiss <insanjmail@gmail.com>
+//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, Julian Weiss <insanjmail@gmail.com>, ilendemli. All rights reserved.
 //  
 
 // Theos / Logos by Dustin Howett
