@@ -285,23 +285,25 @@ static BOOL shouldShowSocialApps;
 - (void)_reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
     %orig;
 
-    int thirdPartyID = 0;
-    NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:self.specifiers];
-    for (int i = 0 ; i < [specifiers count]; i++ ) {
-        PSSpecifier* item = [specifiers objectAtIndex:i];
-        if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
-            thirdPartyID = i;
-            break;
-        }
-    }
-    for (int i = thirdPartyID+1 ; i < [specifiers count]; i++ ) {
-        [AppStoreAppSpecifiers addObject:specifiers[i]];
-    }
+    if (shouldShowAppStoreApps) {
+    	int thirdPartyID = 0;
+	    NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:self.specifiers];
+	    for (int i = 0 ; i < [specifiers count]; i++ ) {
+	        PSSpecifier* item = [specifiers objectAtIndex:i];
+	        if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
+	            thirdPartyID = i;
+	            break;
+	        }
+	    }
+	    for (int i = thirdPartyID+1 ; i < [specifiers count]; i++ ) {
+	        [AppStoreAppSpecifiers addObject:specifiers[i]];
+	    }
 
-    while ([specifiers count] > thirdPartyID+1) {
-        [specifiers removeLastObject];
+	    while ([specifiers count] > thirdPartyID+1) {
+	        [specifiers removeLastObject];
+	    }
+	    self.specifiers = specifiers;
     }
-    self.specifiers = specifiers;
 }
 
 - (void)refresh3rdPartyBundles {
