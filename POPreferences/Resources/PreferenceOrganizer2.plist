@@ -18,8 +18,6 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Apple Apps</string>
-			<key>footerText</key>
-			<string>If your iCloud settings are crashing, go to Apple Apps, Mail, then iCloud to change iCloud settings. Alternatively, you can also just turn the Apple Apps section off.</string>
 		</dict>
 
 		<dict>
@@ -184,7 +182,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, ilendemli, insanj.</string>
+			<string>© 2013-2014 Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), Gary Lin (gary19930520).</string>
 		</dict>
 	</array>
 	<key>title</key>
