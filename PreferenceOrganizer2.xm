@@ -181,7 +181,7 @@ static BOOL shouldShowSocialApps;
 			// So, it must either be the Tweaks or Apps section.
 			else if (currentOrganizableGroup) {
 
-				if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_8_0) {
+				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
 					if (groupID < 2) {
                     	groupID++;
                     	currentOrganizableGroup = @"STORE";
