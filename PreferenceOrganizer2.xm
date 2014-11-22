@@ -2,13 +2,21 @@
 //  PreferenceOrganizer2.xm
 //  PreferenceOrganizer 2
 //
-//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, Julian Weiss <insanjmail@gmail.com>, ilendemli. All rights reserved.
+//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, Julian Weiss <insanjmail@gmail.com>, ilendemli, Hiraku (hirakujira), Gary Lin (gary19930520). All rights reserved.
 //  
 
 // Theos / Logos by Dustin Howett
 // see https://github.com/DHowett/theos
 
+#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
+#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
+#endif
+
 #import "PreferenceOrganizer2.h"
+
+@interface PrefsListController : PSListController
+@end
+
 
 // Static specifier-overriding arrays (used when populating PSListController/etc)
 static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifiers, *AppStoreAppSpecifiers;
@@ -103,6 +111,7 @@ static BOOL shouldShowSocialApps;
 		NSString *appStoreAppsLabel = poValidNameForDefault(POSettings[@"AppStoreAppsName"], @"App Store Apps");
 
 		// Okay, let's start pushing paper.
+		int groupID = 0;
 		NSMutableDictionary *organizableSpecifiers = [[NSMutableDictionary alloc] init];
 		NSString *currentOrganizableGroup = nil;
 
@@ -171,13 +180,25 @@ static BOOL shouldShowSocialApps;
 			// have been any previously encountered group, but is still important to PreferenceOrganizer's organization.
 			// So, it must either be the Tweaks or Apps section.
 			else if (currentOrganizableGroup) {
-				NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
-				if (tweaksGroup && tweaksGroup.count > 1) { // Because of some unholy lingering group specifiers
-					currentOrganizableGroup = @"APPS";
-				}
 
-				else {
-					currentOrganizableGroup = @"TWEAKS";
+				if (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_8_0) {
+					if (groupID < 2) {
+                    	groupID++;
+                    	currentOrganizableGroup = @"STORE";
+	                } else if (groupID == 2) {
+	                    groupID++;
+	                    currentOrganizableGroup = @"TWEAKS";
+	                } else {
+	                    groupID++;
+	                    currentOrganizableGroup = @"APPS";
+	                }
+				} else {
+					NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
+					if (tweaksGroup && tweaksGroup.count > 1) { // Because of some unholy lingering group specifiers
+						currentOrganizableGroup = @"APPS";
+					} else {
+						currentOrganizableGroup = @"TWEAKS";
+					}
 				}
 
 				NSMutableArray *newSavedGroup = organizableSpecifiers[currentOrganizableGroup];
@@ -187,6 +208,22 @@ static BOOL shouldShowSocialApps;
 
 				[newSavedGroup addObject:s];
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
+			}
+		}
+
+		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just remove it.
+
+		for (PSSpecifier* specifier in organizableSpecifiers[@"STORE"]) {
+			if ([specifier.identifier isEqualToString:@"CASTLE"]) {
+				[(NSMutableArray *)organizableSpecifiers[@"STORE"] removeObject:specifier];
+				break;
+			}
+		}
+
+		for (PSSpecifier* specifier in organizableSpecifiers[@"CASTLE"]) {
+			if ([specifier.identifier isEqualToString:@"CASTLE"]) {
+				[(NSMutableArray *)organizableSpecifiers[@"CASTLE"] removeObject:specifier];
+				break;
 			}
 		}
 
@@ -204,7 +241,7 @@ static BOOL shouldShowSocialApps;
 		AppStoreAppSpecifiers = [organizableSpecifiers[@"APPS"] retain];
 		
 		// Time to begin the shuffling!
-		NSLog(@"-karen pops out from her hiding hole-");
+		NSLog(@"PreferenceOrganizer2: [INFO] -karen pops out from her hiding hole-");
 
 		// Make a group section for our special organized groups
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
@@ -243,6 +280,28 @@ static BOOL shouldShowSocialApps;
 	});
 
 	return specifiers;
+}
+
+- (void)_reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
+    %orig;
+
+    int thirdPartyID = 0;
+    NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:self.specifiers];
+    for (int i = 0 ; i < [specifiers count]; i++ ) {
+        PSSpecifier* item = [specifiers objectAtIndex:i];
+        if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
+            thirdPartyID = i;
+            break;
+        }
+    }
+    for (int i = thirdPartyID+1 ; i < [specifiers count]; i++ ) {
+        [AppStoreAppSpecifiers addObject:specifiers[i]];
+    }
+
+    while ([specifiers count] > thirdPartyID+1) {
+        [specifiers removeLastObject];
+    }
+    self.specifiers = specifiers;
 }
 
 - (void)refresh3rdPartyBundles {
