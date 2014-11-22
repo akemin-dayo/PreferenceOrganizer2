@@ -73,32 +73,34 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
 	}
 }
 
-%hook PrefsListController
+static BOOL shouldShowAppleApps;
+static BOOL shouldShowTweaks;
+static BOOL shouldShowAppStoreApps;
+static BOOL shouldShowSocialApps;
 
+%hook PrefsListController
 - (NSMutableArray *)specifiers {
 	NSMutableArray *specifiers = %orig();
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Read preferences....
-		NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:@"/User/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"];
+		POSyncPrefs();
+		POPref(shouldShowAppleApps, ShowAppleApps, 1);
+		POPref(shouldShowTweaks, ShowTweaks, 1);
+		POPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
+		POPref(shouldShowSocialApps, ShowSocialApps, 1);
+#ifdef PREFS_DEBUG
+		POBoolDebug(shouldShowAppleApps);
+		POBoolDebug(shouldShowTweaks);
+		POBoolDebug(shouldShowAppStoreApps);
+		POBoolDebug(shouldShowSocialApps);
+#endif
 
-		NSNumber *appleAppsValue = settings[@"ShowAppleApps"];
-		BOOL showAppleApps = (appleAppsValue ? [appleAppsValue boolValue] : YES);
-
-		NSNumber *tweaksValue = settings[@"ShowTweaks"];
-		BOOL showTweaks = (tweaksValue ? [tweaksValue boolValue] : YES);
-
-		NSNumber *appStoreAppsValue = settings[@"ShowAppStoreApps"];
-		BOOL showAppStoreApps = (appStoreAppsValue ? [appStoreAppsValue boolValue] : YES);
-
-		NSNumber *socialAppsValue = settings[@"ShowSocialApps"];
-		BOOL showSocialApps = (socialAppsValue ? [socialAppsValue boolValue] : YES);
-
-		NSString *appleAppsLabel = poValidNameForDefault(settings[@"AppleAppsName"], @"Apple Apps");
-		NSString *socialAppsLabel = poValidNameForDefault(settings[@"SocialAppsName"], @"Social Apps");
-		NSString *tweaksLabel = poValidNameForDefault(settings[@"TweaksName"], @"Tweaks");
-		NSString *appStoreAppsLabel = poValidNameForDefault(settings[@"AppStoreAppsName"], @"App Store Apps");
+		NSString *appleAppsLabel = poValidNameForDefault(POSettings[@"AppleAppsName"], @"Apple Apps");
+		NSString *socialAppsLabel = poValidNameForDefault(POSettings[@"SocialAppsName"], @"Social Apps");
+		NSString *tweaksLabel = poValidNameForDefault(POSettings[@"TweaksName"], @"Tweaks");
+		NSString *appStoreAppsLabel = poValidNameForDefault(POSettings[@"AppStoreAppsName"], @"App Store Apps");
 
 		// Okay, let's start pushing paper.
 		NSMutableDictionary *organizableSpecifiers = [[NSMutableDictionary alloc] init];
@@ -207,7 +209,7 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
 		// Make a group section for our special organized groups
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
-		if (showAppleApps && AppleAppSpecifiers) {
+		if (shouldShowAppleApps && AppleAppSpecifiers) {
 			[specifiers removeObjectsInArray:AppleAppSpecifiers];
 			
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
@@ -215,7 +217,7 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
 			[specifiers addObject:appleSpecifier];
 		}
 
-		if (showSocialApps && SocialAppSpecifiers) {
+		if (shouldShowSocialApps && SocialAppSpecifiers) {
 			[specifiers removeObjectsInArray:SocialAppSpecifiers];
 		   
 			PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:socialAppsLabel target:self set:NULL get:NULL  detail:[SocialAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
@@ -223,7 +225,7 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
 			[specifiers addObject:socialSpecifier];
 		}
 
-		if (showTweaks && TweakSpecifiers) {
+		if (shouldShowTweaks && TweakSpecifiers) {
 			[specifiers removeObjectsInArray:TweakSpecifiers];
 			  
 			PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:tweaksLabel target:self set:NULL get:NULL detail:[TweakSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
@@ -231,7 +233,7 @@ static NSString * poValidNameForDefault(NSString *name, NSString *def) {
 			[specifiers addObject:cydiaSpecifier];
 		}
 
-		if (showAppStoreApps && AppStoreAppSpecifiers) {
+		if (shouldShowAppStoreApps && AppStoreAppSpecifiers) {
 			[specifiers removeObjectsInArray:AppStoreAppSpecifiers];
 			
 			PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:appStoreAppsLabel target:self set:NULL get:NULL detail:[AppStoreAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
