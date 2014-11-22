@@ -283,7 +283,7 @@ static BOOL shouldShowSocialApps;
 }
 
 - (void)_reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
-    %orig;
+    %orig(arg1, arg2);
 
     if (shouldShowAppStoreApps) {
     	int thirdPartyID = 0;
