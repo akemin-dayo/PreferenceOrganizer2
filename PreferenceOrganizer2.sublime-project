@@ -2,19 +2,18 @@
 	"folders":
 	[
 		{
-			"path": "/Users/Karen/Development/PreferenceOrganizer2",
 			"follow_symlinks": false,
-            "path": ".",
-            "file_exclude_patterns": [
-                "*.deb"
-            ],
-            "folder_exclude_patterns": [
-                "_",
-                "obj",
-                "theos",
-                ".theos",
-                "debs"
-            ]
+			"path": ".",
+			"file_exclude_patterns": [
+				"*.deb"
+			],
+			"folder_exclude_patterns": [
+				"_",
+				"obj",
+				"theos",
+				".theos",
+				"debs"
+			]
 		}
 	]
 }

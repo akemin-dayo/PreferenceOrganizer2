@@ -1,10 +1,10 @@
 {
-    entry = {
+	entry = {
 		bundle = POPreferences;
 		cell = PSLinkCell;
 		detail = POListController;
 		icon = "Tweaks.png";
 		isController = 1;
 		label = "PreferenceOrganizer 2";
-    };
+	};
 }
