@@ -192,13 +192,12 @@ static BOOL shouldShowSocialApps;
 	                    groupID++;
 	                    currentOrganizableGroup = @"APPS";
 	                }
+				} 
+				NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
+				if (tweaksGroup && tweaksGroup.count > 1) { // Because of some unholy lingering group specifiers
+					currentOrganizableGroup = @"APPS";
 				} else {
-					NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
-					if (tweaksGroup && tweaksGroup.count > 1) { // Because of some unholy lingering group specifiers
-						currentOrganizableGroup = @"APPS";
-					} else {
-						currentOrganizableGroup = @"TWEAKS";
-					}
+					currentOrganizableGroup = @"TWEAKS";
 				}
 
 				NSMutableArray *newSavedGroup = organizableSpecifiers[currentOrganizableGroup];
