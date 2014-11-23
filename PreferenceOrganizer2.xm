@@ -216,7 +216,6 @@ static BOOL shouldShowSocialApps;
 				if (!newSavedGroup) {
 					newSavedGroup = [[NSMutableArray alloc] init];
 				}
-				[newSavedGroup addObject:s];
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
 		}
