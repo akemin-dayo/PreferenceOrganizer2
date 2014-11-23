@@ -183,15 +183,15 @@ static BOOL shouldShowSocialApps;
 
 				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
 					if (groupID < 2) {
-                    	groupID++;
-                    	currentOrganizableGroup = @"STORE";
-	                } else if (groupID == 2) {
-	                    groupID++;
-	                    currentOrganizableGroup = @"TWEAKS";
-	                } else {
-	                    groupID++;
-	                    currentOrganizableGroup = @"APPS";
-	                }
+						groupID++;
+						currentOrganizableGroup = @"STORE";
+					} else if (groupID == 2) {
+						groupID++;
+						currentOrganizableGroup = @"TWEAKS";
+					} else {
+						groupID++;
+						currentOrganizableGroup = @"APPS";
+					}
 				} else {
 					NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
 					if (tweaksGroup && tweaksGroup.count > 1) { // Because of some unholy lingering group specifiers
@@ -211,7 +211,7 @@ static BOOL shouldShowSocialApps;
 			}
 			if (i == specifiers.count - 1 && groupID != 4) {
 				groupID++;
-	            currentOrganizableGroup = @"APPS";
+				currentOrganizableGroup = @"APPS";
 				NSMutableArray *newSavedGroup = organizableSpecifiers[currentOrganizableGroup];
 				if (!newSavedGroup) {
 					newSavedGroup = [[NSMutableArray alloc] init];
@@ -292,27 +292,27 @@ static BOOL shouldShowSocialApps;
 }
 
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
-    %orig(arg1, arg2);
+	%orig(arg1, arg2);
 
-    if (shouldShowAppStoreApps) {
-    	int thirdPartyID = 0;
-	    NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:self.specifiers];
-	    for (int i = 0; i < [specifiers count]; i++) {
-	        PSSpecifier* item = [specifiers objectAtIndex:i];
-	        if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
-	            thirdPartyID = i;
-	            break;
-	        }
-	    }
-	    for (int i = thirdPartyID + 1; i < [specifiers count]; i++) {
-	        [AppStoreAppSpecifiers addObject:specifiers[i]];
-	    }
+	if (shouldShowAppStoreApps) {
+		int thirdPartyID = 0;
+		NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:self.specifiers];
+		for (int i = 0; i < [specifiers count]; i++) {
+			PSSpecifier* item = [specifiers objectAtIndex:i];
+			if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
+				thirdPartyID = i;
+				break;
+			}
+		}
+		for (int i = thirdPartyID + 1; i < [specifiers count]; i++) {
+			[AppStoreAppSpecifiers addObject:specifiers[i]];
+		}
 
-	    while ([specifiers count] > thirdPartyID + 1) {
-	        [specifiers removeLastObject];
-	    }
-	    self.specifiers = specifiers;
-    }
+		while ([specifiers count] > thirdPartyID + 1) {
+			[specifiers removeLastObject];
+		}
+		self.specifiers = specifiers;
+	}
 }
 
 -(void) refresh3rdPartyBundles {
