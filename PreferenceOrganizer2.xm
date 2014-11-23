@@ -24,7 +24,7 @@ static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifier
 // Sneaky implementations of vanilla PSListControllers with the proper hidden specifiers
 @implementation AppleAppSpecifiersController
 
-- (NSArray *)specifiers {
+-(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = AppleAppSpecifiers;
 	}
@@ -36,7 +36,7 @@ static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifier
 
 @implementation SocialAppSpecifiersController
 
-- (NSArray *)specifiers {
+-(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = SocialAppSpecifiers; 
 	}
@@ -48,7 +48,7 @@ static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifier
 
 @implementation TweakSpecifiersController
 
-- (NSArray *)specifiers {
+-(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = TweakSpecifiers;
 	}
@@ -60,7 +60,7 @@ static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifier
 
 @implementation AppStoreAppSpecifiersController
 
-- (NSArray *)specifiers {
+-(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = AppStoreAppSpecifiers;
 	}
@@ -87,7 +87,7 @@ static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 
 %hook PrefsListController
-- (NSMutableArray *)specifiers {
+-(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 
 	static dispatch_once_t onceToken;
@@ -282,31 +282,31 @@ static BOOL shouldShowSocialApps;
 	return specifiers;
 }
 
-- (void)_reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
+-(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
     %orig(arg1, arg2);
 
     if (shouldShowAppStoreApps) {
     	int thirdPartyID = 0;
 	    NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:self.specifiers];
-	    for (int i = 0 ; i < [specifiers count]; i++ ) {
+	    for (int i = 0; i < [specifiers count]; i++) {
 	        PSSpecifier* item = [specifiers objectAtIndex:i];
 	        if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
 	            thirdPartyID = i;
 	            break;
 	        }
 	    }
-	    for (int i = thirdPartyID+1 ; i < [specifiers count]; i++ ) {
+	    for (int i = thirdPartyID + 1; i < [specifiers count]; i++) {
 	        [AppStoreAppSpecifiers addObject:specifiers[i]];
 	    }
 
-	    while ([specifiers count] > thirdPartyID+1) {
+	    while ([specifiers count] > thirdPartyID + 1) {
 	        [specifiers removeLastObject];
 	    }
 	    self.specifiers = specifiers;
     }
 }
 
-- (void)refresh3rdPartyBundles {
+-(void) refresh3rdPartyBundles {
 	%orig();
 
 	NSMutableArray *organizableSpecifiers = [[NSMutableArray alloc] init];
@@ -329,7 +329,7 @@ static BOOL shouldShowSocialApps;
 	AppStoreAppSpecifiers = [organizableSpecifiers retain];
 }
 
-- (void)reloadSpecifiers {
+-(void) reloadSpecifiers {
 	return; // Nah dawg you've come to the wrong part 'a town...
 }
 
