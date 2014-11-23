@@ -209,6 +209,16 @@ static BOOL shouldShowSocialApps;
 				[newSavedGroup addObject:s];
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
+			if (i == specifiers.count - 1 && groupID != 4) {
+				groupID++;
+	            currentOrganizableGroup = @"APPS";
+				NSMutableArray *newSavedGroup = organizableSpecifiers[currentOrganizableGroup];
+				if (!newSavedGroup) {
+					newSavedGroup = [[NSMutableArray alloc] init];
+				}
+				[newSavedGroup addObject:s];
+				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
+			}
 		}
 
 		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just remove it.
