@@ -12,6 +12,8 @@
 #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
 #endif
 
+#define DPKG_PATH "/var/lib/dpkg/info/net.angelxwind.preferenceorganizer2.list"
+
 #import "PreferenceOrganizer2.h"
 
 @interface PrefsListController : PSListController
@@ -92,18 +94,18 @@ static BOOL shouldShowSocialApps;
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
+		// Do a check for net.angelxwind.preferenceorganizer2
+		if (access(DPKG_PATH, F_OK) == -1) {
+			NSLog(@"PreferenceOrganizer2: [WARNING] You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).");
+			NSLog(@"PreferenceOrganizer2: [WARNING] If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are likely lying.");
+			NSLog(@"PreferenceOrganizer2: [WARNING] Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.");
+		}
 		// Read preferences....
 		POSyncPrefs();
 		POPref(shouldShowAppleApps, ShowAppleApps, 1);
 		POPref(shouldShowTweaks, ShowTweaks, 1);
 		POPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
 		POPref(shouldShowSocialApps, ShowSocialApps, 1);
-#ifdef PREFS_DEBUG
-		POBoolDebug(shouldShowAppleApps);
-		POBoolDebug(shouldShowTweaks);
-		POBoolDebug(shouldShowAppStoreApps);
-		POBoolDebug(shouldShowSocialApps);
-#endif
 
 		NSString *appleAppsLabel = poValidNameForDefault(POSettings[@"AppleAppsName"], @"Apple Apps");
 		NSString *socialAppsLabel = poValidNameForDefault(POSettings[@"SocialAppsName"], @"Social Apps");

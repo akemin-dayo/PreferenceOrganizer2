@@ -9,7 +9,7 @@ TWEAK_NAME = PreferenceOrganizer2
 PreferenceOrganizer2_FILES = PreferenceOrganizer2.xm
 PreferenceOrganizer2_FRAMEWORKS = UIKit Foundation
 PreferenceOrganizer2_PRIVATE_FRAMEWORKS = Preferences
-PreferenceOrganizer2_CFLAGS += -DPREFS_DEBUG
+PreferenceOrganizer2_CFLAGS += -DVERBOSE
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 SUBPROJECTS += POPreferences
