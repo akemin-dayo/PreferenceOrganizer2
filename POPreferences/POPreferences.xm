@@ -47,6 +47,27 @@ static void PO2InitPrefs() {
 	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), mikotoPost, NULL, NULL, YES);
 }
 
+-(void) resetSettings {
+	NSError *error;
+	if ([[NSFileManager defaultManager] removeItemAtPath:PO2PreferencePath error:&error]) {
+	    UIAlertView *ripInPieces = [[UIAlertView alloc] initWithTitle:@"PreferenceOrganizer 2 Preferences Reset Successfully"
+													message:@"PreferenceOrganizer 2's preferences have been successfully reset to default values."
+													delegate:nil
+													cancelButtonTitle:@"OK (^_-)-☆"
+													otherButtonTitles: nil];
+		[ripInPieces show];
+		[ripInPieces release];
+	} else {
+		UIAlertView *ripInPieces = [[UIAlertView alloc] initWithTitle:@"Error ━Σ(ﾟДﾟ|||)━"
+													message:[NSString stringWithFormat:@"PreferenceOrganizer 2 was unable to reset settings! NSError info: %@", [error localizedDescription]]
+													delegate:nil
+													cancelButtonTitle:@"OK (・へ・)"
+													otherButtonTitles: nil];
+		[ripInPieces show];
+		[ripInPieces release];
+	}
+}
+
 -(void) killPreferences {
 	UIAlertView *suicidalPreferences = [[UIAlertView alloc] initWithTitle:@"Note"
 		message:@"The Preferences app will now kill itself to apply changes. This is not a crash."
