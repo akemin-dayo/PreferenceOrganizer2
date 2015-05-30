@@ -1,13 +1,3 @@
-//
-//  PreferenceOrganizer2.xm
-//  PreferenceOrganizer 2
-//
-//  Copyright (c) 2013-2014 Karen Tsai <angelXwind@angelxwind.net>, Eliz, Julian Weiss <insanjmail@gmail.com>, ilendemli, Hiraku (hirakujira), Gary Lin (gary19930520). All rights reserved.
-//  
-
-// Theos / Logos by Dustin Howett
-// see https://github.com/DHowett/theos
-
 #ifndef kCFCoreFoundationVersionNumber_iOS_8_0
 #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
 #endif
@@ -15,6 +5,7 @@
 #define DPKG_PATH "/var/lib/dpkg/info/net.angelxwind.preferenceorganizer2.list"
 
 #import "PreferenceOrganizer2.h"
+#import "PO2Common.h"
 
 @interface PrefsListController : PSListController
 @end
@@ -72,21 +63,33 @@ static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifier
 
 @end
 
-// Static function that chooses the first parameter if it's a non-nil, non-empty string, the second otherwise
-static NSString * poValidNameForDefault(NSString *name, NSString *def) {
-	if (name && [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length > 0) {
-		return name;
-	}
-
-	else {
-		return def;
-	}
-}
-
 static BOOL shouldShowAppleApps;
 static BOOL shouldShowTweaks;
 static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
+static BOOL shouldSyslogSpam;
+static NSString *appleAppsLabel;
+static NSString *socialAppsLabel;
+static NSString *tweaksLabel;
+static NSString *appStoreAppsLabel;
+
+static void PO2InitPrefs() {
+	PO2SyncPrefs();
+	PO2BoolPref(shouldSyslogSpam, syslogSpam, 0);
+	PO2BoolPref(shouldShowAppleApps, ShowAppleApps, 1);
+	PO2BoolPref(shouldShowTweaks, ShowTweaks, 1);
+	PO2BoolPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
+	PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
+	PO2StringPref(appleAppsLabel, AppleAppsName, @"Apple Apps");
+	PO2StringPref(socialAppsLabel, SocialAppsName, @"Social Apps");
+	PO2StringPref(tweaksLabel, TweaksName, @"Tweaks");
+	PO2StringPref(appStoreAppsLabel, AppStoreAppsName, @"App Store Apps");
+}
+
+%ctor {
+	PO2InitPrefs();
+	PO2Observer(PO2InitPrefs, "net.angelxwind.preferenceorganizer2-PreferencesChanged");
+}
 
 %hook PrefsListController
 -(NSMutableArray *) specifiers {
@@ -96,21 +99,10 @@ static BOOL shouldShowSocialApps;
 	dispatch_once(&onceToken, ^{
 		// Do a check for net.angelxwind.preferenceorganizer2
 		if (access(DPKG_PATH, F_OK) == -1) {
-			NSLog(@"PreferenceOrganizer2: [WARNING] You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).");
-			NSLog(@"PreferenceOrganizer2: [WARNING] If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are likely lying.");
-			NSLog(@"PreferenceOrganizer2: [WARNING] Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.");
+			NSLog(@"PreferenceOrganizer 2: [WARNING] You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).");
+			NSLog(@"PreferenceOrganizer 2: [WARNING] If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are likely lying.");
+			NSLog(@"PreferenceOrganizer 2: [WARNING] Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.");
 		}
-		// Read preferences....
-		POSyncPrefs();
-		POPref(shouldShowAppleApps, ShowAppleApps, 1);
-		POPref(shouldShowTweaks, ShowTweaks, 1);
-		POPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
-		POPref(shouldShowSocialApps, ShowSocialApps, 1);
-
-		NSString *appleAppsLabel = poValidNameForDefault(POSettings[@"AppleAppsName"], @"Apple Apps");
-		NSString *socialAppsLabel = poValidNameForDefault(POSettings[@"SocialAppsName"], @"Social Apps");
-		NSString *tweaksLabel = poValidNameForDefault(POSettings[@"TweaksName"], @"Tweaks");
-		NSString *appStoreAppsLabel = poValidNameForDefault(POSettings[@"AppStoreAppsName"], @"App Store Apps");
 
 		// Okay, let's start pushing paper.
 		int groupID = 0;
@@ -252,7 +244,7 @@ static BOOL shouldShowSocialApps;
 		AppStoreAppSpecifiers = [organizableSpecifiers[@"APPS"] retain];
 		
 		// Time to begin the shuffling!
-		NSLog(@"PreferenceOrganizer2: [INFO] -karen pops out from her hiding hole-");
+		NSLog(@"PreferenceOrganizer 2: [INFO] -karen pops out from her hiding hole-");
 
 		// Make a group section for our special organized groups
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];

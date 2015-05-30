@@ -1,4 +1,18 @@
-#import "../PreferenceOrganizer2.h"
+#import "../PO2Common.h"
+#import <Preferences/Preferences.h>
+#import <UIKit/UIKit.h>
+
+static BOOL shouldSyslogSpam;
+
+static void PO2InitPrefs() {
+	PO2SyncPrefs();
+	PO2BoolPref(shouldSyslogSpam, syslogSpam, 0);
+}
+
+%ctor {
+	PO2Observer(PO2InitPrefs, "net.angelxwind.preferenceorganizer2-PreferencesChanged");
+	PO2InitPrefs();
+}
 
 @interface POListController : PSListController
 @end
@@ -13,7 +27,7 @@
 }
 
 -(id) readPreferenceValue:(PSSpecifier*)specifier {
-	NSDictionary *POSettings = [NSDictionary dictionaryWithContentsOfFile:POPreferencePath];
+	NSDictionary *POSettings = [NSDictionary dictionaryWithContentsOfFile:PO2PreferencePath];
 	if (!POSettings[specifier.properties[@"key"]]) {
 		return specifier.properties[@"default"];
 	}
@@ -22,13 +36,13 @@
 
 -(void) setPreferenceValue:(id)value specifier:(PSSpecifier*)specifier {
 	NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
-	[defaults addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:POPreferencePath]];
-	NSLog(@"PreferenceOrganizer2: [DEBUG] %@",specifier.properties);
+	[defaults addEntriesFromDictionary:[NSDictionary dictionaryWithContentsOfFile:PO2PreferencePath]];
+	PO2Log([NSString stringWithFormat:@"%@",specifier.properties], shouldSyslogSpam);
 	[defaults setObject:value forKey:specifier.properties[@"key"]];
-	[defaults writeToFile:POPreferencePath atomically:YES];
-	NSDictionary *POSettings = [NSDictionary dictionaryWithContentsOfFile:POPreferencePath];
-	NSLog(@"PreferenceOrganizer2: [DEBUG] POSettings %@",POSettings);
-	NSLog(@"PreferenceOrganizer2: [DEBUG] posting CFNotification %@", specifier.properties[@"PostNotification"]);
+	[defaults writeToFile:PO2PreferencePath atomically:YES];
+	NSDictionary *POSettings = [NSDictionary dictionaryWithContentsOfFile:PO2PreferencePath];
+	PO2Log([NSString stringWithFormat:@"POSettings %@",POSettings], shouldSyslogSpam);
+	PO2Log([NSString stringWithFormat:@"posting CFNotification %@", specifier.properties[@"PostNotification"]], shouldSyslogSpam);
 	CFStringRef mikotoPost = (CFStringRef)specifier.properties[@"PostNotification"];
 	CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), mikotoPost, NULL, NULL, YES);
 }
