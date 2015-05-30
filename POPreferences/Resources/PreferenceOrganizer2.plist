@@ -172,6 +172,28 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Logs some debug info to /var/tmp/net.angelxwind.preferenceorganizer2.log.</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>net.angelxwind.preferenceorganizer2</string>
+			<key>key</key>
+			<string>syslogSpam</string>
+			<key>label</key>
+			<string>Enable Debugging</string>
+			<key>PostNotification</key>
+			<string>net.angelxwind.preferenceorganizer2-PreferencesChanged</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Help</string>
 			<key>footerText</key>
