@@ -1,8 +1,8 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 
-#define PO2PreferencePath @"/User/Library/Preferences/net.angelxwind.jellylockunified.plist"
-#define PO2LogPath @"/var/tmp/net.angelxwind.jellylockunified.log"
+#define PO2PreferencePath @"/User/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"
+#define PO2LogPath @"/var/tmp/net.angelxwind.preferenceorganizer2.log"
 
 static bool PO2Log(NSString *string, bool enabled);
 static bool PO2Log(NSString *string, bool enabled) {

@@ -59,7 +59,7 @@ static void PO2InitPrefs() {
 
 -(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
 	if (buttonIndex == 0) {
-		system("killall -9 Preferences");
+		system("/usr/bin/killall -9 Preferences");
 	}
 }
 @end
