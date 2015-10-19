@@ -99,9 +99,9 @@ static void PO2InitPrefs() {
 	dispatch_once(&onceToken, ^{
 		// Do a check for net.angelxwind.preferenceorganizer2
 		if (access(DPKG_PATH, F_OK) == -1) {
-			NSLog(@"PreferenceOrganizer 2: [WARNING] You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).");
-			NSLog(@"PreferenceOrganizer 2: [WARNING] If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are likely lying.");
-			NSLog(@"PreferenceOrganizer 2: [WARNING] Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.");
+			NSLog(@"You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).");
+			NSLog(@"If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are likely lying.");
+			NSLog(@"Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.");
 		}
 
 		// Okay, let's start pushing paper.
@@ -214,7 +214,7 @@ static void PO2InitPrefs() {
 			}
 		}
 
-		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just remove it.
+		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just exclude it.
 
 		for (PSSpecifier* specifier in organizableSpecifiers[@"STORE"]) {
 			if ([specifier.identifier isEqualToString:@"CASTLE"]) {
@@ -244,7 +244,7 @@ static void PO2InitPrefs() {
 		AppStoreAppSpecifiers = [organizableSpecifiers[@"APPS"] retain];
 		
 		// Time to begin the shuffling!
-		NSLog(@"PreferenceOrganizer 2: [INFO] -karen pops out from her hiding hole-");
+		NSLog(@"-karen pops out from her hiding hole-");
 
 		// Make a group section for our special organized groups
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];

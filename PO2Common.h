@@ -1,6 +1,7 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 
+#define NSLog(LogContents, ...) NSLog((@"PreferenceOrganizer 2: %s:%d " LogContents), __FUNCTION__, __LINE__, ##__VA_ARGS__)
 #define PO2PreferencePath @"/User/Library/Preferences/net.angelxwind.preferenceorganizer2.plist"
 #define PO2LogPath @"/var/tmp/net.angelxwind.preferenceorganizer2.log"
 
@@ -8,7 +9,7 @@ static bool PO2Log(NSString *string, bool enabled);
 static bool PO2Log(NSString *string, bool enabled) {
 	if (enabled) {
 		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		NSString *formattedString = [NSString stringWithFormat:@"%@%@", @"PreferenceOrganizer 2: [DEBUG] ", string];
+		NSString *formattedString = [NSString stringWithFormat:@"%@", string];
 		NSLog(@"%@", formattedString);
 		NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:PO2LogPath];
 		if (!fileHandle) {
@@ -24,7 +25,7 @@ static bool PO2Log(NSString *string, bool enabled) {
 				[fileHandle writeData:[formattedString dataUsingEncoding:NSUTF8StringEncoding]];
 			}
 			@catch (NSException *e) {
-				NSLog(@"PreferenceOrganizer 2: [DEBUG] Failed to log to file! ━Σ(ﾟДﾟ|||)━ %@", e);
+				NSLog(@"Failed to log to file! ━Σ(ﾟДﾟ|||)━ %@", e);
 				return 0;
 			}
 			[fileHandle closeFile];
@@ -71,7 +72,7 @@ static bool PO2Log(NSString *string, bool enabled) {
 
 #define PO2Observer(funcToCall, listener) CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)funcToCall, CFSTR(listener), NULL, CFNotificationSuspensionBehaviorCoalesce);
 #define PO2SyncPrefs() \
-	NSLog(@"PreferenceOrganizer 2: [INFO] PreferenceOrganizer 2 (C) 2013-2015 Karen Tsai (angelXwind)"); \
+	NSLog(@"PreferenceOrganizer 2 (C) 2013-2015 Karen Tsai (angelXwind)"); \
 	NSDictionary *PO2Settings = [NSDictionary dictionaryWithContentsOfFile:PO2PreferencePath];
 #define isJonyIve() (kCFCoreFoundationVersionNumber > 793.00)
 
