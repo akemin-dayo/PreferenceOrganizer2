@@ -66,7 +66,7 @@ static bool PO2Log(NSString *string, bool enabled) {
 #define PO2StringLog(arg) PO2Log([NSString stringWithFormat:@"%s = %@", #arg, arg], shouldSyslogSpam)
 #define PO2StringPref(var, key, default) do { \
 	NSString *key = PO2Settings[@STRINGIFY(key)]; \
-	var = key ? key : default; \
+	var = ([key length] > 0) ? key : default; \
 	PO2StringLog(var); \
 } while (0)
 
