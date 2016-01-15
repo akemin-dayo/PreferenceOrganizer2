@@ -72,7 +72,7 @@ static bool PO2Log(NSString *string, bool enabled) {
 
 #define PO2Observer(funcToCall, listener) CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)funcToCall, CFSTR(listener), NULL, CFNotificationSuspensionBehaviorCoalesce);
 #define PO2SyncPrefs() \
-	NSLog(@"PreferenceOrganizer 2 (C) 2013-2015 Karen Tsai (angelXwind)"); \
+	NSLog(@"PreferenceOrganizer 2 (C) 2013-2016 Karen Tsai (angelXwind)"); \
 	NSDictionary *PO2Settings = [NSDictionary dictionaryWithContentsOfFile:PO2PreferencePath];
 #define isJonyIve() (kCFCoreFoundationVersionNumber > 793.00)
 

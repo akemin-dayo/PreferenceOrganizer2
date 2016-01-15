@@ -1,0 +1,18 @@
+"APPLY" = "Apply";
+
+"ENABLE" = "Show Section";
+
+"APPLE_APPS" = "Apple Apps";
+"SOCIAL_APPS" = "Social Apps";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Store Apps";
+
+"DEBUG_DETAIL" = "Logs some debug info to /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "Debug Logging";
+
+"DONATE_GROUPCELL" = "Donations";
+"DONATE_GROUPCELL_DETAIL" = "PayPal Address: rei@angelxwind.net\n\nDonations are greatly appreciated — thank you to everyone who has donated so far!";
+"DONATE" = "Donate Using PayPal";
+
+"RESET_DETAIL" = "Resets PreferenceOrganizer 2's settings to default values.";
+"RESET" = "Reset to Defaults";

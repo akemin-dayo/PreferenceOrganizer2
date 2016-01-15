@@ -15,3 +15,7 @@ PreferenceOrganizer2_CFLAGS += -DVERBOSE
 include $(THEOS_MAKE_PATH)/tweak.mk
 SUBPROJECTS += POPreferences
 include $(THEOS_MAKE_PATH)/aggregate.mk
+
+internal-stage::
+	$(ECHO_NOTHING)mkdir -p $(THEOS_STAGING_DIR)/Library/KarenLocalize$(ECHO_END)
+	$(ECHO_NOTHING)cp -r KarenLocalize/PreferenceOrganizer2.bundle $(THEOS_STAGING_DIR)/Library/KarenLocalize/$(ECHO_END)

@@ -2,65 +2,57 @@
 #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
 #endif
 
+#ifndef kCFCoreFoundationVersionNumber_iOS_9_0
+#define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
+#endif
+
 #define DPKG_PATH "/var/lib/dpkg/info/net.angelxwind.preferenceorganizer2.list"
 
 #import "PreferenceOrganizer2.h"
 #import "PO2Common.h"
+#import "KarenLocalize/KarenLocalize.mm"
 
 @interface PrefsListController : PSListController
 @end
 
+@interface PSUIPrefsListController : PSListController
+@end
 
 // Static specifier-overriding arrays (used when populating PSListController/etc)
 static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifiers, *AppStoreAppSpecifiers;
 
 // Sneaky implementations of vanilla PSListControllers with the proper hidden specifiers
 @implementation AppleAppSpecifiersController
-
 -(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = AppleAppSpecifiers;
 	}
-
 	return _specifiers;
 }
-
 @end
-
 @implementation SocialAppSpecifiersController
-
 -(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = SocialAppSpecifiers; 
 	}
-
 	return _specifiers;
 }
-
 @end
-
 @implementation TweakSpecifiersController
-
 -(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = TweakSpecifiers;
 	}
-
 	return _specifiers;
 }
-
 @end
-
 @implementation AppStoreAppSpecifiersController
-
 -(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = AppStoreAppSpecifiers;
 	}
-
 	return _specifiers;
 }
-
 @end
 
 static BOOL shouldShowAppleApps;
@@ -68,6 +60,7 @@ static BOOL shouldShowTweaks;
 static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
+static BOOL prefloaderDialogShown;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -80,28 +73,48 @@ static void PO2InitPrefs() {
 	PO2BoolPref(shouldShowTweaks, ShowTweaks, 1);
 	PO2BoolPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
 	PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
-	PO2StringPref(appleAppsLabel, AppleAppsName, @"Apple Apps");
-	PO2StringPref(socialAppsLabel, SocialAppsName, @"Social Apps");
-	PO2StringPref(tweaksLabel, TweaksName, @"Tweaks");
-	PO2StringPref(appStoreAppsLabel, AppStoreAppsName, @"App Store Apps");
-}
-
-%ctor {
-	PO2InitPrefs();
-	PO2Observer(PO2InitPrefs, "net.angelxwind.preferenceorganizer2-PreferencesChanged");
+	initKarenLocalize(@"PreferenceOrganizer2");
+	PO2StringPref(appleAppsLabel, AppleAppsName, karenLocalizedString(@"APPLE_APPS"));
+	PO2StringPref(socialAppsLabel, SocialAppsName, karenLocalizedString(@"SOCIAL_APPS"));
+	PO2StringPref(tweaksLabel, TweaksName, karenLocalizedString(@"TWEAKS"));
+	PO2StringPref(appStoreAppsLabel, AppStoreAppsName, karenLocalizedString(@"APP_STORE_APPS"));
 }
 
 %hook PrefsListController
 -(NSMutableArray *) specifiers {
+	initKarenLocalize(@"PreferenceOrganizer2");
+	// TODO: Find some way to determine if /Developer is a mountpoint or not programmatically
+	// ...and find a way to programmatically determine preferenceloader version
+	// (because system() feels so wrong)
+	if (system("/sbin/mount | grep Developer") == 0 && system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.3") == 0) {
+		// need this conditional here because this method is called multiple times
+		if (!prefloaderDialogShown) {
+			UIAlertView *prefloaderAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"PL223_TITLE")
+				message:karenLocalizedString(@"PL223_CONTENT")
+				delegate:self
+				cancelButtonTitle:karenLocalizedString(@"OK_SAD")
+				otherButtonTitles:nil];
+			[prefloaderAlert show];
+		}
+		prefloaderDialogShown = 1;
+		return %orig();
+	}
+
 	NSMutableArray *specifiers = %orig();
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Do a check for net.angelxwind.preferenceorganizer2
 		if (access(DPKG_PATH, F_OK) == -1) {
-			NSLog(@"You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).");
-			NSLog(@"If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are likely lying.");
-			NSLog(@"Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.");
+			UIAlertView *aptAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"WARNING")
+				message:[NSString stringWithFormat:@"%@ %@ %@", karenLocalizedString(@"APT_DETAIL_1"), karenLocalizedString(@"APT_DETAIL_2"),karenLocalizedString(@"APT_DETAIL_3")]
+				delegate:self
+				cancelButtonTitle:karenLocalizedString(@"OK")
+				otherButtonTitles:nil];
+			[aptAlert show];
+			NSLog(@"%@", karenLocalizedString(@"APT_DETAIL_1"));
+			NSLog(@"%@", karenLocalizedString(@"APT_DETAIL_2"));
+			NSLog(@"%@", karenLocalizedString(@"APT_DETAIL_3"));
 		}
 
 		// Okay, let's start pushing paper.
@@ -174,7 +187,6 @@ static void PO2InitPrefs() {
 			// have been any previously encountered group, but is still important to PreferenceOrganizer's organization.
 			// So, it must either be the Tweaks or Apps section.
 			else if (currentOrganizableGroup) {
-
 				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
 					if (groupID < 2) {
 						groupID++;
@@ -214,7 +226,7 @@ static void PO2InitPrefs() {
 			}
 		}
 
-		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just exclude it.
+		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just exclude it. ┐(￣ー￣)┌
 
 		for (PSSpecifier* specifier in organizableSpecifiers[@"STORE"]) {
 			if ([specifier.identifier isEqualToString:@"CASTLE"]) {
@@ -242,10 +254,8 @@ static void PO2InitPrefs() {
 		TweakSpecifiers = [tweaksGroup retain];
 
 		AppStoreAppSpecifiers = [organizableSpecifiers[@"APPS"] retain];
-		
-		// Time to begin the shuffling!
-		NSLog(@"-karen pops out from her hiding hole-");
 
+		// Shuffling START!!
 		// Make a group section for our special organized groups
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
@@ -259,9 +269,13 @@ static void PO2InitPrefs() {
 
 		if (shouldShowSocialApps && SocialAppSpecifiers) {
 			[specifiers removeObjectsInArray:SocialAppSpecifiers];
-		   
+			
 			PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:socialAppsLabel target:self set:NULL get:NULL  detail:[SocialAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-			[socialSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Applications/Preferences.app/FacebookSettings.png"] forKey:@"iconImage"];
+			NSString *imagePath = @"/Applications/Preferences.app/FacebookSettings.png";
+			if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+				imagePath = @"/System/Library/PrivateFrameworks/Preferences.framework/FacebookSettings.png";
+			}
+			[socialSpecifier setProperty:[UIImage imageWithContentsOfFile:imagePath] forKey:@"iconImage"];
 			[specifiers addObject:socialSpecifier];
 		}
 
@@ -275,7 +289,7 @@ static void PO2InitPrefs() {
 
 		if (shouldShowAppStoreApps && AppStoreAppSpecifiers) {
 			[specifiers removeObjectsInArray:AppStoreAppSpecifiers];
-			
+
 			PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:appStoreAppsLabel target:self set:NULL get:NULL detail:[AppStoreAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			[appstoreSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.AppStore" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			[specifiers addObject:appstoreSpecifier];
@@ -287,10 +301,13 @@ static void PO2InitPrefs() {
 
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
 	%orig(arg1, arg2);
+	if (prefloaderDialogShown) {
+		return;
+	}
 
 	if (shouldShowAppStoreApps) {
 		int thirdPartyID = 0;
-		NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:self.specifiers];
+		NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
 		for (int i = 0; i < [specifiers count]; i++) {
 			PSSpecifier* item = [specifiers objectAtIndex:i];
 			if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
@@ -305,12 +322,15 @@ static void PO2InitPrefs() {
 		while ([specifiers count] > thirdPartyID + 1) {
 			[specifiers removeLastObject];
 		}
-		self.specifiers = specifiers;
+		((PSListController *)self).specifiers = specifiers;
 	}
 }
 
 -(void) refresh3rdPartyBundles {
 	%orig();
+	if (prefloaderDialogShown) {
+		return;
+	}
 
 	NSMutableArray *organizableSpecifiers = [[NSMutableArray alloc] init];
 	NSArray *unorganizedSpecifiers = MSHookIvar<NSArray *>(self, "_specifiers"); // from PSListController
@@ -333,7 +353,15 @@ static void PO2InitPrefs() {
 }
 
 -(void) reloadSpecifiers {
+	if (prefloaderDialogShown) {
+		%orig();
+	}
 	return; // Nah dawg you've come to the wrong part 'a town...
 }
-
 %end
+
+%ctor {
+	%init(PrefsListController = objc_getClass((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? "PSUIPrefsListController" : "PrefsListController"));
+	PO2InitPrefs();
+	PO2Observer(PO2InitPrefs, "net.angelxwind.preferenceorganizer2-PreferencesChanged");
+}

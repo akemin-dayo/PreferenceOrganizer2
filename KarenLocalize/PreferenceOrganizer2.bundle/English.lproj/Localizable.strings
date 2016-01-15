@@ -1,0 +1,27 @@
+"NOTICE" = "NOTICE";
+"WARNING" = "WARNING";
+"ERROR" = "ERROR";
+
+"PL223_TITLE" = "Oh no, you've ran into a bug!";
+"PL223_CONTENT" = "PreferenceOrganizer 2 has disabled itself to prevent a crash because it has detected that you have PreferenceLoader 2.2.3 installed while simultaneously having an Xcode DeveloperDiskImage mounted. This is a known bug, and cannot be fixed by Karen. PreferenceLoader will need to be updated to fix this bug.\n\nIf you want to use PreferenceOrganizer 2 again, simply reboot (NOT respring) your device.";
+
+"APT_DETAIL_1" = "You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are lying.";
+"APT_DETAIL_3" = "Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.";
+
+"APPLE_APPS" = "Apple Apps";
+"SOCIAL_APPS" = "Social Apps";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Store Apps";
+
+"PREFS_RESET_SUCCESS" = "Preferences Successfully Reset";
+"PREFS_RESET_SUCCESS_DETAIL" = "PreferenceOrganizer 2's preferences have been successfully reset to default values.";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"ERROR" = "Error ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 was unable to reset settings! NSError info:";
+
+"PREFS_IS_KILL" = "Notice";
+"PREFS_IS_KILL_DETAIL" = "The Preferences app will now close itself to apply changes. This is not a crash.";

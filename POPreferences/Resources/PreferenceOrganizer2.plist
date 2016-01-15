@@ -10,14 +10,14 @@
 			<key>action</key>
 			<string>killPreferences</string>
 			<key>label</key>
-			<string>Apply</string>
+			<string>APPLY</string>
 		</dict>
 
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Apple Apps</string>
+			<string>APPLE_APPS</string>
 		</dict>
 
 		<dict>
@@ -30,7 +30,7 @@
 			<key>key</key>
 			<string>ShowAppleApps</string>
 			<key>label</key>
-			<string>Enabled</string>
+			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -47,7 +47,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Apple Apps</string>
+			<string>APPLE_APPS</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -56,7 +56,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Social Apps</string>
+			<string>SOCIAL_APPS</string>
 		</dict>
 
 		<dict>
@@ -69,7 +69,7 @@
 			<key>key</key>
 			<string>ShowSocialApps</string>
 			<key>label</key>
-			<string>Enabled</string>
+			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -86,7 +86,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Social Apps</string>
+			<string>SOCIAL_APPS</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -95,7 +95,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Tweaks</string>
+			<string>TWEAKS</string>
 		</dict>
 
 		<dict>
@@ -108,7 +108,7 @@
 			<key>key</key>
 			<string>ShowTweaks</string>
 			<key>label</key>
-			<string>Enabled</string>
+			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -125,7 +125,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>Tweaks</string>
+			<string>TWEAKS</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -134,7 +134,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>App Store Apps</string>
+			<string>APP_STORE_APPS</string>
 		</dict>
 
 		<dict>
@@ -147,7 +147,7 @@
 			<key>key</key>
 			<string>ShowAppStoreApps</string>
 			<key>label</key>
-			<string>Enabled</string>
+			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -164,7 +164,7 @@
 			<key>label</key>
 			<string>Name</string>
 			<key>placeholder</key>
-			<string>App Store Apps</string>
+			<string>APP_STORE_APPS</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 		</dict>
@@ -173,7 +173,28 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Logs some debug info to /var/tmp/net.angelxwind.preferenceorganizer2.log.</string>
+			<string>DONATE_GROUPCELL_DETAIL</string>
+			<key>label</key>
+			<string>DONATE_GROUPCELL</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>donate</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>BlackTextActionButtonCell</string>
+			<key>icon</key>
+			<string>paypal.png</string>
+			<key>label</key>
+			<string>DONATE</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>DEBUG_DETAIL</string>
 		</dict>
 
 		<dict>
@@ -186,7 +207,7 @@
 			<key>key</key>
 			<string>syslogSpam</string>
 			<key>label</key>
-			<string>Enable Debugging</string>
+			<string>DEBUG</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-PreferencesChanged</string>
 		</dict>
@@ -195,26 +216,18 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Help</string>
-			<key>footerText</key>
-			<string>If PreferenceOrganizer 2 doesn't work, or things are appearing in the wrong sections, check to see if you have any other tweaks installed that modify the Settings app.</string>
-		</dict>
-
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
 			<string>Reset Settings</string>
 			<key>footerText</key>
-			<string>Resets PreferenceOrganizer 2's settings to default values.</string>
+			<string>RESET_DETAIL</string>
 		</dict>
 
 		<dict>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+			<key>cellClass</key>
+			<string>BlackTextActionButtonCell</string>
 			<key>label</key>
-			<string>Reset to Defaults</string>
+			<string>RESET</string>
 			<key>action</key>
 			<string>resetSettings</string>
 		</dict>
@@ -223,7 +236,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>© 2013-2015 Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), and Gary Lin (gary19930520).</string>
+			<string>© 2013-2016 Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), Gary Lin (gary19930520).</string>
 		</dict>
 	</array>
 	<key>title</key>

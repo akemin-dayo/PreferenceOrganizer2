@@ -1,6 +1,9 @@
 #import "../PO2Common.h"
 #import <Preferences/Preferences.h>
 #import <UIKit/UIKit.h>
+#import "../KarenLocalize/KarenLocalize.mm"
+
+#define paypalURL @"https://www.paypal.com/myaccount/transfer/send/external?recipient=rei@angelxwind.net&amount=&currencyCode=USD&payment_type=Gift"
 
 static BOOL shouldSyslogSpam;
 
@@ -16,6 +19,21 @@ static void PO2InitPrefs() {
 
 @interface POListController : PSListController
 @end
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
+@interface BlackTextActionButtonCell : PSTableCell
+-(UILabel *) textLabel;
+@end
+
+@implementation BlackTextActionButtonCell
+-(void) layoutSubviews {
+    [super layoutSubviews];
+    UILabel* textLabel = [self textLabel];
+    textLabel.textColor = [UIColor blackColor];
+}
+@end
+#pragma clang diagnostic pop
 
 @implementation POListController
 - (NSArray *)specifiers{
@@ -48,31 +66,37 @@ static void PO2InitPrefs() {
 }
 
 -(void) resetSettings {
+	initKarenLocalize(@"PreferenceOrganizer2");
 	NSError *error;
 	if ([[NSFileManager defaultManager] removeItemAtPath:PO2PreferencePath error:&error]) {
-	    UIAlertView *ripInPieces = [[UIAlertView alloc] initWithTitle:@"PreferenceOrganizer 2 Preferences Reset Successfully"
-													message:@"PreferenceOrganizer 2's preferences have been successfully reset to default values."
+	    UIAlertView *ripInPieces = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"PREFS_RESET_SUCCESS")
+													message:karenLocalizedString(@"PREFS_RESET_SUCCESS_DETAIL")
 													delegate:nil
-													cancelButtonTitle:@"OK (^_-)-☆"
+													cancelButtonTitle:karenLocalizedString(@"OK_WINK")
 													otherButtonTitles: nil];
 		[ripInPieces show];
 		[ripInPieces release];
 	} else {
-		UIAlertView *ripInPieces = [[UIAlertView alloc] initWithTitle:@"Error ━Σ(ﾟДﾟ|||)━"
-													message:[NSString stringWithFormat:@"PreferenceOrganizer 2 was unable to reset settings! NSError info: %@", [error localizedDescription]]
+		UIAlertView *ripInPieces = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"ERROR")
+													message:[NSString stringWithFormat:@"%@ %@", karenLocalizedString(@"ERROR_DETAIL"), [error localizedDescription]]
 													delegate:nil
-													cancelButtonTitle:@"OK (・へ・)"
+													cancelButtonTitle:karenLocalizedString(@"OK_SAD")
 													otherButtonTitles: nil];
 		[ripInPieces show];
 		[ripInPieces release];
 	}
 }
 
+-(void) donate {
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:paypalURL]];
+}
+
 -(void) killPreferences {
-	UIAlertView *suicidalPreferences = [[UIAlertView alloc] initWithTitle:@"Note"
-		message:@"The Preferences app will now kill itself to apply changes. This is not a crash."
+	initKarenLocalize(@"PreferenceOrganizer2");
+	UIAlertView *suicidalPreferences = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"PREFS_IS_KILL")
+		message:karenLocalizedString(@"PREFS_IS_KILL_DETAIL")
 		delegate:self
-		cancelButtonTitle:@"OK"
+		cancelButtonTitle:karenLocalizedString(@"OK")
 		otherButtonTitles:nil];
 	[suicidalPreferences show];
 	[suicidalPreferences release];
@@ -89,7 +113,7 @@ static void PO2InitPrefs() {
 @end
 
 @implementation POEditTextCell
-- (BOOL)textFieldShouldReturn:(id)arg1 {
-	return YES;
+-(BOOL) textFieldShouldReturn:(id)arg1 {
+	return 1;
 }
 @end
