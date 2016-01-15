@@ -86,7 +86,7 @@ static void PO2InitPrefs() {
 	// TODO: Find some way to determine if /Developer is a mountpoint or not programmatically
 	// ...and find a way to programmatically determine preferenceloader version
 	// (because system() feels so wrong)
-	if (system("/sbin/mount | grep Developer") == 0 && system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.3") == 0) {
+	if (system("/sbin/mount | grep Developer") == 0 && (system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.3") || system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.4~alpha1") == 0)) {
 		// need this conditional here because this method is called multiple times
 		if (!prefloaderDialogShown) {
 			UIAlertView *prefloaderAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"PL223_TITLE")

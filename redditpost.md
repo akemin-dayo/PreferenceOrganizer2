@@ -23,7 +23,7 @@ Refresh Cydia. (Changes -> Refresh on the top-left corner)
 
 * **[iOS 6]** Preferences get sorted into the totally wrong category, this will take some time to fix, unfortunately :/
 * **[iOS 8+]** News, iBooks, Podcasts, and iTunes U do not show in Apple Apps like they are supposed to. Instead, they are simply appended below iCloud.
-* **[iOS 6+]** PreferenceLoader 2.2.3 incompatibility (details will be shown if you will experience this bug)
+* **[iOS 6+]** PreferenceLoader 2.2.3/2.2.4~alpha1 incompatibility (details will be shown if you will experience this bug)
 
 #**Planned features that are still unimplemented**
 
