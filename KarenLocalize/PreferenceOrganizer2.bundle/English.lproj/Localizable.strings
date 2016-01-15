@@ -3,7 +3,7 @@
 "ERROR" = "ERROR";
 
 "PL223_TITLE" = "Oh no, you've ran into a bug!";
-"PL223_CONTENT" = "PreferenceOrganizer 2 has disabled itself to prevent a crash because it has detected that you have PreferenceLoader 2.2.3 installed while simultaneously having an Xcode DeveloperDiskImage mounted. This is a known bug, and cannot be fixed by Karen. PreferenceLoader will need to be updated to fix this bug.\n\nIf you want to use PreferenceOrganizer 2 again, simply reboot (NOT respring) your device.";
+"PL223_CONTENT" = "It seems like you have PreferenceLoader 2.2.3 or 2.2.4~alpha1 installed and have an Xcode DeveloperDiskImage (DDI) mounted. These versions currently have a bug in them that causes PreferenceOrganizer 2 to sort things into the wrong sections.\n\nThis is a known issue, and may require a PreferenceLoader update to be properly fixed.\n\nFor now, you may fix this bug by simply rebooting (NOT respringing) your device.";
 
 "APT_DETAIL_1" = "You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).";
 "APT_DETAIL_2" = "If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are lying.";

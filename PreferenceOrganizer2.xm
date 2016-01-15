@@ -97,7 +97,6 @@ static void PO2InitPrefs() {
 			[prefloaderAlert show];
 		}
 		prefloaderDialogShown = 1;
-		return %orig();
 	}
 
 	NSMutableArray *specifiers = %orig();
@@ -248,7 +247,7 @@ static void PO2InitPrefs() {
 		SocialAppSpecifiers = [organizableSpecifiers[@"SOCIAL_ACCOUNTS"] retain];
 
 		NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
-		if (((PSSpecifier *)tweaksGroup[0])->cellType == 0 && ((PSSpecifier *)tweaksGroup[1])->cellType == 0) {
+		if ([tweaksGroup count] != 0 && ((PSSpecifier *)tweaksGroup[0])->cellType == 0 && ((PSSpecifier *)tweaksGroup[1])->cellType == 0) {
 			[tweaksGroup removeObjectAtIndex:0];
 		}
 		TweakSpecifiers = [tweaksGroup retain];
@@ -301,10 +300,6 @@ static void PO2InitPrefs() {
 
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
 	%orig(arg1, arg2);
-	if (prefloaderDialogShown) {
-		return;
-	}
-
 	if (shouldShowAppStoreApps) {
 		int thirdPartyID = 0;
 		NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
@@ -328,10 +323,6 @@ static void PO2InitPrefs() {
 
 -(void) refresh3rdPartyBundles {
 	%orig();
-	if (prefloaderDialogShown) {
-		return;
-	}
-
 	NSMutableArray *organizableSpecifiers = [[NSMutableArray alloc] init];
 	NSArray *unorganizedSpecifiers = MSHookIvar<NSArray *>(self, "_specifiers"); // from PSListController
 	
@@ -353,9 +344,6 @@ static void PO2InitPrefs() {
 }
 
 -(void) reloadSpecifiers {
-	if (prefloaderDialogShown) {
-		%orig();
-	}
 	return; // Nah dawg you've come to the wrong part 'a town...
 }
 %end
