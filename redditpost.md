@@ -20,6 +20,7 @@ Refresh Cydia. (Changes -> Refresh on the top-left corner)
 
 #**Fixed bugs**
 
+* **[iOS 6+]** **[3.0.4]** Fixed a bug where PreferenceOrganizer 2 would cause the "prefs:" URL scheme to behave incorrectly.
 * **[iOS 6]** **[3.0.3]** Fixed a bug where PreferenceOrganizer 2 would sort things into the wrong categories on iOS 6.
 * **[iOS 9]** **[3.0]** Fixed a bug where well, PreferenceOrganizer 2 would completely fail to work at all on iOS 9 ;P
 * **[iOS 8+]** **[3.0]** Fixed a bug where News, iBooks, Podcasts, and iTunes U would disappear.
