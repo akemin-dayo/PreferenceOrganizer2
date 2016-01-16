@@ -80,6 +80,16 @@ static void PO2InitPrefs() {
 	PO2StringPref(appStoreAppsLabel, AppStoreAppsName, karenLocalizedString(@"APP_STORE_APPS"));
 }
 
+/*
+	##  #######   ######    ########    ##   
+	   ##     ## ##    ##        ##     ##   
+	## ##     ## ##             ##      ##   
+	## ##     ##  ######       ##    ########
+	## ##     ##       ##     ##        ##   
+	## ##     ## ##    ##    ##         ##   
+	##  #######   ######    ##          ##   
+*/
+%group iOS7Up
 %hook PrefsListController
 -(NSMutableArray *) specifiers {
 	initKarenLocalize(@"PreferenceOrganizer2");
@@ -260,7 +270,6 @@ static void PO2InitPrefs() {
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
 			[specifiers removeObjectsInArray:AppleAppSpecifiers];
-			
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			[specifiers addObject:appleSpecifier];
@@ -268,7 +277,6 @@ static void PO2InitPrefs() {
 
 		if (shouldShowSocialApps && SocialAppSpecifiers) {
 			[specifiers removeObjectsInArray:SocialAppSpecifiers];
-			
 			PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:socialAppsLabel target:self set:NULL get:NULL  detail:[SocialAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			NSString *imagePath = @"/Applications/Preferences.app/FacebookSettings.png";
 			if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
@@ -280,7 +288,6 @@ static void PO2InitPrefs() {
 
 		if (shouldShowTweaks && TweakSpecifiers) {
 			[specifiers removeObjectsInArray:TweakSpecifiers];
-			  
 			PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:tweaksLabel target:self set:NULL get:NULL detail:[TweakSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			[cydiaSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/POPreferences.bundle/Tweaks.png"] forKey:@"iconImage"];
 			[specifiers addObject:cydiaSpecifier];
@@ -288,7 +295,6 @@ static void PO2InitPrefs() {
 
 		if (shouldShowAppStoreApps && AppStoreAppSpecifiers) {
 			[specifiers removeObjectsInArray:AppStoreAppSpecifiers];
-
 			PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:appStoreAppsLabel target:self set:NULL get:NULL detail:[AppStoreAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			[appstoreSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.AppStore" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			[specifiers addObject:appstoreSpecifier];
@@ -347,9 +353,124 @@ static void PO2InitPrefs() {
 	return; // Nah dawg you've come to the wrong part 'a town...
 }
 %end
+%end
+
+/*
+	##  #######   ######     #######
+	   ##     ## ##    ##   ##      
+	## ##     ## ##         ##      
+	## ##     ##  ######    ####### 
+	## ##     ##       ##   ##    ##
+	## ##     ## ##    ##   ##    ##
+	##  #######   ######     ###### 
+*/
+%group iOS6
+%hook PrefsListController
+-(NSMutableArray *) specifiers {
+	NSMutableArray *specifiers = %orig();
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		NSMutableDictionary *savedSpecifiers = [NSMutableDictionary dictionary];
+		NSInteger group = -1;
+		for (PSSpecifier *s in specifiers) {
+			if (s->cellType == 0) {
+				group++;
+				if (group >= 3) {
+					[savedSpecifiers setObject:[NSMutableArray array] forKey:[NSNumber numberWithInteger:group]];
+				} else {
+					continue;
+				}
+			}
+			if (group >= 3) {
+				[[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group]] addObject:s];
+			}
+		}
+		
+		AppleAppSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:3]] retain];
+		[AppleAppSpecifiers addObjectsFromArray:[savedSpecifiers objectForKey:[NSNumber numberWithInteger:4]]];
+		SocialAppSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:5]] retain];
+		AppStoreAppSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group]] retain];
+		
+		if (group - 2 >= 6) {
+			TweakSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group - 2]] retain];
+		} else if (group - 1 >= 6) {
+			TweakSpecifiers = [[savedSpecifiers objectForKey:[NSNumber numberWithInteger:group - 1]] retain];
+		}
+		
+		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
+		if (shouldShowAppleApps) {
+			if (AppleAppSpecifiers.count > 0) {
+				[specifiers removeObjectsInArray:AppleAppSpecifiers];
+				[AppleAppSpecifiers removeObjectAtIndex:0];
+				PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+				[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
+				[specifiers addObject:appleSpecifier];
+			}
+		}
+		if (shouldShowSocialApps) {
+			if (SocialAppSpecifiers.count > 0) {
+				[specifiers removeObjectsInArray:SocialAppSpecifiers];
+				[SocialAppSpecifiers removeObjectAtIndex:0];
+				PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:socialAppsLabel target:self set:NULL get:NULL detail:[SocialAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+				[socialSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Applications/Preferences.app/FacebookSettings.png"] forKey:@"iconImage"];
+				[specifiers addObject:socialSpecifier];
+			}
+		}
+		if (shouldShowTweaks) {
+			if (TweakSpecifiers.count > 0) {
+				[specifiers removeObjectsInArray:TweakSpecifiers];
+				[TweakSpecifiers removeObjectAtIndex:0];
+				PSSpecifier *cydiaSpecifier = [PSSpecifier preferenceSpecifierNamed:tweaksLabel target:self set:NULL get:NULL detail:[TweakSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+				[cydiaSpecifier setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/POPreferences.bundle/Tweaks.png"] forKey:@"iconImage"];
+				[specifiers addObject:cydiaSpecifier];
+			}
+		}
+		if (shouldShowAppStoreApps) {
+			if (AppStoreAppSpecifiers.count > 0) {
+				[specifiers removeObjectsInArray:AppStoreAppSpecifiers];
+				[AppStoreAppSpecifiers removeObjectAtIndex:0];
+				PSSpecifier *appstoreSpecifier = [PSSpecifier preferenceSpecifierNamed:appStoreAppsLabel target:self set:NULL get:NULL detail:[AppStoreAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
+				[appstoreSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.AppStore" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
+				[specifiers addObject:appstoreSpecifier];
+			}
+		}
+	});
+	return specifiers;
+}
+
+-(void) refresh3rdPartyBundles {
+	%orig();
+	NSMutableArray *savedSpecifiers = [NSMutableArray array];
+	BOOL go = 0;
+	for (PSSpecifier *s in MSHookIvar<NSMutableArray *>(self, "_specifiers")) {
+		if (!go && [s.identifier isEqualToString:@"App Store"]) {
+			go = 1;
+			continue;
+		}
+		if (go) {
+			[savedSpecifiers addObject:s];
+		}
+	}
+	for (PSSpecifier *s in savedSpecifiers) {
+		[self removeSpecifier:s];
+	}
+	[savedSpecifiers removeObjectAtIndex:0];
+	[AppStoreAppSpecifiers release];
+	AppStoreAppSpecifiers = [savedSpecifiers retain];
+}
+
+-(void) reloadSpecifiers {
+	return;
+}
+%end
+%end
 
 %ctor {
-	%init(PrefsListController = objc_getClass((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? "PSUIPrefsListController" : "PrefsListController"));
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
+		%init(iOS7Up, PrefsListController = objc_getClass((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? "PSUIPrefsListController" : "PrefsListController"));
+	} else {
+		%init(iOS6);
+	}
 	PO2InitPrefs();
 	PO2Observer(PO2InitPrefs, "net.angelxwind.preferenceorganizer2-PreferencesChanged");
 }

@@ -10,20 +10,20 @@ Refresh Cydia. (Changes -> Refresh on the top-left corner)
 
 #**Added features, improvements**
 
-* **[Misc]** Added some more useful information regarding the debug logging feature
-* **[Misc]** Added KarenLocalize support (previously in mikoto and Pasithea) to PreferenceOrganizer 2
-* **[Misc]** Added a PayPal donate button (`rei@angelxwind.net`)
+* **[Misc]** **[3.0]** Added some more useful information regarding the debug logging feature
+* **[Misc]** **[3.0]** Added KarenLocalize support (previously in mikoto and Pasithea) to PreferenceOrganizer 2
+* **[Misc]** **[3.0]** Added a PayPal donate button (`rei@angelxwind.net`)
 
 #**Fixed bugs**
 
-* **[iOS 9]** Fixed a bug where well, PreferenceOrganizer 2 would completely fail to work at all on iOS 9 ;P
-* **[iOS 8+]** Fixed a bug where News, iBooks, Podcasts, and iTunes U would disappear.
+* **[iOS 6]** **[3.0.3]** Fixed a bug where PreferenceOrganizer 2 would sort things into the wrong categories.
+* **[iOS 9]** **[3.0]** Fixed a bug where well, PreferenceOrganizer 2 would completely fail to work at all on iOS 9 ;P
+* **[iOS 8+]** **[3.0]** Fixed a bug where News, iBooks, Podcasts, and iTunes U would disappear.
 
 #**Known issues**
 
-* **[iOS 6]** Preferences get sorted into the totally wrong category, this will take some time to fix, unfortunately :/
 * **[iOS 8+]** News, iBooks, Podcasts, and iTunes U do not show in Apple Apps like they are supposed to. Instead, they are simply appended below iCloud.
-* **[iOS 6+]** PreferenceLoader 2.2.3/2.2.4~alpha1 incompatibility (details will be shown if you will experience this bug)
+* **[iOS 7+]** PreferenceLoader 2.2.3 and 2.2.4~alpha1 will cause PreferenceOrganizer 2 to sort things into incorrect categories. iOS 6 is unaffected as PO2 uses different sorting logic for iOS 6.
 
 #**Planned features that are still unimplemented**
 
