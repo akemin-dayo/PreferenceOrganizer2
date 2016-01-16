@@ -26,6 +26,7 @@ Refresh Cydia. (Changes -> Refresh on the top-left corner)
 
 #**Known issues**
 
+* **[iOS 9 iPads]** Apparently, PreferenceOrganizer 2 causes the Settings app to crash on iPads running iOS 9...
 * **[iOS 8+]** News, iBooks, Podcasts, and iTunes U do not show in Apple Apps like they are supposed to. Instead, they are simply appended below iCloud.
 * **[iOS 7+]** PreferenceLoader 2.2.3 and 2.2.4~alpha1 will cause PreferenceOrganizer 2 to sort things into incorrect categories. iOS 6 is unaffected as PO2 uses different sorting logic for iOS 6.
 
