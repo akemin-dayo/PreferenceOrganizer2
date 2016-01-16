@@ -3,6 +3,10 @@
 #import <UIKit/UIKit.h>
 #import "substrate.h"
 
+@interface PreferencesAppController
+-(void) preferenceOrganizerOpenTweakPane:(NSString *)name;
+@end
+
 @interface UIImage (Private)
 + (UIImage *)_applicationIconImageForBundleIdentifier:(NSString *)bundleIdentifier format:(int)format scale:(CGFloat)scale;
 @end

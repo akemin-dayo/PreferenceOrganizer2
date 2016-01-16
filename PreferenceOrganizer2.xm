@@ -465,12 +465,40 @@ static void PO2InitPrefs() {
 %end
 %end
 
+%hook PreferencesAppController
+%new
+-(void) preferenceOrganizerOpenTweakPane:(NSString *)name {
+	// this is where I'd put a method
+	// if I had one
+}
+// Parses the given URL to check if it's in a PreferenceOrganizer2-API conforming format, that is to say,
+// it has a root=Tweaks, and a &path= cooresponding to a tweak name. At the moment, simply strips the URL
+// and launches Preferences into the Tweaks pane (even if they've renamed it), since the method by which
+// Apple discovers and pushes PSListControllers by name (Info.plist information) is still unknown.
+-(void) applicationOpenURL:(NSURL *)url {
+	NSString *parsableURL = [url absoluteString];
+	if (parsableURL.length >= 11 && [parsableURL rangeOfString:@"root=Tweaks"].location != NSNotFound) {
+		NSString *truncatedPrefsURL = [@"prefs:root=" stringByAppendingString:tweaksLabel];
+		url = [NSURL URLWithString:truncatedPrefsURL];
+		%orig(url);
+		NSRange tweakPathRange = [parsableURL rangeOfString:@"path="];
+		if (tweakPathRange.location != NSNotFound) {
+			NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
+			[self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]];
+		}
+	} else {
+		%orig(url);
+	}
+}
+%end
+
 %ctor {
 	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
 		%init(iOS7Up, PrefsListController = objc_getClass((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? "PSUIPrefsListController" : "PrefsListController"));
 	} else {
 		%init(iOS6);
 	}
+	%init();
 	PO2InitPrefs();
 	PO2Observer(PO2InitPrefs, "net.angelxwind.preferenceorganizer2-PreferencesChanged");
 }
