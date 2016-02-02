@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
-#import <Preferences/Preferences.h>
+#import <Preferences/PSListController.h>
+#import <Preferences/PSTableCell.h>
 #import <UIKit/UIKit.h>
 #import "substrate.h"
 

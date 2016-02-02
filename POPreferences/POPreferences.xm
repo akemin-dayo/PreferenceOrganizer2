@@ -1,7 +1,9 @@
 #import "../PO2Common.h"
-#import <Preferences/Preferences.h>
-#import <UIKit/UIKit.h>
 #import "../KarenLocalize/KarenLocalize.mm"
+#import <UIKit/UIKit.h>
+#import <libprefs/prefs.h>
+#import <Preferences/PSSwitchTableCell.h>
+#import <Preferences/PSEditableTableCell.h>
 
 #define paypalURL @"https://www.paypal.com/myaccount/transfer/send/external?recipient=rei@angelxwind.net&amount=&currencyCode=USD&payment_type=Gift"
 
