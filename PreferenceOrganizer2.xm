@@ -267,11 +267,7 @@ static void PO2InitPrefs() {
 		if (shouldShowSocialApps && SocialAppSpecifiers) {
 			[specifiers removeObjectsInArray:SocialAppSpecifiers];
 			PSSpecifier *socialSpecifier = [PSSpecifier preferenceSpecifierNamed:socialAppsLabel target:self set:NULL get:NULL  detail:[SocialAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
-			NSString *imagePath = @"/Applications/Preferences.app/FacebookSettings.png";
-			if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
-				imagePath = @"/System/Library/PrivateFrameworks/Preferences.framework/FacebookSettings.png";
-			}
-			[socialSpecifier setProperty:[UIImage imageWithContentsOfFile:imagePath] forKey:@"iconImage"];
+			[socialSpecifier setProperty:[UIImage imageWithContentsOfFile:(kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? @"/System/Library/PrivateFrameworks/Preferences.framework/FacebookSettings.png" : @"/Applications/Preferences.app/FacebookSettings.png"] forKey:@"iconImage"];
 			[specifiers addObject:socialSpecifier];
 		}
 
