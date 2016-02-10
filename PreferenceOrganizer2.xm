@@ -95,7 +95,7 @@ static void PO2InitPrefs() {
 	initKarenLocalize(@"PreferenceOrganizer2");
 	
 	// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
-	ddiIsMounted = (system("/sbin/mount | grep Developer") == 0 && (system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.3") || system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.4~alpha1") == 0));
+	ddiIsMounted = (system("/sbin/mount | grep Developer") == 0);
 	// TODO: Find some way to determine if /Developer is a mountpoint or not programmatically
 	// ...and find a way to programmatically determine preferenceloader version
 	// (because system() feels so wrong)
