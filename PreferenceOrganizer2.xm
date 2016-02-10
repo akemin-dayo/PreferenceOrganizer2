@@ -472,7 +472,7 @@ static void PO2InitPrefs() {
 	// if I had one
 }
 // Parses the given URL to check if it's in a PreferenceOrganizer2-API conforming format, that is to say,
-// it has a root=Tweaks, and a &path= cooresponding to a tweak name. At the moment, simply strips the URL
+// it has a root=Tweaks, and a &path= corresponding to a tweak name. At the moment, simply strips the URL
 // and launches Preferences into the Tweaks pane (even if they've renamed it), since the method by which
 // Apple discovers and pushes PSListControllers by name (Info.plist information) is still unknown.
 -(void) applicationOpenURL:(NSURL *)url {
