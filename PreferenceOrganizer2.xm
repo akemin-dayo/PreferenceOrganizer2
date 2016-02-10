@@ -96,9 +96,7 @@ static void PO2InitPrefs() {
 	
 	// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
 	ddiIsMounted = (system("/sbin/mount | grep Developer") == 0);
-	// TODO: Find some way to determine if /Developer is a mountpoint or not programmatically
-	// ...and find a way to programmatically determine preferenceloader version
-	// (because system() feels so wrong)
+	// TODO: Find some way to determine DDI mount status programmatically
 
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
