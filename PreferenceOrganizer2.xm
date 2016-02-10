@@ -186,10 +186,10 @@ static void PO2InitPrefs() {
 			else if (currentOrganizableGroup) {
 				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
 					// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
-					if (groupID < ((ddiIsMounted) ? 3 : 2)) {
+					if (groupID < 2 + ddiIsMounted) {
 						groupID++;
 						currentOrganizableGroup = @"STORE";
-					} else if (groupID == ((ddiIsMounted) ? 3 : 2)) {
+					} else if (groupID == 2 + ddiIsMounted) {
 						groupID++;
 						currentOrganizableGroup = @"TWEAKS";
 					} else {
@@ -213,7 +213,7 @@ static void PO2InitPrefs() {
 				[newSavedGroup addObject:s];
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
-			if (i == specifiers.count - 1 && groupID != ((ddiIsMounted) ? 5 : 4)) {
+			if (i == specifiers.count - 1 && groupID != 4 + ddiIsMounted) {
 				groupID++;
 				currentOrganizableGroup = @"APPS";
 				NSMutableArray *newSavedGroup = organizableSpecifiers[currentOrganizableGroup];
