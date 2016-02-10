@@ -101,6 +101,7 @@ static void PO2InitPrefs() {
 	// (because system() feels so wrong)
 
 	NSMutableArray *specifiers = %orig();
+	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -112,9 +113,9 @@ static void PO2InitPrefs() {
 				cancelButtonTitle:karenLocalizedString(@"OK")
 				otherButtonTitles:nil];
 			[aptAlert show];
-			NSLog(@"%@", karenLocalizedString(@"APT_DETAIL_1"));
-			NSLog(@"%@", karenLocalizedString(@"APT_DETAIL_2"));
-			NSLog(@"%@", karenLocalizedString(@"APT_DETAIL_3"));
+			PO2Log([NSString stringWithFormat:@"%@", karenLocalizedString(@"APT_DETAIL_1")], 1);
+			PO2Log([NSString stringWithFormat:@"%@", karenLocalizedString(@"APT_DETAIL_2")], 1);
+			PO2Log([NSString stringWithFormat:@"%@", karenLocalizedString(@"APT_DETAIL_3")], 1);
 		}
 
 		// Okay, let's start pushing paper.
@@ -290,8 +291,11 @@ static void PO2InitPrefs() {
 			[appstoreSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.AppStore" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			[specifiers addObject:appstoreSpecifier];
 		}
+
+		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
 
+	PO2Log([NSString stringWithFormat:@"shuffledSpecifiers = %@", specifiers], shouldSyslogSpam);
 	return specifiers;
 }
 
