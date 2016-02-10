@@ -363,6 +363,7 @@ static void PO2InitPrefs() {
 %hook PrefsListController
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
+	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		NSMutableDictionary *savedSpecifiers = [NSMutableDictionary dictionary];
@@ -429,7 +430,9 @@ static void PO2InitPrefs() {
 				[specifiers addObject:appstoreSpecifier];
 			}
 		}
+		PO2Log([NSString stringWithFormat:@"savedSpecifiers = %@", savedSpecifiers], shouldSyslogSpam);
 	});
+	PO2Log([NSString stringWithFormat:@"shuffledSpecifiers = %@", specifiers], shouldSyslogSpam);
 	return specifiers;
 }
 
@@ -488,6 +491,7 @@ static void PO2InitPrefs() {
 %end
 
 %ctor {
+	PO2Log([NSString stringWithFormat:@"kCFCoreFoundationVersionNumber = %f", kCFCoreFoundationVersionNumber], shouldSyslogSpam);
 	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
 		%init(iOS7Up, PrefsListController = objc_getClass((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? "PSUIPrefsListController" : "PrefsListController"));
 	} else {
