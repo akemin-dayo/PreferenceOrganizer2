@@ -93,10 +93,6 @@ static void PO2InitPrefs() {
 %hook PrefsListController
 -(NSMutableArray *) specifiers {
 	initKarenLocalize(@"PreferenceOrganizer2");
-	
-	// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
-	ddiIsMounted = (system("/sbin/mount | grep Developer") == 0);
-	// TODO: Find some way to determine DDI mount status programmatically
 
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
@@ -137,7 +133,9 @@ static void PO2InitPrefs() {
 				// its group specifier from the previous group and leave it out of everything.
 				if ([identifier isEqualToString:@"DEVELOPER_SETTINGS"]) {
 					NSMutableArray *lastSavedGroup = organizableSpecifiers[currentOrganizableGroup];
-					[lastSavedGroup removeObjectAtIndex:lastSavedGroup.count-1];
+					[lastSavedGroup removeObjectAtIndex:lastSavedGroup.count - 1];
+					// If DEVELOPER_SETTINGS is present, then that means the DDI must have been mounted.
+					ddiIsMounted = 1;
 				}
 
 				// If we're in the first item of the iCloud/Mail/Notes... group, setup the key string, 
@@ -146,7 +144,7 @@ static void PO2InitPrefs() {
 					currentOrganizableGroup = identifier;
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
-					[newSavedGroup addObject:specifiers[i-1]];
+					[newSavedGroup addObject:specifiers[i - 1]];
 					[newSavedGroup addObject:s];
 
 					[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
@@ -158,7 +156,7 @@ static void PO2InitPrefs() {
 					currentOrganizableGroup = identifier;
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
-					[newSavedGroup addObject:specifiers[i-1]];
+					[newSavedGroup addObject:specifiers[i - 1]];
 					[newSavedGroup addObject:s];
 
 					[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
@@ -187,6 +185,7 @@ static void PO2InitPrefs() {
 			// So, it must either be the Tweaks or Apps section.
 			else if (currentOrganizableGroup) {
 				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
+					// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
 					if (groupID < ((ddiIsMounted) ? 3 : 2)) {
 						groupID++;
 						currentOrganizableGroup = @"STORE";
