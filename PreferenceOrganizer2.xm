@@ -96,6 +96,15 @@ static void PO2InitPrefs() {
 
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
+	if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+		UIAlertView *iPadAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"IPAD_TITLE")
+			message:karenLocalizedString(@"IPAD_CONTENT")
+			delegate:self
+			cancelButtonTitle:karenLocalizedString(@"OK_SAD")
+			otherButtonTitles:nil];
+		[iPadAlert show];
+		return %orig();
+	}
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
