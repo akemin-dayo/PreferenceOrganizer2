@@ -60,7 +60,7 @@ static BOOL shouldShowTweaks;
 static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
-static BOOL prefloaderDialogShown;
+static BOOL ddiIsMounted;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -93,21 +93,12 @@ static void PO2InitPrefs() {
 %hook PrefsListController
 -(NSMutableArray *) specifiers {
 	initKarenLocalize(@"PreferenceOrganizer2");
+	
+	// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
+	ddiIsMounted = (system("/sbin/mount | grep Developer") == 0 && (system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.3") || system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.4~alpha1") == 0));
 	// TODO: Find some way to determine if /Developer is a mountpoint or not programmatically
 	// ...and find a way to programmatically determine preferenceloader version
 	// (because system() feels so wrong)
-	if (system("/sbin/mount | grep Developer") == 0 && (system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.3") || system("/usr/bin/dpkg-query -s preferenceloader | grep 2.2.4~alpha1") == 0)) {
-		// need this conditional here because this method is called multiple times
-		if (!prefloaderDialogShown) {
-			UIAlertView *prefloaderAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"PL223_TITLE")
-				message:karenLocalizedString(@"PL223_CONTENT")
-				delegate:self
-				cancelButtonTitle:karenLocalizedString(@"OK_SAD")
-				otherButtonTitles:nil];
-			[prefloaderAlert show];
-		}
-		prefloaderDialogShown = 1;
-	}
 
 	NSMutableArray *specifiers = %orig();
 
@@ -197,10 +188,10 @@ static void PO2InitPrefs() {
 			// So, it must either be the Tweaks or Apps section.
 			else if (currentOrganizableGroup) {
 				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
-					if (groupID < 2) {
+					if (groupID < ((ddiIsMounted) ? 3 : 2)) {
 						groupID++;
 						currentOrganizableGroup = @"STORE";
-					} else if (groupID == 2) {
+					} else if (groupID == ((ddiIsMounted) ? 3 : 2)) {
 						groupID++;
 						currentOrganizableGroup = @"TWEAKS";
 					} else {
@@ -224,7 +215,7 @@ static void PO2InitPrefs() {
 				[newSavedGroup addObject:s];
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
-			if (i == specifiers.count - 1 && groupID != 4) {
+			if (i == specifiers.count - 1 && groupID != ((ddiIsMounted) ? 5 : 4)) {
 				groupID++;
 				currentOrganizableGroup = @"APPS";
 				NSMutableArray *newSavedGroup = organizableSpecifiers[currentOrganizableGroup];
