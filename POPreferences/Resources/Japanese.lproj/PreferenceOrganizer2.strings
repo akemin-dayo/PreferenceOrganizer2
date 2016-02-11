@@ -8,11 +8,11 @@
 "TWEAKS" = "Tweaks";
 "APP_STORE_APPS" = "App Storeのアプリ";
 
-"DEBUG_DETAIL" = "/var/tmp/net.angelxwind.preferenceorganizer2.logにはいくつかのデバッグ情報をログします。";
+"DEBUG_DETAIL" = "/var/tmp/net.angelxwind.preferenceorganizer2.logにデバッグログを残します";
 "DEBUG" = "デバッグログ";
 
 "DONATE_GROUPCELL" = "寄付";
-"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス: rei@angelxwind.net\n\n寄付は大歓迎です、これまでに寄贈したすべての人にありがとうございました！";
+"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス: rei@angelxwind.net\n\n寄付は大歓迎です、これまでに寄付してくれた方々、ありがとうございます！";
 "DONATE" = "PayPalを使用して寄付する";
 
 "RESET" = "設定をリセットする";
