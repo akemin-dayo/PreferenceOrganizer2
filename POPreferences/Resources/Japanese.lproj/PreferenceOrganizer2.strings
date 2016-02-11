@@ -12,7 +12,7 @@
 "DEBUG" = "デバッグログ";
 
 "DONATE_GROUPCELL" = "寄付";
-"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス: rei@angelxwind.net\n\n寄付は大歓迎です、これまでに寄付してくれた方々、ありがとうございます！";
+"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス: rei@angelxwind.net\n\n寄付は大歓迎です、これまでに寄付してくれた方々ありがとうございます！";
 "DONATE" = "PayPalを使用して寄付する";
 
 "RESET" = "設定をリセットする";
