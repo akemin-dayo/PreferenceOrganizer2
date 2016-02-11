@@ -97,7 +97,7 @@ static void PO2InitPrefs() {
 
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-	if (!iPadDialogShown && [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0 && !iPadDialogShown && [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
 		UIAlertView *iPadAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"IPAD_TITLE")
 			message:karenLocalizedString(@"IPAD_CONTENT")
 			delegate:self
