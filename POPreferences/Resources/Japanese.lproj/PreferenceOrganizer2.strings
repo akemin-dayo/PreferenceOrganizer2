@@ -1,6 +1,7 @@
 "APPLY" = "適用する";
 
 "ENABLE" = "セクションを表示";
+"NAME" = "セクション名";
 
 "APPLE_APPS" = "システムアプリ";
 "SOCIAL_APPS" = "SNSアプリ";

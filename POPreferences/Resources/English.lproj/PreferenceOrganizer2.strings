@@ -1,6 +1,7 @@
 "APPLY" = "Apply";
 
 "ENABLE" = "Show Section";
+"NAME" = "Section Name";
 
 "APPLE_APPS" = "System Apps";
 "SOCIAL_APPS" = "Social Networking Apps";

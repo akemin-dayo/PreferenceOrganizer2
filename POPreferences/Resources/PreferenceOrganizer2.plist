@@ -45,7 +45,7 @@
 			<key>key</key>
 			<string>AppleAppsName</string>
 			<key>label</key>
-			<string>Name</string>
+			<string>NAME</string>
 			<key>placeholder</key>
 			<string>APPLE_APPS</string>
 			<key>PostNotification</key>
@@ -84,7 +84,7 @@
 			<key>key</key>
 			<string>SocialAppsName</string>
 			<key>label</key>
-			<string>Name</string>
+			<string>NAME</string>
 			<key>placeholder</key>
 			<string>SOCIAL_APPS</string>
 			<key>PostNotification</key>
@@ -123,7 +123,7 @@
 			<key>key</key>
 			<string>TweaksName</string>
 			<key>label</key>
-			<string>Name</string>
+			<string>NAME</string>
 			<key>placeholder</key>
 			<string>TWEAKS</string>
 			<key>PostNotification</key>
@@ -162,7 +162,7 @@
 			<key>key</key>
 			<string>AppStoreAppsName</string>
 			<key>label</key>
-			<string>Name</string>
+			<string>NAME</string>
 			<key>placeholder</key>
 			<string>APP_STORE_APPS</string>
 			<key>PostNotification</key>
