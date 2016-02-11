@@ -215,10 +215,6 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Reset Settings</string>
-			<key>footerText</key>
-			<string>RESET_DETAIL</string>
 		</dict>
 
 		<dict>

@@ -1,0 +1,27 @@
+"NOTICE" = "お知らせ";
+"WARNING" = "注意";
+"ERROR" = "エラー";
+
+"IPAD_TITLE" = "重要なお知らせ";
+"IPAD_CONTENT" = "PreferenceOrganizer 2はiPadのみでクラッシュを防ぐために無効にされています。アップデートですぐに修正されます。";
+
+"APT_DETAIL_1" = "cydia.angelxwind.net (パッケージID net.angelxwind.preferenceorganizer2)からPreferenceOrganizer 2をインストールしていないように見えます。";
+"APT_DETAIL_2" = "Karen Tsai (angelXwind)、Eliz、Julian Weiss (insanj)、ilendemli、Hiraku (hirakujira)、またはGary Lin (gary19930520)以外の人がPreferenceOrganizer 2を開発したと述べた場合、彼は嘘つきです。";
+"APT_DETAIL_3" = "安定性を確保するために、公式リポジトリのみからPreferenceOrganizer 2をダウンロードしてください。";
+
+"APPLE_APPS" = "システムアプリ";
+"SOCIAL_APPS" = "SNSアプリ";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Storeのアプリ";
+
+"PREFS_RESET_SUCCESS" = "設定が正常にリセットされました";
+"PREFS_RESET_SUCCESS_DETAIL" = "PreferenceOrganizer 2の設定がデフォルト値に正常にリセットされました。";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"ERROR" = "エラー ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2は設定をリセットすることができませんでした！NSError情報：";
+
+"PREFS_IS_KILL" = "お知らせ";
+"PREFS_IS_KILL_DETAIL" = "設定アプリは変更を適用するために自分自身を閉じます。これはクラッシュではありません。";
