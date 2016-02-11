@@ -61,6 +61,7 @@ static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
 static BOOL ddiIsMounted;
+static BOOL iPadDialogShown;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -96,14 +97,14 @@ static void PO2InitPrefs() {
 
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-	if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+	if (!iPadDialogShown && [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
 		UIAlertView *iPadAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"IPAD_TITLE")
 			message:karenLocalizedString(@"IPAD_CONTENT")
 			delegate:self
 			cancelButtonTitle:karenLocalizedString(@"OK_SAD")
 			otherButtonTitles:nil];
 		[iPadAlert show];
-		return %orig();
+		iPadDialogShown = 1;
 	}
 
 	static dispatch_once_t onceToken;
@@ -267,7 +268,7 @@ static void PO2InitPrefs() {
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			[specifiers removeObjectsInArray:AppleAppSpecifiers];
+			if (!iPadDialogShown) [specifiers removeObjectsInArray:AppleAppSpecifiers];
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			[specifiers addObject:appleSpecifier];
