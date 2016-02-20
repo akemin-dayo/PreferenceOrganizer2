@@ -61,6 +61,8 @@ static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
 static BOOL ddiIsMounted;
+static BOOL iPadDialogShown;
+static BOOL shouldNeverShowiPadWarning;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -73,6 +75,8 @@ static void PO2InitPrefs() {
 	PO2BoolPref(shouldShowTweaks, ShowTweaks, 1);
 	PO2BoolPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
 	PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
+	PO2BoolPref(shouldNeverShowiPadWarning, neverShowiPadWarning, 0);
+	iPadDialogShown = shouldNeverShowiPadWarning;
 	initKarenLocalize(@"PreferenceOrganizer2");
 	PO2StringPref(appleAppsLabel, AppleAppsName, karenLocalizedString(@"APPLE_APPS"));
 	PO2StringPref(socialAppsLabel, SocialAppsName, karenLocalizedString(@"SOCIAL_APPS"));
@@ -89,6 +93,17 @@ static void PO2InitPrefs() {
 	## ##     ## ##    ##    ##         ##   
 	##  #######   ######    ##          ##   
 */
+@interface PO2UIAlertViewDelegate : UIViewController <UIAlertViewDelegate>
+@end
+@implementation PO2UIAlertViewDelegate
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex == [alertView firstOtherButtonIndex]) {
+		NSMutableDictionary *prefsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:PO2PreferencePath];
+		[prefsDict setObject:@YES forKey:@"neverShowiPadWarning"];
+		[prefsDict writeToFile:PO2PreferencePath atomically:1];
+	}
+}
+@end
 %group iOS7Up
 %hook PrefsListController
 -(NSMutableArray *) specifiers {
@@ -96,6 +111,15 @@ static void PO2InitPrefs() {
 
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0 && !iPadDialogShown && [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+		UIAlertView *iPadAlert = [[UIAlertView alloc] initWithTitle:karenLocalizedString(@"IPAD_TITLE")
+			message:karenLocalizedString(@"IPAD_CONTENT")
+			delegate:[[PO2UIAlertViewDelegate alloc] init]
+			cancelButtonTitle:karenLocalizedString(@"OK_SAD")
+			otherButtonTitles:karenLocalizedString(@"NEVER_SHOW_AGAIN"), nil];
+		[iPadAlert show];
+		iPadDialogShown = 1;
+	}
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -258,7 +282,7 @@ static void PO2InitPrefs() {
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			[specifiers removeObjectsInArray:AppleAppSpecifiers];
+			if (!iPadDialogShown) [specifiers removeObjectsInArray:AppleAppSpecifiers];
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			[specifiers addObject:appleSpecifier];
