@@ -4,11 +4,12 @@ ARCHS = armv7 armv7s arm64
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = POPreferences
-POPreferences_FILES = POPreferences.xm
+POPreferences_FILES = POPreferences.mm 
 POPreferences_INSTALL_PATH = /Library/PreferenceBundles
+POPreferences_LIBRARIES = karenprefs karenlocalizer
 POPreferences_FRAMEWORKS = UIKit
+POPreferences_CFLAGS = -fobjc-arc
 POPreferences_PRIVATE_FRAMEWORKS = Preferences
-
 include $(THEOS_MAKE_PATH)/bundle.mk
 
 internal-stage::

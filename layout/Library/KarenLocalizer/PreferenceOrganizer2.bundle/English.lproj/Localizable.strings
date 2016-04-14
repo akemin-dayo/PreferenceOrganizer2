@@ -1,0 +1,28 @@
+"NOTICE" = "NOTICE";
+"WARNING" = "WARNING";
+"ERROR" = "ERROR";
+
+"IPAD_TITLE" = "Important Notice";
+"IPAD_CONTENT" = "The System Apps section currently cannot be properly sorted on iPads running iOS 9. The System Apps section will still contain the correct entries, but they will remain present in the main Settings view. I'll fix this bug in a later update, but it may take some time to do so.";
+
+"APT_DETAIL_1" = "You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "If someone other than Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are lying.";
+"APT_DETAIL_3" = "Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.";
+
+"APPLE_APPS" = "System Apps";
+"SOCIAL_APPS" = "Social Networking Apps";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Store Apps";
+
+"PREFS_RESET_SUCCESS" = "Preferences Successfully Reset";
+"PREFS_RESET_SUCCESS_DETAIL" = "PreferenceOrganizer 2's preferences have been successfully reset to default values.";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"NEVER_SHOW_AGAIN" = "Never show again";
+"ERROR" = "Error ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 was unable to reset settings! NSError info:";
+
+"PREFS_CLOSE" = "Notice";
+"PREFS_CLOSE_DETAIL" = "The Preferences app will now close itself to apply changes.";
