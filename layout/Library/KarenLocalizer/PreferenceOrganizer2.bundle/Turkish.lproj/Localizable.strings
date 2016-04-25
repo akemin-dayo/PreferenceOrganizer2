@@ -1,0 +1,28 @@
+﻿"NOTICE" = "UYARI";
+"WARNING" = "UYARI";
+"ERROR" = "HATA";
+
+"IPAD_TITLE" = "Önemli Uyarı";
+"IPAD_CONTENT" = "Sistem Uygulamaları bölümü şu anda iOS 9 çalıştıran iPad'larda düzgün şekilde sıralanamıyor. Sistem Uygulamaları bölümü hala doğru girdileri içerecek, ama şu anki Ayarlar görünümü kalacak. Bu hatayı sonraki güncellemede düzelteceğim, ama bunu yapmam biraz zaman alabilir.";
+
+"APT_DETAIL_1" = "PreferenceOrganizer 2'yi bir APT kaynağından kurmuşsunuz gibi görünüyor; cydia.angelxwind.net (paket kimliği net.angelxwind.preferenceorganizer2) üzerinden değil.";
+"APT_DETAIL_2" = "Karen Tsai (angelXwind)'dan başkaları, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), ya da Gary Lin (gary19930520) bu uygulamanın geliştirilmesi için kredi alıyor ve onlar yalan söylüyor.";
+"APT_DETAIL_3" = "Dosya bütünlüğü ve güvenilirliği için PreferenceOrganizer 2'yi lütfen yalnızca resmi kaynaktan indirin.";
+
+"APPLE_APPS" = "Sistem Uygulamaları";
+"SOCIAL_APPS" = "Sosyal Ağ Uygulamaları";
+"TWEAKS" = "İnce Ayarlar";
+"APP_STORE_APPS" = "App Store Uygulamaları";
+
+"PREFS_RESET_SUCCESS" = "Ayarlar Başarıyla Sıfırlandı";
+"PREFS_RESET_SUCCESS_DETAIL" = "PreferenceOrganizer 2'nin ayarları başarıyla varsayılan değerlerine sıfırlandı.";
+
+"OK" = "Tamam";
+"OK_WINK" = "Tamam (^_-)-☆";
+"OK_SAD" = "Tamam (・へ・)";
+"NEVER_SHOW_AGAIN" = "Bir daha gösterme";
+"ERROR" = "Hata ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 ayarları sıfırlayamadı! NSError bilgisi:";
+
+"PREFS_CLOSE" = "Uyarı";
+"PREFS_CLOSE_DETAIL" = "Ayarlar uygulaması ayarlar uygulandığında kendini kapatacak.";

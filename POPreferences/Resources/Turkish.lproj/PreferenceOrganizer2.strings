@@ -1,0 +1,18 @@
+﻿"APPLY" = "Uygula (Ayarlar'ı Kapat)";
+
+"ENABLE" = "Bölümü Göster";
+"NAME" = "Bölümün Adı";
+
+"APPLE_APPS" = "Sistem Uygulamaları";
+"SOCIAL_APPS" = "Sosyal Ağ Uygulamaları";
+"TWEAKS" = "İnce Ayarlar";
+"APP_STORE_APPS" = "App Store Uygulamaları";
+
+"DEBUG_DETAIL" = "/var/tmp/net.angelxwind.preferenceorganizer2.log üzerindeki günlükler bazı sorun giderme bilgilerini içerir.";
+"DEBUG" = "Sorun Giderme Günlüklemesi";
+
+"DONATE_GROUPCELL" = "Bağışlar";
+"DONATE_GROUPCELL_DETAIL" = "PayPal Adresi: rei@angelxwind.net\n\nBağışlarınız büyük mutluluk — şimdiye kadar bağışta bulunan herkese teşekkür ederim!";
+"DONATE" = "PayPal Kullanarak Bağışta Bulun";
+
+"RESET" = "Ayarları Sıfırla";
