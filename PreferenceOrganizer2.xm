@@ -106,7 +106,18 @@ static void PO2InitPrefs() {
 }
 @end
 %group iOS7Up
+
 %hook PrefsListController
+
+// This method may be invoked by -[(PSUI)PrefsListController appleAccountsDidChange] which calls for [self specifierForID:@"CASTLE"] but it doesn't exist due to organisation!
+// So just do nothing if you can't find the iCloud preference pane
+- (void)_setupiCloudSpecifier:(PSSpecifier *)specifier
+{
+	if (specifier == nil)
+		return;
+	%orig;
+}
+
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
@@ -179,7 +190,8 @@ static void PO2InitPrefs() {
 					currentOrganizableGroup = identifier;
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
-					[newSavedGroup addObject:specifiers[i - 1]];
+					// we don't need this, so that CASTLE and STORE can be in the same group
+					//[newSavedGroup addObject:specifiers[i - 1]];
 					[newSavedGroup addObject:s];
 
 					[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
@@ -248,8 +260,9 @@ static void PO2InitPrefs() {
 		}
 
 		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just exclude it. ┐(￣ー￣)┌
+		// ^We can confront this problem anyway :P --PoomSmart
 
-		for (PSSpecifier* specifier in organizableSpecifiers[@"STORE"]) {
+		/*for (PSSpecifier* specifier in organizableSpecifiers[@"STORE"]) {
 			if ([specifier.identifier isEqualToString:@"CASTLE"]) {
 				[(NSMutableArray *)organizableSpecifiers[@"STORE"] removeObject:specifier];
 				break;
@@ -261,7 +274,7 @@ static void PO2InitPrefs() {
 				[(NSMutableArray *)organizableSpecifiers[@"CASTLE"] removeObject:specifier];
 				break;
 			}
-		}
+		}*/
 
 		AppleAppSpecifiers = [organizableSpecifiers[@"CASTLE"] retain];
 		[AppleAppSpecifiers addObjectsFromArray:organizableSpecifiers[@"STORE"]];
