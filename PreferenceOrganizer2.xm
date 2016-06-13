@@ -67,6 +67,8 @@ static NSString *appStoreAppsLabel;
 
 KarenLocalizer *karenLocalizer;
 
+static NSMutableArray *unorganisedSpecifiers = nil;
+
 static void PO2InitPrefs() {
 	PO2SyncPrefs();
 	PO2BoolPref(shouldSyslogSpam, syslogSpam, 0);
@@ -104,15 +106,15 @@ static void PO2InitPrefs() {
 	%orig;
 }
 
-// Just think in the another way, and this fixes crashing issue on iPad iOS 9+ according to my testing
-// However, it is also necessary to update PreferenceLoader in order to fix insertion bug on iPad, as stated by vit9696
-// (Some groups won't show the list if PreferenceLoader is not fixed)
-- (void)setSpecifiers:(NSMutableArray *)specifiers {
+- (NSMutableArray *)specifiers {
+	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-	
+		// Here we save the original unorganised specifiers
+		if (unorganisedSpecifiers == nil)
+			unorganisedSpecifiers = [specifiers.copy retain];
 		// Do a check for net.angelxwind.preferenceorganizer2
 		if (access(DPKG_PATH, F_OK) == -1) {
 			UIAlertView *aptAlert = [[UIAlertView alloc] initWithTitle:[karenLocalizer karenLocalizeString:@"WARNING"]
@@ -288,11 +290,24 @@ static void PO2InitPrefs() {
 	});
 
 	PO2Log([NSString stringWithFormat:@"shuffledSpecifiers = %@", specifiers], shouldSyslogSpam);
-	%orig(specifiers);
+	return specifiers;
+}
+
+
+// This -loadView method is familiar with unorganised specifiers, so just serve its needs
+// As far as I know, this leads to no crashing on iPad environment
+// However, it is also necessary to update PreferenceLoader in order to fix insertion bug on iPad, as stated by vit9696
+// (Some groups won't show the list if PreferenceLoader is not fixed)
+
+-(void)loadView {
+	NSMutableArray *originalSpecifiers = MSHookIvar<NSMutableArray *>(self, "_specifiers");
+	MSHookIvar<NSMutableArray *>(self, "_specifiers") = unorganisedSpecifiers;
+	%orig;
+	MSHookIvar<NSMutableArray *>(self, "_specifiers") = originalSpecifiers;
 }
 
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
-	%orig(arg1, arg2);
+	%orig;
 	if (shouldShowAppStoreApps) {
 		int thirdPartyID = 0;
 		NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
@@ -314,32 +329,6 @@ static void PO2InitPrefs() {
 	}
 }
 
--(void) refresh3rdPartyBundles {
-	%orig();
-	NSMutableArray *organizableSpecifiers = [[NSMutableArray alloc] init];
-	NSArray *unorganizedSpecifiers = MSHookIvar<NSArray *>(self, "_specifiers"); // from PSListController
-	
-	// Loop through, starting at the bottom, every specifier in the FINAL Settings group
-	// (the App Store apps), until we reach a group. Then we know we must be encountering
-	// either the Developer or Tweak areas, so we should bust out right away.
-	for (int i = unorganizedSpecifiers.count - 1; ((PSSpecifier *)unorganizedSpecifiers[i])->cellType != 0; i--) {
-		[organizableSpecifiers addObject:unorganizedSpecifiers[i]];
-	}
-
-	// Remove all the refreshed app specifiers from the main list, then switch up the
-	// specifiers found in the global PreferenceOrganizer variable that takes care of that.
-	for (PSSpecifier *s in organizableSpecifiers) {
-		[self removeSpecifier:s];
-	}
-
-	[AppStoreAppSpecifiers release];
-	AppStoreAppSpecifiers = [organizableSpecifiers retain];
-}
-
--(void) reloadSpecifiers {
-	return; // Nah dawg you've come to the wrong part 'a town...
-}
-%end
 %end
 
 /*
