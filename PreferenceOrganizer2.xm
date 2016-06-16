@@ -32,7 +32,7 @@ static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifier
 @implementation SocialAppSpecifiersController
 -(NSArray *) specifiers {
 	if (!_specifiers) {
-		self.specifiers = SocialAppSpecifiers; 
+		self.specifiers = SocialAppSpecifiers;
 	}
 	return _specifiers;
 }
@@ -94,27 +94,26 @@ static void PO2InitPrefs() {
 */
 
 %group iOS7Up
-
 %hook PrefsListController
-
-// This method may be invoked by -[(PSUI)PrefsListController appleAccountsDidChange] which calls for [self specifierForID:@"CASTLE"] but it doesn't exist due to organisation!
-// So just do nothing if you can't find the iCloud preference pane
-- (void)_setupiCloudSpecifier:(PSSpecifier *)specifier
-{
-	if (specifier == nil)
+// The ages-old iCloud prefpane crashing bug is caused by the fact that the following method sometimes may be invoked by -[(PSUI)PrefsListController appleAccountsDidChange] which calls for [self specifierForID:@"CASTLE"]... but it won't exist when PO2 "organises" it.
+// So, we implement our own method that just does nothing if the iCloud specifier is nil
+-(void) _setupiCloudSpecifier:(PSSpecifier *)specifier {
+	if (specifier == nil) {
 		return;
-	%orig;
+	}
+	%orig();
 }
 
-- (NSMutableArray *)specifiers {
+-(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		// Here we save the original unorganised specifiers
-		if (unorganisedSpecifiers == nil)
+		// Save the original, unorganised specifiers
+		if (unorganisedSpecifiers == nil) {
 			unorganisedSpecifiers = [specifiers.copy retain];
+		}
 		// Do a check for net.angelxwind.preferenceorganizer2
 		if (access(DPKG_PATH, F_OK) == -1) {
 			UIAlertView *aptAlert = [[UIAlertView alloc] initWithTitle:[karenLocalizer karenLocalizeString:@"WARNING"]
@@ -293,21 +292,17 @@ static void PO2InitPrefs() {
 	return specifiers;
 }
 
-
-// This -loadView method is familiar with unorganised specifiers, so just serve its needs
-// As far as I know, this leads to no crashing on iPad environment
-// However, it is also necessary to update PreferenceLoader in order to fix insertion bug on iPad, as stated by vit9696
-// (Some groups won't show the list if PreferenceLoader is not fixed)
-
--(void)loadView {
+// Write custom -loadView method implementation that works with unorganised specifiers... which somehow fixes the infamous iOS 9.x iPad crash bug
+// However, PreferenceLoader ultimately should be updated in order to fix the insertion bug present on iOS 9.x iPads, as stated by vit9696 (#9)
+-(void) loadView {
 	NSMutableArray *originalSpecifiers = MSHookIvar<NSMutableArray *>(self, "_specifiers");
 	MSHookIvar<NSMutableArray *>(self, "_specifiers") = unorganisedSpecifiers;
-	%orig;
+	%orig();
 	MSHookIvar<NSMutableArray *>(self, "_specifiers") = originalSpecifiers;
 }
 
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
-	%orig;
+	%orig(arg1, arg2);
 	if (shouldShowAppStoreApps) {
 		int thirdPartyID = 0;
 		NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
@@ -321,14 +316,13 @@ static void PO2InitPrefs() {
 		for (int i = thirdPartyID + 1; i < [specifiers count]; i++) {
 			[AppStoreAppSpecifiers addObject:specifiers[i]];
 		}
-
 		while ([specifiers count] > thirdPartyID + 1) {
 			[specifiers removeLastObject];
 		}
 		((PSListController *)self).specifiers = specifiers;
 	}
 }
-
+%end
 %end
 
 /*
@@ -342,6 +336,12 @@ static void PO2InitPrefs() {
 */
 %group iOS6
 %hook PrefsListController
+-(void) _setupiCloudSpecifier:(PSSpecifier *)specifier {
+	if (specifier == nil) {
+		return;
+	}
+	%orig();
+}
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
