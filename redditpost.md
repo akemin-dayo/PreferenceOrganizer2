@@ -6,14 +6,12 @@
 
 #**Important Announcement**
 
-Due to limited time and other personal circumstances, progress on mikoto and my other projects will be a bit slower than usual.
-
-Next on my list is the long-overdue "iOS 8+ EA Game Fixer" (I'm bad at coming up with names... it works on non-EA games with the same bug too...)
-
-Then afterwards, a full refactor/cleanup of JellyLock Unified. Because it needs one. *Then* I'll get to forward-porting the JellyLock iOS 5/6 features to the iOS 7/8/9 codebase.
+Due to limited time and other personal circumstances, progress on my projects will be a bit slower than usual. Don't worry, new releases are still coming ;P
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.jellylockunified-changelog))**
 
+* **[3.2] [iOS 9, iPads only]** iPads running iOS 9 are now able to sort System Apps.
+* **[3.2] [iOS 6+]** iCloud preferences are now properly sorted as opposed to being excluded from sorting.
 * **[3.1.1] [Misc]** Fixed a bug where preference resetting might claim to fail even if it didn't.
 * **[3.1.1] [Misc]** Updated to use my public open-source [KarenPrefs](https://github.com/angelXwind/KarenPrefs) library. Also updated PreferenceOrganizer 2's usage of KarenPrefs to include colored buttons, animated exit-to-SpringBoard app close animation, and many other things I've forgotten by now.
 * **[3.1.1] [Misc]** Updated to use my public open-source [KarenLocalizer](https://github.com/angelXwind/KarenLocalizer) library.
@@ -31,7 +29,6 @@ Then afterwards, a full refactor/cleanup of JellyLock Unified. Because it needs 
 
 #**Known issues**
 
-* **[iOS 9 iPads]** The current workaround to prevent iOS 9 iPads from crashing is not a real solution, as it leaves the System Apps settings in the main view.
 * **[iOS 8+]** News, iBooks, Podcasts, and iTunes U do not show in Apple Apps like they are supposed to. Instead, they are simply appended below iCloud.
 
 #**Planned features that are still unimplemented**
