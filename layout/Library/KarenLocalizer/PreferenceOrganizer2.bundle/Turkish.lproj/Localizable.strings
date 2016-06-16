@@ -2,9 +2,6 @@
 "WARNING" = "UYARI";
 "ERROR" = "HATA";
 
-"IPAD_TITLE" = "Önemli Uyarı";
-"IPAD_CONTENT" = "Sistem Uygulamaları bölümü şu anda iOS 9 çalıştıran iPad'larda düzgün şekilde sıralanamıyor. Sistem Uygulamaları bölümü hala doğru girdileri içerecek, ama şu anki Ayarlar görünümü kalacak. Bu hatayı sonraki güncellemede düzelteceğim, ama bunu yapmam biraz zaman alabilir.";
-
 "APT_DETAIL_1" = "PreferenceOrganizer 2'yi bir APT kaynağından kurmuşsunuz gibi görünüyor; cydia.angelxwind.net (paket kimliği net.angelxwind.preferenceorganizer2) üzerinden değil.";
 "APT_DETAIL_2" = "Karen Tsai (angelXwind)'dan başkaları, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), ya da Gary Lin (gary19930520) bu uygulamanın geliştirilmesi için kredi alıyor ve onlar yalan söylüyor.";
 "APT_DETAIL_3" = "Dosya bütünlüğü ve güvenilirliği için PreferenceOrganizer 2'yi lütfen yalnızca resmi kaynaktan indirin.";
