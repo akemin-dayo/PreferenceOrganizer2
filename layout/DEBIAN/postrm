@@ -1,0 +1,9 @@
+#!/bin/sh
+# karen was here o u o
+declare -a cydia
+cydia=($CYDIA)
+if [[ ${CYDIA+@} ]]; then
+	eval "echo 'finish:return' >&${cydia[0]}"
+fi
+killall Preferences
+exit 0
