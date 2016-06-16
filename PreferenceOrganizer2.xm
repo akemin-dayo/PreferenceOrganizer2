@@ -60,14 +60,14 @@ static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
 static BOOL ddiIsMounted;
-static BOOL iPadDialogShown;
-static BOOL shouldNeverShowiPadWarning;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
 static NSString *appStoreAppsLabel;
 
 KarenLocalizer *karenLocalizer;
+
+static NSMutableArray *unorganisedSpecifiers = nil;
 
 static void PO2InitPrefs() {
 	PO2SyncPrefs();
@@ -76,8 +76,6 @@ static void PO2InitPrefs() {
 	PO2BoolPref(shouldShowTweaks, ShowTweaks, 1);
 	PO2BoolPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
 	PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
-	PO2BoolPref(shouldNeverShowiPadWarning, neverShowiPadWarning, 0);
-	iPadDialogShown = shouldNeverShowiPadWarning;
 	karenLocalizer = [[KarenLocalizer alloc] initWithKarenLocalizerBundle:@"PreferenceOrganizer2"];
 	PO2StringPref(appleAppsLabel, AppleAppsName, [karenLocalizer karenLocalizeString:@"APPLE_APPS"]);
 	PO2StringPref(socialAppsLabel, SocialAppsName, [karenLocalizer karenLocalizeString:@"SOCIAL_APPS"]);
@@ -94,17 +92,7 @@ static void PO2InitPrefs() {
 	## ##     ## ##    ##    ##         ##   
 	##  #######   ######    ##          ##   
 */
-@interface PO2UIAlertViewDelegate : UIViewController <UIAlertViewDelegate>
-@end
-@implementation PO2UIAlertViewDelegate
--(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-	if (buttonIndex == [alertView firstOtherButtonIndex]) {
-		NSMutableDictionary *prefsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:PO2PreferencePath];
-		[prefsDict setObject:@YES forKey:@"neverShowiPadWarning"];
-		[prefsDict writeToFile:PO2PreferencePath atomically:1];
-	}
-}
-@end
+
 %group iOS7Up
 
 %hook PrefsListController
@@ -118,21 +106,15 @@ static void PO2InitPrefs() {
 	%orig;
 }
 
--(NSMutableArray *) specifiers {
+- (NSMutableArray *)specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0 && !iPadDialogShown && [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-		UIAlertView *iPadAlert = [[UIAlertView alloc] initWithTitle:[karenLocalizer karenLocalizeString:@"IPAD_TITLE"]
-			message:[karenLocalizer karenLocalizeString:@"IPAD_CONTENT"]
-			delegate:[[PO2UIAlertViewDelegate alloc] init]
-			cancelButtonTitle:[karenLocalizer karenLocalizeString:@"OK_SAD"]
-			otherButtonTitles:[karenLocalizer karenLocalizeString:@"NEVER_SHOW_AGAIN"], nil];
-		[iPadAlert show];
-		iPadDialogShown = 1;
-	}
 
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
+		// Here we save the original unorganised specifiers
+		if (unorganisedSpecifiers == nil)
+			unorganisedSpecifiers = [specifiers.copy retain];
 		// Do a check for net.angelxwind.preferenceorganizer2
 		if (access(DPKG_PATH, F_OK) == -1) {
 			UIAlertView *aptAlert = [[UIAlertView alloc] initWithTitle:[karenLocalizer karenLocalizeString:@"WARNING"]
@@ -259,23 +241,6 @@ static void PO2InitPrefs() {
 			}
 		}
 
-		// Since no one can figure out why the iCloud preference pane crashes when organised... let's just exclude it. ┐(￣ー￣)┌
-		// ^We can confront this problem anyway :P --PoomSmart
-
-		/*for (PSSpecifier* specifier in organizableSpecifiers[@"STORE"]) {
-			if ([specifier.identifier isEqualToString:@"CASTLE"]) {
-				[(NSMutableArray *)organizableSpecifiers[@"STORE"] removeObject:specifier];
-				break;
-			}
-		}
-
-		for (PSSpecifier* specifier in organizableSpecifiers[@"CASTLE"]) {
-			if ([specifier.identifier isEqualToString:@"CASTLE"]) {
-				[(NSMutableArray *)organizableSpecifiers[@"CASTLE"] removeObject:specifier];
-				break;
-			}
-		}*/
-
 		AppleAppSpecifiers = [organizableSpecifiers[@"CASTLE"] retain];
 		[AppleAppSpecifiers addObjectsFromArray:organizableSpecifiers[@"STORE"]];
 
@@ -294,7 +259,7 @@ static void PO2InitPrefs() {
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			if (!iPadDialogShown) [specifiers removeObjectsInArray:AppleAppSpecifiers];
+			[specifiers removeObjectsInArray:AppleAppSpecifiers];
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:Nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			[specifiers addObject:appleSpecifier];
@@ -328,8 +293,21 @@ static void PO2InitPrefs() {
 	return specifiers;
 }
 
+
+// This -loadView method is familiar with unorganised specifiers, so just serve its needs
+// As far as I know, this leads to no crashing on iPad environment
+// However, it is also necessary to update PreferenceLoader in order to fix insertion bug on iPad, as stated by vit9696
+// (Some groups won't show the list if PreferenceLoader is not fixed)
+
+-(void)loadView {
+	NSMutableArray *originalSpecifiers = MSHookIvar<NSMutableArray *>(self, "_specifiers");
+	MSHookIvar<NSMutableArray *>(self, "_specifiers") = unorganisedSpecifiers;
+	%orig;
+	MSHookIvar<NSMutableArray *>(self, "_specifiers") = originalSpecifiers;
+}
+
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
-	%orig(arg1, arg2);
+	%orig;
 	if (shouldShowAppStoreApps) {
 		int thirdPartyID = 0;
 		NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
@@ -351,32 +329,6 @@ static void PO2InitPrefs() {
 	}
 }
 
--(void) refresh3rdPartyBundles {
-	%orig();
-	NSMutableArray *organizableSpecifiers = [[NSMutableArray alloc] init];
-	NSArray *unorganizedSpecifiers = MSHookIvar<NSArray *>(self, "_specifiers"); // from PSListController
-	
-	// Loop through, starting at the bottom, every specifier in the FINAL Settings group
-	// (the App Store apps), until we reach a group. Then we know we must be encountering
-	// either the Developer or Tweak areas, so we should bust out right away.
-	for (int i = unorganizedSpecifiers.count - 1; ((PSSpecifier *)unorganizedSpecifiers[i])->cellType != 0; i--) {
-		[organizableSpecifiers addObject:unorganizedSpecifiers[i]];
-	}
-
-	// Remove all the refreshed app specifiers from the main list, then switch up the
-	// specifiers found in the global PreferenceOrganizer variable that takes care of that.
-	for (PSSpecifier *s in organizableSpecifiers) {
-		[self removeSpecifier:s];
-	}
-
-	[AppStoreAppSpecifiers release];
-	AppStoreAppSpecifiers = [organizableSpecifiers retain];
-}
-
--(void) reloadSpecifiers {
-	return; // Nah dawg you've come to the wrong part 'a town...
-}
-%end
 %end
 
 /*
