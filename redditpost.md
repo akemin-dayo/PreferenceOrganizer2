@@ -10,6 +10,8 @@ Due to limited time and other personal circumstances, progress on my projects wi
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.jellylockunified-changelog))**
 
+* **[3.3] [iOS 9]** Crash fixes for iOS 9.2.x and 9.3.x
+* **[3.3] [iOS 9]** Podcasts, iBooks, Passbook/Wallet, and News are now sorted correctly into System Apps.
 * **[3.2] [iOS 9, iPads only]** iPads running iOS 9 are now able to sort System Apps.
 * **[3.2] [iOS 6+]** iCloud preferences are now properly sorted as opposed to being excluded from sorting.
 * **[3.1.1] [Misc]** Fixed a bug where preference resetting might claim to fail even if it didn't.
