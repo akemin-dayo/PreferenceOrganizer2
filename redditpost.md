@@ -8,7 +8,7 @@
 
 Due to limited time and other personal circumstances, progress on my projects will be a bit slower than usual. Don't worry, new releases are still coming ;P
 
-#**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.jellylockunified-changelog))**
+#**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
 * **[3.3] [iOS 9]** Crash fixes for iOS 9.2.x and 9.3.x
 * **[3.3] [iOS 9]** Podcasts, iBooks, Passbook/Wallet, and News are now sorted correctly into System Apps.
