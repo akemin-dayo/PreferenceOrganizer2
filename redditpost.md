@@ -10,6 +10,8 @@ Due to limited time and other personal circumstances, progress on my projects wi
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
+* **[3.4] [iOS 9]** Rewrote code pertaining to iOS 9.2.x and 9.3.x. Should fix some crashes people were reporting.
+* **[3.4] [iOS 9]** Prevent duplicates of some apps appearing in System Apps.
 * **[3.3] [iOS 9]** Crash fixes for iOS 9.2.x and 9.3.x
 * **[3.3] [iOS 9]** Podcasts, iBooks, Passbook/Wallet, and News are now sorted correctly into System Apps.
 * **[3.2] [iOS 9, iPads only]** iPads running iOS 9 are now able to sort System Apps.

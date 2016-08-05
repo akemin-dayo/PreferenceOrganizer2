@@ -63,7 +63,8 @@ static BOOL shouldShowTweaks;
 static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
-static BOOL ddiIsMounted;
+static BOOL ddiIsMounted = 0;
+static BOOL shouldShuffle = 1;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -105,7 +106,19 @@ static void PO2InitPrefs() {
 	if (specifier == nil) {
 		return;
 	}
-	%orig();
+	%orig(specifier);
+}
+-(void) _setupiCloudSpecifierAsync:(PSSpecifier *)specifier {
+	if (specifier == nil) {
+		return;
+	}
+	%orig(specifier);
+}
+-(void) _setupiCloudSpecifier:(PSSpecifier *)specifier withPrimaryAccount:(id)arg {
+	if (specifier == nil) {
+		return;
+	}
+	%orig(specifier, arg);
 }
 
 -(NSMutableArray *) specifiers {
@@ -261,13 +274,7 @@ static void PO2InitPrefs() {
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			if (shouldShowAppleApps && kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_2) {
-				[specifiers removeObjectsInArray:organizableSpecifiers[@"STORE"]];
-				[specifiers removeObject:organizableSpecifiers[@"CASTLE"][0]];
-			} else {
-				[specifiers removeObjectsInArray:AppleAppSpecifiers];
-			}
-			
+			[specifiers removeObjectsInArray:AppleAppSpecifiers];
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			// Setting this identifier for later use...
@@ -318,41 +325,34 @@ static void PO2InitPrefs() {
 	NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
 	
 	// Now begin organising specifiers that appear with this method...
-	if (shouldShowAppleApps) {
-		NSMutableArray *itemsToReallyRemove = [[NSMutableArray alloc] init];
+	if (shouldShowAppleApps && shouldShuffle) {
 		NSMutableArray *itemsToReallyAdd = [[NSMutableArray alloc] init];
-		for (int i = 0; i < [specifiers count]; i++) {
-			PSSpecifier *item = [specifiers objectAtIndex:i];
-			// For some bizarre reason, organisation of the iCloud specifier will only work in this method on iOS 9.2+... doing it in -specifiers will just result in a crash.
-			if ([item.identifier isEqualToString:@"CASTLE"]) {
-				[itemsToReallyRemove addObject:item];
-			} else if ([item.identifier isEqualToString:@"com.apple.iBooks"]) {
-				[itemsToReallyRemove addObject:item];
+		for (PSSpecifier *item in specifiers) {
+			if ([item.identifier isEqualToString:@"com.apple.iBooks"]) {
 				[itemsToReallyAdd addObject:item];
 			} else if ([item.identifier isEqualToString:@"com.apple.podcasts"]) {
-				[itemsToReallyRemove addObject:item];
 				[itemsToReallyAdd addObject:item];
 			} else if ([item.identifier isEqualToString:@"com.apple.PassbookSettings"]) {
-				[itemsToReallyRemove addObject:item];
 				[itemsToReallyAdd addObject:item];
 			} else if ([item.identifier isEqualToString:@"com.apple.Passbook"]) {
-				[itemsToReallyRemove addObject:item];
 				[itemsToReallyAdd addObject:item];
 			} else if ([item.identifier isEqualToString:@"com.apple.news"]) {
-				[itemsToReallyRemove addObject:item];
 				[itemsToReallyAdd addObject:item];
 			}
 		}
-		[specifiers removeObjectsInArray:itemsToReallyRemove];
+		[specifiers removeObjectsInArray:itemsToReallyAdd];
 		for (int i = 0; i < [specifiers count]; i++) {
 			PSSpecifier *item = [specifiers objectAtIndex:i];
 			if ([item.identifier isEqualToString:@"APPLE_APPS"]) {
+				[AppleAppSpecifiers removeObjectsInArray:itemsToReallyAdd];
 				[AppleAppSpecifiers addObjectsFromArray:itemsToReallyAdd];
 				PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
 				[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 				[((PSListController *)self).specifiers replaceObjectAtIndex:i withObject:appleSpecifier];
 			}
 		}
+		// don't run this part of the code again to prevent duplicates
+		shouldShuffle = 0;
 	}
 
 	if (shouldShowAppStoreApps) {
