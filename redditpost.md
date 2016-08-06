@@ -10,31 +10,8 @@ Due to limited time and other personal circumstances, progress on my projects wi
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* **[3.4.1] [iOS 9]** Prevent duplicates of some System Apps entries appearing in the main Settings view.
-* **[3.4] [iOS 9]** Rewrote code pertaining to iOS 9.2.x and 9.3.x. Should fix some crashes people were reporting.
-* **[3.4] [iOS 9]** Prevent duplicates of some apps appearing in System Apps.
-* **[3.3] [iOS 9]** Crash fixes for iOS 9.2.x and 9.3.x
-* **[3.3] [iOS 9]** Podcasts, iBooks, Passbook/Wallet, and News are now sorted correctly into System Apps.
-* **[3.2] [iOS 9, iPads only]** iPads running iOS 9 are now able to sort System Apps.
-* **[3.2] [iOS 6+]** iCloud preferences are now properly sorted as opposed to being excluded from sorting.
-* **[3.1.1] [Misc]** Fixed a bug where preference resetting might claim to fail even if it didn't.
-* **[3.1.1] [Misc]** Updated to use my public open-source [KarenPrefs](https://github.com/angelXwind/KarenPrefs) library. Also updated PreferenceOrganizer 2's usage of KarenPrefs to include colored buttons, animated exit-to-SpringBoard app close animation, and many other things I've forgotten by now.
-* **[3.1.1] [Misc]** Updated to use my public open-source [KarenLocalizer](https://github.com/angelXwind/KarenLocalizer) library.
-* **[3.1] [Misc]** 日本語化を追加しました
-* **[3.1] [Misc]** Changed default section titles
-* **[3.1] [iOS 7+]** Fixed a bug where PreferenceOrganizer 2 would sort preferences incorrectly (by one `GroupID`) if a DDI was mounted and PreferenceLoader 2.2.3+ was installed.
-* **[3.1] [iOS 9, iPads only]** Worked around a crash caused by removing System Apps from the main Settings view on iPads running iOS 9(!?)
-* **[3.0.4] [iOS 6+]** Fixed a bug where PreferenceOrganizer 2 would cause the "prefs:" URL scheme to behave incorrectly.
-* **[3.0.3] [iOS 6]** Fixed a bug where PreferenceOrganizer 2 would sort things into the wrong categories on iOS 6.
-* **[3.0] [Misc]** Added some more useful information regarding the debug logging feature
-* **[3.0] [Misc]** Added KarenLocalize support (previously in mikoto and Pasithea) to PreferenceOrganizer 2
-* **[3.0] [Misc]** Added a PayPal donate button (`rei@angelxwind.net`)
-* **[3.0] [iOS 9]** Fixed a bug where well, PreferenceOrganizer 2 would completely fail to work at all on iOS 9 ;P
-* **[3.0] [iOS 8+]** Fixed a bug where News, iBooks, Podcasts, and iTunes U would disappear.
-
-#**Known issues**
-
-* **[iOS 8+]** News, iBooks, Podcasts, and iTunes U do not show in Apple Apps like they are supposed to. Instead, they are simply appended below iCloud.
+* **[3.5] [iOS 7+]** Fix a crash that would sometimes happen if the user suspends the Settings app and then resumes it via the App Switcher.
+* **[3.5] [iOS 7+]** Fix duplicated copies of Apple's "third-party" apps (iBooks, Podcasts, etc.)
 
 #**Planned features that are still unimplemented**
 
