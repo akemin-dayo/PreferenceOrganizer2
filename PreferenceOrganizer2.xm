@@ -63,7 +63,8 @@ static BOOL shouldShowTweaks;
 static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
-static BOOL ddiIsMounted;
+static BOOL preventAppleThirdPartyInsertion = NO;
+static BOOL ddiIsMounted = 0;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -105,13 +106,24 @@ static void PO2InitPrefs() {
 	if (specifier == nil) {
 		return;
 	}
-	%orig();
+	%orig(specifier);
+}
+-(void) _setupiCloudSpecifierAsync:(PSSpecifier *)specifier {
+	if (specifier == nil) {
+		return;
+	}
+	%orig(specifier);
+}
+-(void) _setupiCloudSpecifier:(PSSpecifier *)specifier withPrimaryAccount:(id)arg {
+	if (specifier == nil) {
+		return;
+	}
+	%orig(specifier, arg);
 }
 
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Save the original, unorganised specifiers
@@ -261,13 +273,7 @@ static void PO2InitPrefs() {
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			if (shouldShowAppleApps && kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_2) {
-				[specifiers removeObjectsInArray:organizableSpecifiers[@"STORE"]];
-				[specifiers removeObject:organizableSpecifiers[@"CASTLE"][0]];
-			} else {
-				[specifiers removeObjectsInArray:AppleAppSpecifiers];
-			}
-			
+			[specifiers removeObjectsInArray:AppleAppSpecifiers];
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			// Setting this identifier for later use...
@@ -298,7 +304,12 @@ static void PO2InitPrefs() {
 
 		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
-
+	
+	// If we found Apple's third party apps, we really won't add them because this would mess up with UITableView rows count check after the update
+	if (shouldShowAppleApps) {
+		[specifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
+	}
+	
 	PO2Log([NSString stringWithFormat:@"shuffledSpecifiers = %@", specifiers], shouldSyslogSpam);
 	return specifiers;
 }
@@ -312,67 +323,44 @@ static void PO2InitPrefs() {
 	MSHookIvar<NSMutableArray *>(self, "_specifiers") = originalSpecifiers;
 }
 
--(void) _reallyLoadThirdPartySpecifiersForProxies:(id)arg1 withCompletion:(id)arg2 {
-	%orig(arg1, arg2);
-
-	NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
-	
-	// Now begin organising specifiers that appear with this method...
-	/*if (shouldShowAppleApps) {
-		NSMutableArray *itemsToReallyRemove = [[NSMutableArray alloc] init];
-		NSMutableArray *itemsToReallyAdd = [[NSMutableArray alloc] init];
-		for (int i = 0; i < [specifiers count]; i++) {
-			PSSpecifier *item = [specifiers objectAtIndex:i];
-			// For some bizarre reason, organisation of the iCloud specifier will only work in this method on iOS 9.2+... doing it in -specifiers will just result in a crash.
-			if ([item.identifier isEqualToString:@"CASTLE"]) {
-				[itemsToReallyRemove addObject:item];
-			} else if ([item.identifier isEqualToString:@"com.apple.iBooks"]) {
-				[itemsToReallyRemove addObject:item];
-				[itemsToReallyAdd addObject:item];
-			} else if ([item.identifier isEqualToString:@"com.apple.podcasts"]) {
-				[itemsToReallyRemove addObject:item];
-				[itemsToReallyAdd addObject:item];
-			} else if ([item.identifier isEqualToString:@"com.apple.PassbookSettings"]) {
-				[itemsToReallyRemove addObject:item];
-				[itemsToReallyAdd addObject:item];
-			} else if ([item.identifier isEqualToString:@"com.apple.Passbook"]) {
-				[itemsToReallyRemove addObject:item];
-				[itemsToReallyAdd addObject:item];
-			} else if ([item.identifier isEqualToString:@"com.apple.news"]) {
-				[itemsToReallyRemove addObject:item];
-				[itemsToReallyAdd addObject:item];
-			}
-		}
-		[specifiers removeObjectsInArray:itemsToReallyRemove];
-		for (int i = 0; i < [specifiers count]; i++) {
-			PSSpecifier *item = [specifiers objectAtIndex:i];
-			if ([item.identifier isEqualToString:@"APPLE_APPS"]) {
-				[AppleAppSpecifiers addObjectsFromArray:itemsToReallyAdd];
-				PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
-				[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
-				[((PSListController *)self).specifiers replaceObjectAtIndex:i withObject:appleSpecifier];
-			}
-		}
-	}*/
-
-	if (shouldShowAppStoreApps) {
-		int thirdPartyID = 0;
-		for (int i = 0; i < [specifiers count]; i++) {
-			PSSpecifier* item = [specifiers objectAtIndex:i];
-			if ([item.identifier isEqualToString:@"THIRD_PARTY_GROUP"]) {
-				thirdPartyID = i;
-				break;
-			}
-		}
-		for (int i = thirdPartyID + 1; i < [specifiers count]; i++) {
-			[AppStoreAppSpecifiers addObject:specifiers[i]];
-		}
-		while ([specifiers count] > thirdPartyID + 1) {
-			[specifiers removeLastObject];
-		}
-		((PSListController *)self).specifiers = specifiers;
-	}
+-(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated
+{
+	if (preventAppleThirdPartyInsertion)
+		return;
+	%orig(animated);
 }
+
+-(void) _reallyLoadThirdPartySpecifiersForProxies:(NSArray *)apps withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
+	// thirdParty - self->_thirdPartySpecifiers
+	// appleThirdParty - self->_movedThirdPartySpecifiers
+	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
+		if (completion) {
+			// First, have completion done
+			// From here, we also block Apple's third party apps insertion, as it would create more and more problem according to UITableView update
+			preventAppleThirdPartyInsertion = YES;
+			completion(thirdParty, appleThirdParty);
+			preventAppleThirdPartyInsertion = NO;
+			
+			// Then add all third party specifiers into correct categories
+			// Also remove them from the original locations
+			NSMutableArray *specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
+			if (shouldShowAppleApps) {
+				NSArray *appleThirdPartySpecifiers = [appleThirdParty allValues];
+				[AppleAppSpecifiers removeObjectsInArray:appleThirdPartySpecifiers];
+				[AppleAppSpecifiers addObjectsFromArray:appleThirdPartySpecifiers];
+				[specifiers removeObjectsInArray:appleThirdPartySpecifiers];
+			}
+			if (shouldShowAppStoreApps) {
+				[AppStoreAppSpecifiers addObjectsFromArray:thirdParty];
+				[specifiers removeObjectsInArray:thirdParty];
+			}
+			((PSListController *)self).specifiers = specifiers;
+		}
+		
+	};
+	%orig(apps, newCompletion);
+}
+
 %end
 %end
 
