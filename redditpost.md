@@ -10,6 +10,7 @@ Due to limited time and other personal circumstances, progress on my projects wi
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
+* **[3.4.1] [iOS 9]** Prevent duplicates of some System Apps entries appearing in the main Settings view.
 * **[3.4] [iOS 9]** Rewrote code pertaining to iOS 9.2.x and 9.3.x. Should fix some crashes people were reporting.
 * **[3.4] [iOS 9]** Prevent duplicates of some apps appearing in System Apps.
 * **[3.3] [iOS 9]** Crash fixes for iOS 9.2.x and 9.3.x

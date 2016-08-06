@@ -325,7 +325,7 @@ static void PO2InitPrefs() {
 	NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
 	
 	// Now begin organising specifiers that appear with this method...
-	if (shouldShowAppleApps && shouldShuffle) {
+	if (shouldShowAppleApps) {
 		NSMutableArray *itemsToReallyAdd = [[NSMutableArray alloc] init];
 		for (PSSpecifier *item in specifiers) {
 			if ([item.identifier isEqualToString:@"com.apple.iBooks"]) {
@@ -341,18 +341,20 @@ static void PO2InitPrefs() {
 			}
 		}
 		[specifiers removeObjectsInArray:itemsToReallyAdd];
-		for (int i = 0; i < [specifiers count]; i++) {
-			PSSpecifier *item = [specifiers objectAtIndex:i];
-			if ([item.identifier isEqualToString:@"APPLE_APPS"]) {
-				[AppleAppSpecifiers removeObjectsInArray:itemsToReallyAdd];
-				[AppleAppSpecifiers addObjectsFromArray:itemsToReallyAdd];
-				PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
-				[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
-				[((PSListController *)self).specifiers replaceObjectAtIndex:i withObject:appleSpecifier];
+		if (shouldShuffle) {
+			for (int i = 0; i < [specifiers count]; i++) {
+				PSSpecifier *item = [specifiers objectAtIndex:i];
+				if ([item.identifier isEqualToString:@"APPLE_APPS"]) {
+					[AppleAppSpecifiers removeObjectsInArray:itemsToReallyAdd];
+					[AppleAppSpecifiers addObjectsFromArray:itemsToReallyAdd];
+					PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
+					[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
+					[((PSListController *)self).specifiers replaceObjectAtIndex:i withObject:appleSpecifier];
+				}
 			}
+			// don't run this part of the code again to prevent duplicates
+			shouldShuffle = 0;
 		}
-		// don't run this part of the code again to prevent duplicates
-		shouldShuffle = 0;
 	}
 
 	if (shouldShowAppStoreApps) {
