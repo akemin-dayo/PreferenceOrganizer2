@@ -318,7 +318,7 @@ static void PO2InitPrefs() {
 	NSMutableArray* specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
 	
 	// Now begin organising specifiers that appear with this method...
-	if (shouldShowAppleApps) {
+	/*if (shouldShowAppleApps) {
 		NSMutableArray *itemsToReallyRemove = [[NSMutableArray alloc] init];
 		NSMutableArray *itemsToReallyAdd = [[NSMutableArray alloc] init];
 		for (int i = 0; i < [specifiers count]; i++) {
@@ -353,7 +353,7 @@ static void PO2InitPrefs() {
 				[((PSListController *)self).specifiers replaceObjectAtIndex:i withObject:appleSpecifier];
 			}
 		}
-	}
+	}*/
 
 	if (shouldShowAppStoreApps) {
 		int thirdPartyID = 0;
