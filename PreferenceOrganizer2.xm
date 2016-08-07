@@ -91,6 +91,35 @@ static void PO2InitPrefs() {
 	PO2StringPref(appStoreAppsLabel, AppStoreAppsName, [karenLocalizer karenLocalizeString:@"APP_STORE_APPS"]);
 }
 
+void removeOldAppleThirdPartySpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
+{
+	NSMutableArray *itemsToDelete = [NSMutableArray array];
+	for (PSSpecifier *spec in specifiers) {
+		NSString *Id = spec.identifier;
+		if ([Id isEqualToString:@"com.apple.news"] || [Id isEqualToString:@"com.apple.iBooks"] || [Id isEqualToString:@"com.apple.podcasts"] || [Id isEqualToString:@"com.apple.itunesu"])
+			[itemsToDelete addObject:spec];
+	}
+	[specifiers removeObjectsInArray:itemsToDelete];
+}
+
+void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
+	// Then add all third party specifiers into correct categories
+	// Also remove them from the original locations
+	NSMutableArray *specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
+	if (shouldShowAppleApps) {
+		NSArray *appleThirdPartySpecifiers = [appleThirdParty allValues];
+		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
+		[AppleAppSpecifiers addObjectsFromArray:appleThirdPartySpecifiers];
+		[specifiers removeObjectsInArray:appleThirdPartySpecifiers];
+	}
+	if (shouldShowAppStoreApps) {
+		[AppStoreAppSpecifiers removeAllObjects];
+		[AppStoreAppSpecifiers addObjectsFromArray:thirdParty];
+		[specifiers removeObjectsInArray:thirdParty];
+	}
+	((PSListController *)self).specifiers = specifiers;
+}
+
 /*
 	##  #######   ######    ########    ##   
 	   ##     ## ##    ##        ##     ##   
@@ -336,46 +365,13 @@ static void PO2InitPrefs() {
 	%orig();
 	MSHookIvar<NSMutableArray *>(self, "_specifiers") = originalSpecifiers;
 }
-
 %end
 %end
 
 %hook PrefsListController
-
-void removeOldAppleThirdPartySpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
-{
-	NSMutableArray *itemsToDelete = [NSMutableArray array];
-	for (PSSpecifier *spec in specifiers) {
-		NSString *Id = spec.identifier;
-		if ([Id isEqualToString:@"com.apple.news"] || [Id isEqualToString:@"com.apple.iBooks"] || [Id isEqualToString:@"com.apple.podcasts"] || [Id isEqualToString:@"com.apple.itunesu"])
-			[itemsToDelete addObject:spec];
-	}
-	[specifiers removeObjectsInArray:itemsToDelete];
-}
-
-void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
-	// Then add all third party specifiers into correct categories
-	// Also remove them from the original locations
-	NSMutableArray *specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
-	if (shouldShowAppleApps) {
-		NSArray *appleThirdPartySpecifiers = [appleThirdParty allValues];
-		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
-		[AppleAppSpecifiers addObjectsFromArray:appleThirdPartySpecifiers];
-		[specifiers removeObjectsInArray:appleThirdPartySpecifiers];
-	}
-	if (shouldShowAppStoreApps) {
-		[AppStoreAppSpecifiers removeAllObjects];
-		[AppStoreAppSpecifiers addObjectsFromArray:thirdParty];
-		[specifiers removeObjectsInArray:thirdParty];
-	}
-	((PSListController *)self).specifiers = specifiers;
-}
-
 %group iOS9Up
-
 // Any Apple's third party specifiers insertion will be redirected to AppleAppSpecifiers, as it's supposed to be
--(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated
-{
+-(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
 		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
 		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
@@ -397,13 +393,10 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 	};
 	%orig(apps, newCompletion);
 }
-
 %end
 
 %group iOS78
-
--(void) insertMovedThirdPartySpecifiersAtStartIndex:(NSUInteger)index usingInsertBlock:(id)arg2 andExistenceBlock:(id)arg3
-{
+-(void) insertMovedThirdPartySpecifiersAtStartIndex:(NSUInteger)index usingInsertBlock:(id)arg2 andExistenceBlock:(id)arg3 {
 	if (shouldShowAppStoreApps && AppStoreAppSpecifiers.count) {
 		[AppStoreAppSpecifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
 		[AppStoreAppSpecifiers addObjectsFromArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
@@ -423,11 +416,8 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 	};
 	%orig(apps, newCompletion);
 }
-
 %end
-
 %end
-
 
 /*
 	##  #######   ######     #######
