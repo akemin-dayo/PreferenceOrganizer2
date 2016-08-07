@@ -3,6 +3,10 @@
 #import "PO2Log.h"
 #import <KarenLocalizer/KarenLocalizer.h>
 
+#ifndef kCFCoreFoundationVersionNumber_iOS_7_0
+#define kCFCoreFoundationVersionNumber_iOS_7_0 847.20
+#endif
+
 #ifndef kCFCoreFoundationVersionNumber_iOS_8_0
 #define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
 #endif
@@ -63,7 +67,6 @@ static BOOL shouldShowTweaks;
 static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
-static BOOL preventAppleThirdPartyInsertion = NO;
 static BOOL ddiIsMounted = 0;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
@@ -305,13 +308,24 @@ static void PO2InitPrefs() {
 		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
 	
-	// If Apple's "third party" apps are found, don't add them because this will mess up the UITableView row count
+	// If we found Apple's third party apps, we really won't add them because this would mess up with UITableView rows count check after the update
 	if (shouldShowAppleApps) {
 		[specifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
 	}
 	
 	PO2Log([NSString stringWithFormat:@"shuffledSpecifiers = %@", specifiers], shouldSyslogSpam);
 	return specifiers;
+}
+
+// This method may add some Apple's third party specifiers with respect to restriction settings and results in duplicate entries, so fix it here
+-(void) updateRestrictedSettings
+{
+	%orig;
+	if (shouldShowAppStoreApps) {
+		[((PSListController *)self).specifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
+		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
+		[AppleAppSpecifiers addObjectsFromArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
+	}
 }
 
 // Write custom -loadView method implementation that works with unorganised specifiers... which somehow fixes the infamous iOS 9.x iPad crash bug
@@ -323,10 +337,52 @@ static void PO2InitPrefs() {
 	MSHookIvar<NSMutableArray *>(self, "_specifiers") = originalSpecifiers;
 }
 
--(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
-	if (preventAppleThirdPartyInsertion)
-		return;
-	%orig(animated);
+%end
+%end
+
+%hook PrefsListController
+
+void removeOldAppleThirdPartySpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
+{
+	NSMutableArray *itemsToDelete = [NSMutableArray array];
+	for (PSSpecifier *spec in specifiers) {
+		NSString *Id = spec.identifier;
+		if ([Id isEqualToString:@"com.apple.news"] || [Id isEqualToString:@"com.apple.iBooks"] || [Id isEqualToString:@"com.apple.podcasts"] || [Id isEqualToString:@"com.apple.itunesu"])
+			[itemsToDelete addObject:spec];
+	}
+	[specifiers removeObjectsInArray:itemsToDelete];
+}
+
+void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
+	// Then add all third party specifiers into correct categories
+	// Also remove them from the original locations
+	NSMutableArray *specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
+	if (shouldShowAppleApps) {
+		NSArray *appleThirdPartySpecifiers = [appleThirdParty allValues];
+		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
+		[AppleAppSpecifiers addObjectsFromArray:appleThirdPartySpecifiers];
+		[specifiers removeObjectsInArray:appleThirdPartySpecifiers];
+	}
+	if (shouldShowAppStoreApps) {
+		[AppStoreAppSpecifiers removeAllObjects];
+		[AppStoreAppSpecifiers addObjectsFromArray:thirdParty];
+		[specifiers removeObjectsInArray:thirdParty];
+	}
+	((PSListController *)self).specifiers = specifiers;
+}
+
+%group iOS9Up
+
+// Any Apple's third party specifiers insertion will be redirected to AppleAppSpecifiers, as it's supposed to be
+-(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated
+{
+	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
+		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
+		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
+		[AppleAppSpecifiers addObjectsFromArray:movedThirdPartySpecifiers];
+	} else {
+		%orig(animated);
+	}
 }
 
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(NSArray *)apps withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
@@ -334,30 +390,44 @@ static void PO2InitPrefs() {
 	// appleThirdParty - self->_movedThirdPartySpecifiers
 	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
 		if (completion) {
-			// First, finish completion
-			// From here, we also block Preferences from inserting Apple's third party apps, as it that would just create more and more problems for us due to UITableView updates
-			preventAppleThirdPartyInsertion = YES;
 			completion(thirdParty, appleThirdParty);
-			preventAppleThirdPartyInsertion = NO;
-			// Then, add all third party specifiers into the correct categories and remove them from the original location
-			NSMutableArray *specifiers = [[NSMutableArray alloc] initWithArray:((PSListController *)self).specifiers];
-			if (shouldShowAppleApps) {
-				NSArray *appleThirdPartySpecifiers = [appleThirdParty allValues];
-				[AppleAppSpecifiers removeObjectsInArray:appleThirdPartySpecifiers];
-				[AppleAppSpecifiers addObjectsFromArray:appleThirdPartySpecifiers];
-				[specifiers removeObjectsInArray:appleThirdPartySpecifiers];
-			}
-			if (shouldShowAppStoreApps) {
-				[AppStoreAppSpecifiers addObjectsFromArray:thirdParty];
-				[specifiers removeObjectsInArray:thirdParty];
-			}
-			((PSListController *)self).specifiers = specifiers;
 		}
+		
+		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
 	};
 	%orig(apps, newCompletion);
 }
+
 %end
+
+%group iOS78
+
+-(void) insertMovedThirdPartySpecifiersAtStartIndex:(NSUInteger)index usingInsertBlock:(id)arg2 andExistenceBlock:(id)arg3
+{
+	if (shouldShowAppStoreApps && AppStoreAppSpecifiers.count) {
+		[AppStoreAppSpecifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
+		[AppStoreAppSpecifiers addObjectsFromArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
+	} else {
+		%orig(index, arg2, arg3);
+	}
+}
+
+-(void) _reallyLoadThirdPartySpecifiersForProxies:(NSArray *)apps withCompletion:(void (^)())completion {
+	void (^newCompletion)() = ^(void) {
+		if (completion)
+			completion();
+		NSArray <PSSpecifier *> *thirdParty = MSHookIvar<NSArray <PSSpecifier *> *>(self, "_thirdPartySpecifiers");
+		NSDictionary *appleThirdParty = MSHookIvar<NSDictionary *>(self, "_movedThirdPartySpecifiers");
+		
+		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
+	};
+	%orig(apps, newCompletion);
+}
+
 %end
+
+%end
+
 
 /*
 	##  #######   ######     #######
@@ -509,6 +579,11 @@ static void PO2InitPrefs() {
 	PO2Log([NSString stringWithFormat:@"kCFCoreFoundationVersionNumber = %f", kCFCoreFoundationVersionNumber], shouldSyslogSpam);
 	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
 		%init(iOS7Up, PrefsListController = objc_getClass((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? "PSUIPrefsListController" : "PrefsListController"));
+		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+			%init(iOS9Up, PrefsListController = objc_getClass("PSUIPrefsListController"));
+		} else {
+			%init(iOS78);
+		}
 	} else {
 		%init(iOS6);
 	}
