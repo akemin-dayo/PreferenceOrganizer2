@@ -1,0 +1,18 @@
+"APPLY" = "ใช้งาน";
+
+"ENABLE" = "เปิดใช้งาน";
+"NAME" = "ชื่อ";
+
+"APPLE_APPS" = "แอพระบบ";
+"SOCIAL_APPS" = "แอพสังคมออนไลน์";
+"TWEAKS" = "แอพปรับแต่ง";
+"APP_STORE_APPS" = "แอพทั่วไป";
+
+"DEBUG_DETAIL" = "บันทึกการใช้งานไปยัง /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "บันทึกการใช้งาน";
+
+"DONATE_GROUPCELL" = "บริจาค";
+"DONATE_GROUPCELL_DETAIL" = "ที่อยู่ PayPal: rei@angelxwind.net\n\nขอแสดงความขอบคุณที่ช่วยบริจาคให้กับเรา เราขอแสดงความขอบคุณอย่างสุดซึ้ง!";
+"DONATE" = "บริจาคด้วย PayPal";
+
+"RESET" = "คืนค่าการตั้งค่า";
