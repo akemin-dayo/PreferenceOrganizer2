@@ -1,0 +1,18 @@
+"APPLY" = "套用设置";
+
+"ENABLE" = "显示区段";
+"NAME" = "区段自订名称";
+
+"APPLE_APPS" = "系统设置";
+"SOCIAL_APPS" = "社交网络";
+"TWEAKS" = "插件设置";
+"APP_STORE_APPS" = "App Store 应用";
+
+"DEBUG_DETAIL" = "将调试信息存储到 /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "调试信息";
+
+"DONATE_GROUPCELL" = "捐献赞助";
+"DONATE_GROUPCELL_DETAIL" = "PayPal 捐献地址: rei@angelxwind.net\n\nDonations 欢迎捐献赞助以支持本插件开发，并在此感谢所有赞助者的支持！";
+"DONATE" = "使用 PayPal 捐献";
+
+"RESET" = "恢复为默许设置";
