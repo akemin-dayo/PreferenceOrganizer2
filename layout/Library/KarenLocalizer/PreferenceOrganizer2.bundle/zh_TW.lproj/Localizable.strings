@@ -1,0 +1,25 @@
+"NOTICE" = "提醒";
+"WARNING" = "注意";
+"ERROR" = "錯誤";
+
+"APT_DETAIL_1" = "您看起來從非原始來源  cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2) 安裝了 PreferenceOrganizer 2";
+"APT_DETAIL_2" = "如果除了 Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) 以外，有任何人聲稱了他們參與了此 Tweak 的開發，請不用懷疑，他們是在說謊。";
+"APT_DETAIL_3" = "請只從原始來源下載、安裝 PreferenceOrganizer 2 以確保您的系統檔案完整性與穩定性";
+
+"APPLE_APPS" = "系統設定";
+"SOCIAL_APPS" = "社交網路";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Store";
+
+"PREFS_RESET_SUCCESS" = "設定已成功重設完畢";
+"PREFS_RESET_SUCCESS_DETAIL" = "PreferenceOrganizer 2 已成功重設為原始設定";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"NEVER_SHOW_AGAIN" = "以後不再顯示";
+"ERROR" = "錯誤 ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 無法重設設定！ NSError info:";
+
+"PREFS_CLOSE" = "提醒";
+"PREFS_CLOSE_DETAIL" = "「設定」App 現在會自動關閉，以套用您的設定";
