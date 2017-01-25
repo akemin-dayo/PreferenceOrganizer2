@@ -46,14 +46,6 @@ static NSMutableArray *AppleAppSpecifiers, *SocialAppSpecifiers, *TweakSpecifier
 }
 @end
 @implementation TweakSpecifiersController
-+(id)sharedInstance {
-	static TweakSpecifiersController *sharedInstance;
-	static dispatch_once_t provider_token;
-	dispatch_once(&provider_token, ^{
-		sharedInstance = [[self alloc] init];
-	});
-	return sharedInstance;
-}
 -(NSArray *) specifiers {
 	if (!_specifiers) {
 		self.specifiers = TweakSpecifiers;
@@ -548,9 +540,10 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 
 %hook PreferencesAppController
 %new
+// Push the requested tweak specifier controller.
 -(BOOL) preferenceOrganizerOpenTweakPane:(NSString *)name {
     // Replace the percent escapes in an iOS 6-friendly way (deprecated in iOS 9).
-    name = (__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL, (CFStringRef)name, CFSTR(""), kCFStringEncodingUTF8);
+    name = [name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     // Set up return value.
     BOOL foundMatch = NO;
@@ -561,70 +554,80 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
         if ( [name caseInsensitiveCompare:[specifier name]] == NSOrderedSame && [specifier target] ) {
             // We have a valid match.
             foundMatch = YES;
-            
+
             // Push the requested controller.
             [[[specifier target] navigationController] pushViewController:[[specifier target] controllerForSpecifier:specifier] animated:NO];
             
-            // Get the navigation stack count.
-            int stackCount = [[specifier target] navigationController].viewControllers.count;
+            // Get the specifier for TweaksSpecifier.
+            PSSpecifier *tweaksSpecifier = [[[self rootController] rootListController] specifierForID:tweaksLabel];
             
-            // Declare a NSMutableArray to manipulate the navigation stack (if necessary).
-            NSMutableArray *mutableStack;
-            
-            switch ( stackCount ) {
-                // Three controllers in the navigation stack (rootListController, unknown controller, and controllerForSpecifier).
-                // Check the controller at index 1 and replace it if necessary.
-                case 3:
-                    // If the user was already on the TweakSpecifiersController, then we're good.
-                    if ( ![[[[specifier target] navigationController].viewControllers objectAtIndex:1] isMemberOfClass:[TweakSpecifiersController class]] ) {
-                        // Get a mutable copy of the navigation stack.
-                        mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
-                        // Set the TweakSpecifiersController navigationItem title.
-                        [[TweakSpecifiersController sharedInstance] navigationItem].title = tweaksLabel;
-                        // Replace the intermediate controller with the TweakSpecifiersController.
-                        [mutableStack replaceObjectAtIndex:1 withObject:[TweakSpecifiersController sharedInstance]];
-                        // Update the navigation stack.
-                        [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
-                        //NSLog(@"PO2: preferenceOrganizerOpenTweakPane: replace the intermediate controller with the TweakSpecifiersController.");
+            // If we got a specifier for TweaksSpecifier... 
+            if ( tweaksSpecifier ) {
+                // Get the TweakSpecifiersController.
+                TweakSpecifiersController *tweakSpecifiersController = [[[self rootController] rootListController] controllerForSpecifier:tweaksSpecifier];
+                
+                // If we got a controller for TweakSpecifiers...
+                if ( tweakSpecifiersController ) {
+                    // Get the navigation stack count.
+                    int stackCount = [[specifier target] navigationController].viewControllers.count;
+                
+                    // Declare a NSMutableArray to manipulate the navigation stack (if necessary).
+                    NSMutableArray *mutableStack;
+                    // Switch on the navigation stack count and manipulate the stack accordingly.
+                    switch ( stackCount ) {
+                        // Three controllers in the navigation stack (rootListController, unknown controller, and controllerForSpecifier).
+                        // Check the controller at index 1 and replace it if necessary.
+                        case 3:
+                            // If the user was already on the TweakSpecifiersController, then we're good.
+                            if ( ![[[[specifier target] navigationController].viewControllers objectAtIndex:1] isMemberOfClass:[TweakSpecifiersController class]] ) {
+                                // Get a mutable copy of the navigation stack.
+                                mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
+                                // Set the TweakSpecifiersController navigationItem title.
+                                [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                                // Replace the intermediate controller with the TweakSpecifiersController.
+                                [mutableStack replaceObjectAtIndex:1 withObject:tweakSpecifiersController];
+                                // Update the navigation stack.
+                                [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
+                                //NSLog(@"PO2: preferenceOrganizerOpenTweakPane: replace the intermediate controller with the TweakSpecifiersController.");
+                            }
+                            break;
+                        // Two controllers in the navigation stack (rootListController and controllerForSpecifier).
+                        // Insert the TweakSpecifiersController as an intermediate.
+                        case 2:
+                            // Get a mutable copy of the navigation stack.
+                            mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
+                            // Set the TweakSpecifiersController navigationItem title.
+                            [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                            // Insert the TweakSpecifiersController as an intermediate controller.
+                            [mutableStack insertObject:tweakSpecifiersController atIndex: 1];
+                            // Update the navigation stack.
+                            [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
+                            break;
+                        // One controller in the navigation stack should not be possible after we push the controllerForSpecifier,
+                        // and zero controllers is legitimately impossible.
+                        case 1:
+                        case 0:
+                            // Get out of here!
+                            break;
+                        // Too many controllers to manage.  Dump everything in the navigation stack except the first and last controllers.
+                        default:
+                            // Get a mutable copy of the navigation stack.
+                            mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
+                            // Remove everything in the middle.
+                            [mutableStack removeObjectsInRange:NSMakeRange(1, stackCount-2)];
+                            // Set the TweakSpecifiersController navigationItem title.
+                            [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                            // Insert the TweakSpecifiersController as an intermediate controller.
+                            [mutableStack insertObject:tweakSpecifiersController atIndex: 1];
+                            // Update the navigation stack.
+                            [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
                     }
-                    break;
-                // Two controllers in the navigation stack (rootListController and controllerForSpecifier).
-                // Insert the TweakSpecifiersController as an intermediate.
-                case 2:
-                    // Get a mutable copy of the navigation stack.
-                    mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
-                    // Set the TweakSpecifiersController navigationItem title.
-                    [[TweakSpecifiersController sharedInstance] navigationItem].title = tweaksLabel;
-                    // Insert the TweakSpecifiersController as an intermediate controller.
-                    [mutableStack insertObject:[TweakSpecifiersController sharedInstance] atIndex: 1];
-                    // Update the navigation stack.
-                    [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
-                    break;
-                // One controller in the navigation stack should not be possible after we push the controllerForSpecifier,
-                // and zero controllers is legitimately impossible.
-                case 1:
-                case 0:
-                    // Get out of here!
-                    break;
-                // Too many controllers to manage.  Dump everything in the navigation stack except the first and last controllers.
-                default:
-                    // Get a mutable copy of the navigation stack.
-                    mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
-                    // Remove everything in the middle.
-                    [mutableStack removeObjectsInRange:NSMakeRange(1, stackCount-2)];
-                    // Set the TweakSpecifiersController navigationItem title.
-                    [[TweakSpecifiersController sharedInstance] navigationItem].title = tweaksLabel;
-                    // Insert the TweakSpecifiersController as an intermediate controller.
-                    [mutableStack insertObject:[TweakSpecifiersController sharedInstance] atIndex: 1];
-                    // Update the navigation stack.
-                    [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
+                }
             }
-            
             // Break the loop.
             break;
         }
     }
-    
     // Return success or failure.
     return foundMatch;
 }
