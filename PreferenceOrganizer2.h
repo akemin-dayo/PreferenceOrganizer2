@@ -17,7 +17,6 @@
 @end
 
 @interface TweakSpecifiersController : PSListController
-+ (id)sharedInstance;
 @end
 
 @interface AppStoreAppSpecifiersController : PSListController
