@@ -6,7 +6,7 @@
 #import <substrate.h>
 
 @interface PreferencesAppController
--(void) preferenceOrganizerOpenTweakPane:(NSString *)name;
+- (BOOL)preferenceOrganizerOpenTweakPane:(NSString *)name;
 @end
 
 @interface UIImage (Private)

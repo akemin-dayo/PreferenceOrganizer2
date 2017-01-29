@@ -1,0 +1,25 @@
+"NOTICE" = "ประกาศ";
+"WARNING" = "คำเตือน";
+"ERROR" = "ผิดพลาด";
+
+"APT_DETAIL_1" = "คุณติดตั้งแอพพลิเคชั่น PreferenceOrganizer 2 จากแหล่งที่มา APT ที่ไม่ใช่จาก cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2)";
+"APT_DETAIL_2" = "หากแอบอ้างว่าเป็นผู้พัฒนาแอพพลิเคชั่นนอกจาก Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) หรือ Gary Lin (gary19930520) โปรดอย่าหลงเชื่อว่าเป็นผู้พัฒนาแอพพลิเคชั่น";
+"APT_DETAIL_3" = "กรุณาดาวน์โหลด PreferenceOrganizer 2 จากแหล่งที่มาที่น่าเชื่อถือจากผู้พัฒนาเท่านั้น";
+
+"APPLE_APPS" = "แอพระบบ";
+"SOCIAL_APPS" = "แอพสังคมออนไลน์";
+"TWEAKS" = "แอพปรับแต่ง";
+"APP_STORE_APPS" = "แอพทั่วไป";
+
+"PREFS_RESET_SUCCESS" = "รีเซตการตั้งค่าเสร็จสิ้น";
+"PREFS_RESET_SUCCESS_DETAIL" = "การตั้งค่า PreferenceOrganizer 2 จะถูกรีเซ็ตไปยังการตั้งค่าเริ่มต้น";
+
+"OK" = "ตกลง";
+"OK_WINK" = "ตกลง (^_-)-☆";
+"OK_SAD" = "ตกลง (・へ・)";
+"NEVER_SHOW_AGAIN" = "ไม่ต้องแสดงอีก";
+"ERROR" = "ผิดพลาด ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "ไม่สามารถรีเซ็ตการตั้งค่า PreferenceOrganizer 2 ได้! ข้อมูล NSError:";
+
+"PREFS_CLOSE" = "ประกาศ";
+"PREFS_CLOSE_DETAIL" = "แอพพลิเคชั่นจะถูกปิดเพื่อเปลี่ยนแปลงการตั้งค่าใหม่";
