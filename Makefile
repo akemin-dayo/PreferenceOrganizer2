@@ -21,3 +21,8 @@ include $(THEOS_MAKE_PATH)/aggregate.mk
 
 after-install::
 	install.exec "killall Preferences; exit 0"
+
+sync: stage
+	rsync -e "ssh -p 2222" -avz .theos/_/Library/MobileSubstrate/DynamicLibraries/* root@127.0.0.1:/Library/MobileSubstrate/DynamicLibraries/
+	ssh root@127.0.0.1 -p 2222 killall Preferences
+	ssh root@127.0.0.1 -p 2222 open Preferences
