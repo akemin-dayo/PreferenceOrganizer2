@@ -13,10 +13,6 @@ Due to limited time and other personal circumstances, progress on my projects wi
 * **[3.6] [iOS 10]** Fixed App Store App sorting functionality on iOS 10.
 * **[3.6] [iOS 6+]** Further improvements to tweak URL forwarding (from external apps/tweaks).
 
-#**Planned features that are still unimplemented**
-
-* **[Misc]** 繁體中文／簡體中文的翻譯
-
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
 If you think PreferenceOrganizer 2 made your device crash, install CrashReporter and send me an email using its app.
