@@ -2,26 +2,7 @@
 #import "PO2Common.h"
 #import "PO2Log.h"
 #import <KarenLocalizer/KarenLocalizer.h>
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_7_0
-#define kCFCoreFoundationVersionNumber_iOS_7_0 847.20
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_9_0
-#define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_9_2
-#define kCFCoreFoundationVersionNumber_iOS_9_2 1242.13
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_10_0
-#define kCFCoreFoundationVersionNumber_iOS_10_0 1348.00
-#endif
+#import <firmware.h>
 
 @interface PrefsListController : PSListController
 @end
@@ -373,33 +354,6 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 %end
 
 %hook PrefsListController
-
-%group iOS10Up
-// Any Apple's third party specifiers insertion will be redirected to AppleAppSpecifiers, as it's supposed to be
--(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
-	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
-		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
-		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
-		[AppleAppSpecifiers addObjectsFromArray:movedThirdPartySpecifiers];
-	} else {
-		%orig(animated);
-	}
-}
-
--(void) _reallyLoadThirdPartySpecifiersForApps:(NSArray *)apps withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
-	// thirdParty - self->_thirdPartySpecifiers
-	// appleThirdParty - self->_movedThirdPartySpecifiers
-	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
-		if (completion) {
-			completion(thirdParty, appleThirdParty);
-		}
-		
-		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
-	};
-	%orig(apps, newCompletion);
-}
-%end
-
 %group iOS9Up
 // Any Apple's third party specifiers insertion will be redirected to AppleAppSpecifiers, as it's supposed to be
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
@@ -413,6 +367,20 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 }
 
 -(void) _reallyLoadThirdPartySpecifiersForProxies:(NSArray *)apps withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
+	// thirdParty - self->_thirdPartySpecifiers
+	// appleThirdParty - self->_movedThirdPartySpecifiers
+	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
+		if (completion) {
+			completion(thirdParty, appleThirdParty);
+		}
+		
+		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
+	};
+	%orig(apps, newCompletion);
+}
+
+//iOS 10 Fix
+-(void) _reallyLoadThirdPartySpecifiersForApps:(NSArray *)apps withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
 	// thirdParty - self->_thirdPartySpecifiers
 	// appleThirdParty - self->_movedThirdPartySpecifiers
 	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
@@ -691,9 +659,7 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 	PO2Log([NSString stringWithFormat:@"kCFCoreFoundationVersionNumber = %f", kCFCoreFoundationVersionNumber], shouldSyslogSpam);
 	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_7_0) {
 		%init(iOS7Up, PrefsListController = objc_getClass((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) ? "PSUIPrefsListController" : "PrefsListController"));
-		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
-			%init(iOS10Up, PrefsListController = objc_getClass("PSUIPrefsListController"));
-		} else if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
+		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_9_0) {
 			%init(iOS9Up, PrefsListController = objc_getClass("PSUIPrefsListController"));
 		} else {
 			%init(iOS78);
