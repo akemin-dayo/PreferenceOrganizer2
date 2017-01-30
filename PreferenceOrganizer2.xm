@@ -19,6 +19,10 @@
 #define kCFCoreFoundationVersionNumber_iOS_9_2 1242.13
 #endif
 
+#ifndef kCFCoreFoundationVersionNumber_iOS_10_0
+#define kCFCoreFoundationVersionNumber_iOS_10_0 1348.00
+#endif
+
 @interface PrefsListController : PSListController
 @end
 
@@ -370,7 +374,7 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 
 %hook PrefsListController
 %group iOS9Up
-// Any Apple's third party specifiers insertion will be redirected to AppleAppSpecifiers, as it's supposed to be
+// Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
 		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
@@ -388,7 +392,20 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 		if (completion) {
 			completion(thirdParty, appleThirdParty);
 		}
-		
+		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
+	};
+	%orig(apps, newCompletion);
+}
+
+// iOS 10 renamed this method, should be benign hooking this on iOS 9 as it wouldn't exist
+// Somewhat bad practice in that this is a literal copy-pasta of the above code, but this'll have to do for now until I figure out a better method of doing so
+-(void) _reallyLoadThirdPartySpecifiersForApps:(NSArray *)apps withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
+	// thirdParty - self->_thirdPartySpecifiers
+	// appleThirdParty - self->_movedThirdPartySpecifiers
+	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
+		if (completion) {
+			completion(thirdParty, appleThirdParty);
+		}
 		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
 	};
 	%orig(apps, newCompletion);
@@ -542,114 +559,114 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 %new
 // Push the requested tweak specifier controller.
 -(BOOL) preferenceOrganizerOpenTweakPane:(NSString *)name {
-    // Replace the percent escapes in an iOS 6-friendly way (deprecated in iOS 9).
-    name = [name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    // Set up return value.
-    BOOL foundMatch = NO;
-    
-    // Loop the registered TweakSpecifiers.
-    for ( PSSpecifier *specifier in TweakSpecifiers ) {
-        // If we have a match, and that match has a non-nil target, let's do this.
-        if ( [name caseInsensitiveCompare:[specifier name]] == NSOrderedSame && [specifier target] ) {
-            // We have a valid match.
-            foundMatch = YES;
+	// Replace the percent escapes in an iOS 6-friendly way (deprecated in iOS 9).
+	name = [name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+	
+	// Set up return value.
+	BOOL foundMatch = NO;
+	
+	// Loop the registered TweakSpecifiers.
+	for ( PSSpecifier *specifier in TweakSpecifiers ) {
+		// If we have a match, and that match has a non-nil target, let's do this.
+		if ( [name caseInsensitiveCompare:[specifier name]] == NSOrderedSame && [specifier target] ) {
+			// We have a valid match.
+			foundMatch = YES;
 
-            // Push the requested controller.
-            [[[specifier target] navigationController] pushViewController:[[specifier target] controllerForSpecifier:specifier] animated:NO];
-            
-            // Get the specifier for TweaksSpecifier.
-            PSSpecifier *tweaksSpecifier = [[[self rootController] rootListController] specifierForID:tweaksLabel];
-            
-            // If we got a specifier for TweaksSpecifier... 
-            if ( tweaksSpecifier ) {
-                // Get the TweakSpecifiersController.
-                TweakSpecifiersController *tweakSpecifiersController = [[[self rootController] rootListController] controllerForSpecifier:tweaksSpecifier];
-                
-                // If we got a controller for TweakSpecifiers...
-                if ( tweakSpecifiersController ) {
-                    // Get the navigation stack count.
-                    int stackCount = [[specifier target] navigationController].viewControllers.count;
-                
-                    // Declare a NSMutableArray to manipulate the navigation stack (if necessary).
-                    NSMutableArray *mutableStack;
-                    // Switch on the navigation stack count and manipulate the stack accordingly.
-                    switch ( stackCount ) {
-                        // Three controllers in the navigation stack (rootListController, unknown controller, and controllerForSpecifier).
-                        // Check the controller at index 1 and replace it if necessary.
-                        case 3:
-                            // If the user was already on the TweakSpecifiersController, then we're good.
-                            if ( ![[[[specifier target] navigationController].viewControllers objectAtIndex:1] isMemberOfClass:[TweakSpecifiersController class]] ) {
-                                // Get a mutable copy of the navigation stack.
-                                mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
-                                // Set the TweakSpecifiersController navigationItem title.
-                                [tweakSpecifiersController navigationItem].title = tweaksLabel;
-                                // Replace the intermediate controller with the TweakSpecifiersController.
-                                [mutableStack replaceObjectAtIndex:1 withObject:tweakSpecifiersController];
-                                // Update the navigation stack.
-                                [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
-                                //NSLog(@"PO2: preferenceOrganizerOpenTweakPane: replace the intermediate controller with the TweakSpecifiersController.");
-                            }
-                            break;
-                        // Two controllers in the navigation stack (rootListController and controllerForSpecifier).
-                        // Insert the TweakSpecifiersController as an intermediate.
-                        case 2:
-                            // Get a mutable copy of the navigation stack.
-                            mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
-                            // Set the TweakSpecifiersController navigationItem title.
-                            [tweakSpecifiersController navigationItem].title = tweaksLabel;
-                            // Insert the TweakSpecifiersController as an intermediate controller.
-                            [mutableStack insertObject:tweakSpecifiersController atIndex: 1];
-                            // Update the navigation stack.
-                            [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
-                            break;
-                        // One controller in the navigation stack should not be possible after we push the controllerForSpecifier,
-                        // and zero controllers is legitimately impossible.
-                        case 1:
-                        case 0:
-                            // Get out of here!
-                            break;
-                        // Too many controllers to manage.  Dump everything in the navigation stack except the first and last controllers.
-                        default:
-                            // Get a mutable copy of the navigation stack.
-                            mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
-                            // Remove everything in the middle.
-                            [mutableStack removeObjectsInRange:NSMakeRange(1, stackCount-2)];
-                            // Set the TweakSpecifiersController navigationItem title.
-                            [tweakSpecifiersController navigationItem].title = tweaksLabel;
-                            // Insert the TweakSpecifiersController as an intermediate controller.
-                            [mutableStack insertObject:tweakSpecifiersController atIndex: 1];
-                            // Update the navigation stack.
-                            [[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
-                    }
-                }
-            }
-            // Break the loop.
-            break;
-        }
-    }
-    // Return success or failure.
-    return foundMatch;
+			// Push the requested controller.
+			[[[specifier target] navigationController] pushViewController:[[specifier target] controllerForSpecifier:specifier] animated:NO];
+			
+			// Get the specifier for TweaksSpecifier.
+			PSSpecifier *tweaksSpecifier = [[[self rootController] rootListController] specifierForID:tweaksLabel];
+			
+			// If we got a specifier for TweaksSpecifier... 
+			if ( tweaksSpecifier ) {
+				// Get the TweakSpecifiersController.
+				TweakSpecifiersController *tweakSpecifiersController = [[[self rootController] rootListController] controllerForSpecifier:tweaksSpecifier];
+				
+				// If we got a controller for TweakSpecifiers...
+				if ( tweakSpecifiersController ) {
+					// Get the navigation stack count.
+					int stackCount = [[specifier target] navigationController].viewControllers.count;
+				
+					// Declare a NSMutableArray to manipulate the navigation stack (if necessary).
+					NSMutableArray *mutableStack;
+					// Switch on the navigation stack count and manipulate the stack accordingly.
+					switch ( stackCount ) {
+						// Three controllers in the navigation stack (rootListController, unknown controller, and controllerForSpecifier).
+						// Check the controller at index 1 and replace it if necessary.
+						case 3:
+							// If the user was already on the TweakSpecifiersController, then we're good.
+							if ( ![[[[specifier target] navigationController].viewControllers objectAtIndex:1] isMemberOfClass:[TweakSpecifiersController class]] ) {
+								// Get a mutable copy of the navigation stack.
+								mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
+								// Set the TweakSpecifiersController navigationItem title.
+								[[tweakSpecifiersController navigationItem] setTitle: tweaksLabel];
+								// Replace the intermediate controller with the TweakSpecifiersController.
+								[mutableStack replaceObjectAtIndex:1 withObject:tweakSpecifiersController];
+								// Update the navigation stack.
+								[[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
+								//NSLog(@"PO2: preferenceOrganizerOpenTweakPane: replace the intermediate controller with the TweakSpecifiersController.");
+							}
+							break;
+						// Two controllers in the navigation stack (rootListController and controllerForSpecifier).
+						// Insert the TweakSpecifiersController as an intermediate.
+						case 2:
+							// Get a mutable copy of the navigation stack.
+							mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
+							// Set the TweakSpecifiersController navigationItem title.
+							[[tweakSpecifiersController navigationItem] setTitle: tweaksLabel];
+							// Insert the TweakSpecifiersController as an intermediate controller.
+							[mutableStack insertObject:tweakSpecifiersController atIndex: 1];
+							// Update the navigation stack.
+							[[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
+							break;
+						// One controller in the navigation stack should not be possible after we push the controllerForSpecifier,
+						// and zero controllers is legitimately impossible.
+						case 1:
+						case 0:
+							// Get out of here!
+							break;
+						// Too many controllers to manage.  Dump everything in the navigation stack except the first and last controllers.
+						default:
+							// Get a mutable copy of the navigation stack.
+							mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
+							// Remove everything in the middle.
+							[mutableStack removeObjectsInRange:NSMakeRange(1, stackCount-2)];
+							// Set the TweakSpecifiersController navigationItem title.
+							[[tweakSpecifiersController navigationItem] setTitle: tweaksLabel];
+							// Insert the TweakSpecifiersController as an intermediate controller.
+							[mutableStack insertObject:tweakSpecifiersController atIndex: 1];
+							// Update the navigation stack.
+							[[specifier target] navigationController].viewControllers = [NSArray arrayWithArray:mutableStack];
+					}
+				}
+			}
+			// Break the loop.
+			break;
+		}
+	}
+	// Return success or failure.
+	return foundMatch;
 }
 // Parses the given URL to check if it's in a PreferenceOrganizer2-API conforming format, that is to say,
 // it has a root=Tweaks, and a &path= corresponding to a tweak name.
 // If %path= is present and it points to a valid tweak name, try to launch it.
 // If preferenceOrganizerOpenTweakPane fails, just open the root tweak pane (even if they've renamed it).
 -(void) applicationOpenURL:(NSURL *)url {
-    NSString *parsableURL = [url absoluteString];
-    if (parsableURL.length >= 11 && [parsableURL rangeOfString:@"root=Tweaks"].location != NSNotFound) {
-        NSString *truncatedPrefsURL = [@"prefs:root=" stringByAppendingString:[tweaksLabel stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        url = [NSURL URLWithString:truncatedPrefsURL];
-        NSRange tweakPathRange = [parsableURL rangeOfString:@"path="];
-        if (tweakPathRange.location != NSNotFound) {
-            NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
-            // If specified tweak was found, don't call the original method;
-            if ( [self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]] ) {
-                return;
-            }
-        }
-    }
-    %orig(url);
+	NSString *parsableURL = [url absoluteString];
+	if (parsableURL.length >= 11 && [parsableURL rangeOfString:@"root=Tweaks"].location != NSNotFound) {
+		NSString *truncatedPrefsURL = [@"prefs:root=" stringByAppendingString:[tweaksLabel stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		url = [NSURL URLWithString:truncatedPrefsURL];
+		NSRange tweakPathRange = [parsableURL rangeOfString:@"path="];
+		if (tweakPathRange.location != NSNotFound) {
+			NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
+			// If specified tweak was found, don't call the original method;
+			if ( [self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]] ) {
+				return;
+			}
+		}
+	}
+	%orig(url);
 }
 %end
 
