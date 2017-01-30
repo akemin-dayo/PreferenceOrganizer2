@@ -10,7 +10,8 @@ Due to limited time and other personal circumstances, progress on my projects wi
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* **[3.6] [iOS 10]** Fixed App Store App functionality on iOS 10.
+* **[3.6] [iOS 10]** Fixed App Store App sorting functionality on iOS 10.
+* **[3.6] [iOS 6+]** Further improvements to tweak URL forwarding (from external apps/tweaks).
 
 #**Planned features that are still unimplemented**
 
