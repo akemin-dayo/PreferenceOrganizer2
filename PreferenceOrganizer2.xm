@@ -401,7 +401,7 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 %end
 
 %group iOS9Up
-// Any Apple's third party specifiers insertion will be redirected to AppleAppSpecifiers, as it's supposed to be
+// Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
 		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
@@ -419,7 +419,20 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 		if (completion) {
 			completion(thirdParty, appleThirdParty);
 		}
-		
+		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
+	};
+	%orig(apps, newCompletion);
+}
+
+// iOS 10 renamed this method, should be benign hooking this on iOS 9 as it wouldn't exist
+// Somewhat bad practice in that this is a literal copy-pasta of the above code, but this'll have to do for now until I figure out a better method of doing so
+-(void) _reallyLoadThirdPartySpecifiersForApps:(NSArray *)apps withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
+	// thirdParty - self->_thirdPartySpecifiers
+	// appleThirdParty - self->_movedThirdPartySpecifiers
+	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
+		if (completion) {
+			completion(thirdParty, appleThirdParty);
+		}
 		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
 	};
 	%orig(apps, newCompletion);
@@ -670,20 +683,20 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 // If %path= is present and it points to a valid tweak name, try to launch it.
 // If preferenceOrganizerOpenTweakPane fails, just open the root tweak pane (even if they've renamed it).
 -(void) applicationOpenURL:(NSURL *)url {
-    NSString *parsableURL = [url absoluteString];
-    if (parsableURL.length >= 11 && [parsableURL rangeOfString:@"root=Tweaks"].location != NSNotFound) {
-        NSString *truncatedPrefsURL = [@"prefs:root=" stringByAppendingString:[tweaksLabel stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        url = [NSURL URLWithString:truncatedPrefsURL];
-        NSRange tweakPathRange = [parsableURL rangeOfString:@"path="];
-        if (tweakPathRange.location != NSNotFound) {
-            NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
-            // If specified tweak was found, don't call the original method;
-            if ( [self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]] ) {
-                return;
-            }
-        }
-    }
-    %orig(url);
+	NSString *parsableURL = [url absoluteString];
+	if (parsableURL.length >= 11 && [parsableURL rangeOfString:@"root=Tweaks"].location != NSNotFound) {
+		NSString *truncatedPrefsURL = [@"prefs:root=" stringByAppendingString:[tweaksLabel stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		url = [NSURL URLWithString:truncatedPrefsURL];
+		NSRange tweakPathRange = [parsableURL rangeOfString:@"path="];
+		if (tweakPathRange.location != NSNotFound) {
+			NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
+			// If specified tweak was found, don't call the original method;
+			if ( [self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]] ) {
+				return;
+			}
+		}
+	}
+	%orig(url);
 }
 %end
 

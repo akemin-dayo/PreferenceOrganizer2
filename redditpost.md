@@ -10,13 +10,8 @@ Due to limited time and other personal circumstances, progress on my projects wi
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* **[3.5.1] [iOS 7+]** Improved overall stability.
-* **[3.5.1] [iOS 7+]** Rewrote code to prevent duplicate entries of Apple's "third-party" app settings (iBooks, Podcasts, etc.).
-* **[3.5.1] [iOS 7+]** Fixed a crash regression that would occur on iOS 7.x/8.x due to changes made in version 3.5.
-
-#**Planned features that are still unimplemented**
-
-* **[Misc]** 繁體中文／簡體中文的翻譯
+* **[3.6] [iOS 10]** Fixed App Store App sorting functionality on iOS 10.
+* **[3.6] [iOS 6+]** Further improvements to tweak URL forwarding (from external apps/tweaks).
 
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
@@ -32,7 +27,7 @@ Your device is now violating... *several* laws of thermodynamics. Congratulation
 
 #**For new users: So what *is* PreferenceOrganizer 2?**
 
-A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, and 9.
+A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, 9, and 10.
 
 PreferenceOrganizer 2 organises your Settings app by separating your Settings app into 4 configurable categories: Apple Apps, Social Apps, Tweaks, and App Store Apps.
 
