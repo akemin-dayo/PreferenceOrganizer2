@@ -25,4 +25,3 @@ after-install::
 sync: stage
 	rsync -e "ssh -p 2222" -avz .theos/_/Library/MobileSubstrate/DynamicLibraries/* root@127.0.0.1:/Library/MobileSubstrate/DynamicLibraries/
 	ssh root@127.0.0.1 -p 2222 killall Preferences
-	ssh root@127.0.0.1 -p 2222 open Preferences

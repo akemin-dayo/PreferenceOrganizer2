@@ -614,7 +614,8 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
                                 // Get a mutable copy of the navigation stack.
                                 mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
                                 // Set the TweakSpecifiersController navigationItem title.
-                                [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                                // [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                                [[tweakSpecifiersController navigationItem] setTitle: tweaksLabel];
                                 // Replace the intermediate controller with the TweakSpecifiersController.
                                 [mutableStack replaceObjectAtIndex:1 withObject:tweakSpecifiersController];
                                 // Update the navigation stack.
@@ -628,7 +629,8 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
                             // Get a mutable copy of the navigation stack.
                             mutableStack = [NSMutableArray arrayWithArray:[[specifier target] navigationController].viewControllers];
                             // Set the TweakSpecifiersController navigationItem title.
-                            [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                            // [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                            [[tweakSpecifiersController navigationItem] setTitle: tweaksLabel];
                             // Insert the TweakSpecifiersController as an intermediate controller.
                             [mutableStack insertObject:tweakSpecifiersController atIndex: 1];
                             // Update the navigation stack.
@@ -647,7 +649,8 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
                             // Remove everything in the middle.
                             [mutableStack removeObjectsInRange:NSMakeRange(1, stackCount-2)];
                             // Set the TweakSpecifiersController navigationItem title.
-                            [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                            // [tweakSpecifiersController navigationItem].title = tweaksLabel;
+                            [[tweakSpecifiersController navigationItem] setTitle: tweaksLabel];
                             // Insert the TweakSpecifiersController as an intermediate controller.
                             [mutableStack insertObject:tweakSpecifiersController atIndex: 1];
                             // Update the navigation stack.
