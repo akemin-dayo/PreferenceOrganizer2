@@ -646,7 +646,7 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 		}
 	}
 	// Return success or failure.
-	return foundMatch;
+	return foundMatch; 
 }
 // Parses the given URL to check if it's in a PreferenceOrganizer2-API conforming format, that is to say,
 // it has a root=Tweaks, and a &path= corresponding to a tweak name.
