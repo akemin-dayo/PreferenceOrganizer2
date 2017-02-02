@@ -40,4 +40,5 @@
 #define PO2Observer(funcToCall, listener) CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)funcToCall, CFSTR(listener), NULL, CFNotificationSuspensionBehaviorCoalesce);
 #define PO2SyncPrefs()\
 	NSDictionary *PO2Settings = [NSDictionary dictionaryWithContentsOfFile:PO2PreferencePath];
+
 #define isJonyIve() (kCFCoreFoundationVersionNumber > 793.00)
