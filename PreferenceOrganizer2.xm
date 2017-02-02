@@ -124,6 +124,19 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 	((PSListController *)self).specifiers = specifiers;
 }
 
+// For iOS 10
+void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
+{
+	NSMutableArray *itemsToDelete = [NSMutableArray array];
+	for (PSSpecifier *spec in specifiers) {
+		NSString *Id = spec.identifier;
+		if ([Id isEqualToString:@"APPLE_ACCOUNT_GROUP"] || [Id isEqualToString:@"ACCOUNTS_GROUP"] || [Id isEqualToString:@"MEDIA_GROUP"] )
+			[itemsToDelete addObject:spec];
+	}
+	[specifiers removeObjectsInArray:itemsToDelete];
+}
+
+
 /*
 	##  #######   ######    ########    ##   
 	   ##     ## ##    ##        ##     ##   
@@ -309,7 +322,23 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			[specifiers removeObjectsInArray:AppleAppSpecifiers];
+
+			if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
+				// Bug in iOS 10 that if delete all group such as APPLE_ACCOUNT_GROUP ACCOUNTS_GROUP MEDIA_GROUP and it will crash
+				for (PSSpecifier* specifier in AppleAppSpecifiers) {
+					// Remove all in specifiers without group specifier
+					// Will remove it later in insertMovedThirdPartySpecifiersAnimated
+					if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
+						continue ;
+					}else{
+						[specifiers removeObject:specifier];
+					}
+				}
+			} else{
+				// below iOS 9 then delete all
+				[specifiers removeObjectsInArray:AppleAppSpecifiers];
+			}
+
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			// Setting this identifier for later use...
@@ -338,6 +367,18 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 			[specifiers addObject:appstoreSpecifier];
 		}
 
+		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
+			// Move deleted group specifiers to last..
+			for (int i = 0; i < specifiers.count; i++) {
+				PSSpecifier *specifier = (PSSpecifier *) specifiers[i];
+				NSString *identifier = specifier.identifier ?: @"";
+				if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
+					[specifiers removeObject:specifier];
+					// Move to last
+					[specifiers addObject:specifier];
+				}
+			}
+		}
 		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
 	
@@ -374,8 +415,14 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 
 %hook PrefsListController
 %group iOS9Up
+
 // Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
+		if (shouldShowAppleApps && AppleAppSpecifiers) {
+			removeOldAppleGroupSpecifiers([self specifiers]);
+		}
+	}
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
 		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
 		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
@@ -646,7 +693,7 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 		}
 	}
 	// Return success or failure.
-	return foundMatch;
+	return foundMatch; 
 }
 // Parses the given URL to check if it's in a PreferenceOrganizer2-API conforming format, that is to say,
 // it has a root=Tweaks, and a &path= corresponding to a tweak name.
