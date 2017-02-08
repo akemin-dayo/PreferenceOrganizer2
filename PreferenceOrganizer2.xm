@@ -100,8 +100,9 @@ void removeOldAppleThirdPartySpecifiers(NSMutableArray <PSSpecifier *> *specifie
 	NSMutableArray *itemsToDelete = [NSMutableArray array];
 	for (PSSpecifier *spec in specifiers) {
 		NSString *Id = spec.identifier;
-		if ([Id isEqualToString:@"com.apple.news"] || [Id isEqualToString:@"com.apple.iBooks"] || [Id isEqualToString:@"com.apple.podcasts"] || [Id isEqualToString:@"com.apple.itunesu"])
+		if ([Id isEqualToString:@"com.apple.news"] || [Id isEqualToString:@"com.apple.iBooks"] || [Id isEqualToString:@"com.apple.podcasts"] || [Id isEqualToString:@"com.apple.itunesu"]) {
 			[itemsToDelete addObject:spec];
+		}
 	}
 	[specifiers removeObjectsInArray:itemsToDelete];
 }
@@ -122,6 +123,18 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 		[specifiers removeObjectsInArray:thirdParty];
 	}
 	((PSListController *)self).specifiers = specifiers;
+}
+
+// For iOS 10
+void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
+	NSMutableArray *itemsToDelete = [NSMutableArray array];
+	for (PSSpecifier *spec in specifiers) {
+		NSString *specID = spec.identifier;
+		if ([specID isEqualToString:@"APPLE_ACCOUNT_GROUP"] || [specID isEqualToString:@"ACCOUNTS_GROUP"] || [specID isEqualToString:@"MEDIA_GROUP"]) {
+			[itemsToDelete addObject:spec];
+		}
+	}
+	[specifiers removeObjectsInArray:itemsToDelete];
 }
 
 /*
@@ -309,7 +322,21 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			[specifiers removeObjectsInArray:AppleAppSpecifiers];
+			if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
+				// Workaround for a bug in iOS 10
+				// If all Apple groups (APPLE_ACCOUNT_GROUP, etc.) are deleted, it will crash
+				for (PSSpecifier* specifier in AppleAppSpecifiers) {
+					// We'll handle this later in insertMovedThirdPartySpecifiersAnimated
+					if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
+						continue;
+					} else {
+						[specifiers removeObject:specifier];
+					}
+				}
+			} else {
+				// Original behaviour is fine in iOS 9
+				[specifiers removeObjectsInArray:AppleAppSpecifiers];
+			}
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			// Setting this identifier for later use...
@@ -338,6 +365,18 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 			[specifiers addObject:appstoreSpecifier];
 		}
 
+		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
+			// Move deleted group specifiers to last..
+			for (int i = 0; i < specifiers.count; i++) {
+				PSSpecifier *specifier = (PSSpecifier *) specifiers[i];
+				NSString *identifier = specifier.identifier ?: @"";
+				if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
+					[specifiers removeObject:specifier];
+					// Move to last
+					[specifiers addObject:specifier];
+				}
+			}
+		}
 		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
 	
@@ -376,6 +415,11 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 %group iOS9Up
 // Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
+		if (shouldShowAppleApps && AppleAppSpecifiers) {
+			removeOldAppleGroupSpecifiers([self specifiers]);
+		}
+	}
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
 		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
 		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
