@@ -100,8 +100,9 @@ void removeOldAppleThirdPartySpecifiers(NSMutableArray <PSSpecifier *> *specifie
 	NSMutableArray *itemsToDelete = [NSMutableArray array];
 	for (PSSpecifier *spec in specifiers) {
 		NSString *Id = spec.identifier;
-		if ([Id isEqualToString:@"com.apple.news"] || [Id isEqualToString:@"com.apple.iBooks"] || [Id isEqualToString:@"com.apple.podcasts"] || [Id isEqualToString:@"com.apple.itunesu"])
+		if ([Id isEqualToString:@"com.apple.news"] || [Id isEqualToString:@"com.apple.iBooks"] || [Id isEqualToString:@"com.apple.podcasts"] || [Id isEqualToString:@"com.apple.itunesu"]) {
 			[itemsToDelete addObject:spec];
+		}
 	}
 	[specifiers removeObjectsInArray:itemsToDelete];
 }
@@ -125,17 +126,16 @@ void fixupThirdPartySpecifiers(PSListController *self, NSArray <PSSpecifier *> *
 }
 
 // For iOS 10
-void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
-{
+void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 	NSMutableArray *itemsToDelete = [NSMutableArray array];
 	for (PSSpecifier *spec in specifiers) {
-		NSString *Id = spec.identifier;
-		if ([Id isEqualToString:@"APPLE_ACCOUNT_GROUP"] || [Id isEqualToString:@"ACCOUNTS_GROUP"] || [Id isEqualToString:@"MEDIA_GROUP"] )
+		NSString *specID = spec.identifier;
+		if ([specID isEqualToString:@"APPLE_ACCOUNT_GROUP"] || [specID isEqualToString:@"ACCOUNTS_GROUP"] || [specID isEqualToString:@"MEDIA_GROUP"]) {
 			[itemsToDelete addObject:spec];
+		}
 	}
 	[specifiers removeObjectsInArray:itemsToDelete];
 }
-
 
 /*
 	##  #######   ######    ########    ##   
@@ -322,23 +322,21 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
 		[specifiers addObject:[PSSpecifier groupSpecifierWithName:nil]];
 		
 		if (shouldShowAppleApps && AppleAppSpecifiers) {
-
 			if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
-				// Bug in iOS 10 that if delete all group such as APPLE_ACCOUNT_GROUP ACCOUNTS_GROUP MEDIA_GROUP and it will crash
+				// Workaround for a bug in iOS 10
+				// If all Apple groups (APPLE_ACCOUNT_GROUP, etc.) are deleted, it will crash
 				for (PSSpecifier* specifier in AppleAppSpecifiers) {
-					// Remove all in specifiers without group specifier
-					// Will remove it later in insertMovedThirdPartySpecifiersAnimated
+					// We'll handle this later in insertMovedThirdPartySpecifiersAnimated
 					if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
-						continue ;
-					}else{
+						continue;
+					} else {
 						[specifiers removeObject:specifier];
 					}
 				}
-			} else{
-				// below iOS 9 then delete all
+			} else {
+				// Original behaviour is fine in iOS 9
 				[specifiers removeObjectsInArray:AppleAppSpecifiers];
 			}
-
 			PSSpecifier *appleSpecifier = [PSSpecifier preferenceSpecifierNamed:appleAppsLabel target:self set:NULL get:NULL detail:[AppleAppSpecifiersController class] cell:[PSTableCell cellTypeFromString:@"PSLinkCell"] edit:nil];
 			[appleSpecifier setProperty:[UIImage _applicationIconImageForBundleIdentifier:@"com.apple.mobilesafari" format:0 scale:[UIScreen mainScreen].scale] forKey:@"iconImage"];
 			// Setting this identifier for later use...
@@ -415,7 +413,6 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
 
 %hook PrefsListController
 %group iOS9Up
-
 // Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
 	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
@@ -693,7 +690,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers)
 		}
 	}
 	// Return success or failure.
-	return foundMatch; 
+	return foundMatch;
 }
 // Parses the given URL to check if it's in a PreferenceOrganizer2-API conforming format, that is to say,
 // it has a root=Tweaks, and a &path= corresponding to a tweak name.

@@ -10,8 +10,7 @@ Due to limited time and other personal circumstances, progress on my projects wi
 
 #**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* **[3.6] [iOS 10]** Fixed App Store App sorting functionality on iOS 10.
-* **[3.6] [iOS 6+]** Further improvements to tweak URL forwarding (from external apps/tweaks).
+* **[3.7] [iOS 10]** Fixed a crash that would occur on some iOS 10 devices when Apple Apps were attempted to be sorted.
 
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
