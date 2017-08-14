@@ -1,27 +1,4 @@
 #import "PreferenceOrganizer2.h"
-#import "PO2Common.h"
-#import "PO2Log.h"
-#import <KarenLocalizer/KarenLocalizer.h>
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_7_0
-#define kCFCoreFoundationVersionNumber_iOS_7_0 847.20
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_9_0
-#define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_9_2
-#define kCFCoreFoundationVersionNumber_iOS_9_2 1242.13
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_10_0
-#define kCFCoreFoundationVersionNumber_iOS_10_0 1348.00
-#endif
 
 @interface PrefsListController : PSListController
 @end

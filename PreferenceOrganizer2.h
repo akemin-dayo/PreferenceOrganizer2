@@ -4,6 +4,10 @@
 #import <Preferences/PSTableCell.h>
 #import <UIKit/UIKit.h>
 #import <substrate.h>
+#import <version.h>
+#import <KarenLocalizer/KarenLocalizer.h>
+#import "PO2Common.h"
+#import "PO2Log.h"
 
 @interface PreferencesAppController
 - (BOOL)preferenceOrganizerOpenTweakPane:(NSString *)name;
