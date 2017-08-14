@@ -215,6 +215,8 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>© 2013-2017 Karen／明美 (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), Gary Lin (gary19930520).</string>
 		</dict>
 
 		<dict>
@@ -226,13 +228,6 @@
 			<string>RESET</string>
 			<key>action</key>
 			<string>resetSettings</string>
-		</dict>
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>© 2013-2017 Karen／明美 (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), Gary Lin (gary19930520).</string>
 		</dict>
 	</array>
 	<key>title</key>
