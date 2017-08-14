@@ -4,7 +4,7 @@ Architecture: iphoneos-arm
 Description: Organises your Settings app into 4 toggleable and renamable categories: System Apps, Social Networking Apps, Tweaks, and App Store Apps.
 Homepage: https://cydia.angelxwind.net/
 Depiction: https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2
-Author: Karen, Hiraku, Gary, Eliz, insanj <angelXwind@angelxwind.net>
+Author: Karen／明美 (angelXwind) <angelXwind@angelxwind.net>
 Section: Tweaks
 Depends: mobilesubstrate, preferenceloader (>= 2.2.3), firmware (>= 6.0), net.angelxwind.karenprefs, net.angelxwind.karenlocalizer
 Conflicts: com.phillipt.noappsettings, jp.r-plus.cloaky, me.qusic.preferenceorganizer, com.sull.preferenceorganizer, com.sull.preferenceorganizer2, com.sull.preferenceorganizer7
