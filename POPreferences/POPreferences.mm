@@ -4,7 +4,7 @@
 #import <KarenPrefs/KarenPrefsAnimatedExitToSpringBoard.h>
 #import <UIKit/UIKit.h>
 
-NSString *paypalURL = @"https://www.paypal.com/myaccount/transfer/send/external?recipient=rei@angelxwind.net&amount=&currencyCode=USD&payment_type=Gift";
+NSString *paypalURL = @"https://paypal.me/angelXwind";
 
 KarenLocalizer *karenLocalizer;
 
