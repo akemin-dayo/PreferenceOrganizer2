@@ -6,11 +6,34 @@
 	<array>
 		<dict>
 			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>© 2013-2018 Karen／明美 (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku Wang (hirakujira), Gary Lin (gary19930520)</string>
+		</dict>
+		
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>cellClass</key>
+			<string>POBannerCell</string>
+			<key>height</key>
+			<integer>205</integer>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>action</key>
 			<string>closeSettings</string>
 			<key>label</key>
 			<string>APPLY</string>
+			<key>cellClass</key>
+			<string>POButtonCell</string>
 		</dict>
 
 		<dict>
@@ -33,6 +56,8 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -72,6 +97,8 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -111,6 +138,8 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -150,6 +179,8 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -210,13 +241,13 @@
 			<string>DEBUG</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-PreferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>© 2013-2017 Karen／明美 (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku Wang (hirakujira), Gary Lin (gary19930520)</string>
 		</dict>
 
 		<dict>
@@ -228,6 +259,8 @@
 			<string>RESET</string>
 			<key>action</key>
 			<string>resetSettings</string>
+			<key>icon</key>
+			<string>resetIcon.png</string>
 		</dict>
 	</array>
 	<key>title</key>

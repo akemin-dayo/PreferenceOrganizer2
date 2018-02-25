@@ -6,9 +6,9 @@ Homepage: https://cydia.angelxwind.net/
 Depiction: https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2
 Author: Karen／明美 (angelXwind) <angelXwind@angelxwind.net>
 Section: Tweaks
-Depends: mobilesubstrate, preferenceloader (>= 2.2.3), firmware (>= 6.0), net.angelxwind.karenprefs, net.angelxwind.karenlocalizer
+Depends: mobilesubstrate, preferenceloader (>= 2.2.3), firmware (>= 6.0), net.angelxwind.karenprefs (>= 1.2), net.angelxwind.karenlocalizer
 Conflicts: com.phillipt.noappsettings, jp.r-plus.cloaky, me.qusic.preferenceorganizer, com.sull.preferenceorganizer, com.sull.preferenceorganizer2, com.sull.preferenceorganizer7
-Version: 3.8
+Version: 4.0~b1
 Maintainer: Karen／明美 (angelXwind) <angelXwind@angelxwind.net>
 Replaces: org.ilendsoft.preferenceorganizer, com.eliz.preferenceorganizer7
-Icon: file:///Library/PreferenceBundles/POPreferences.bundle/Tweaks@2x.png
+Icon: file:///Library/KarenRepoIcons/net.angelxwind.preferenceorganizer2.png

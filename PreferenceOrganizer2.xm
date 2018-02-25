@@ -454,6 +454,10 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 	};
 	%orig(apps, newCompletion);
 }
+
+-(void) reloadSpecifiers {
+	return;
+}
 %end
 %end
 
