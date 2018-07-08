@@ -3,7 +3,7 @@
 "ERROR" = "エラー";
 
 "APT_DETAIL_1" = "cydia.angelxwind.net (パッケージID net.angelxwind.preferenceorganizer2)からPreferenceOrganizer 2をインストールしていません。";
-"APT_DETAIL_2" = "Karen／明美 (angelXwind)、Eliz、Julian Weiss (insanj)、ilendemli、Hiraku (hirakujira)、またはGary Lin (gary19930520)の4名のみがPreferenceOrganizer 2の開発に関わっています。それ以外の人は開発には関わっていないので、もし関わっていると他の人が言っていてもその人は関わっていないです。";
+"APT_DETAIL_2" = "Karen/あけみ (angelXwind)、Eliz、Julian Weiss (insanj)、ilendemli、Hiraku (hirakujira)、またはGary Lin (gary19930520)の4名のみがPreferenceOrganizer 2の開発に関わっています。それ以外の人は開発には関わっていないので、もし関わっていると他の人が言っていてもその人は関わっていないです。";
 "APT_DETAIL_3" = "安定性を確保するために、公式リポジトリのみからPreferenceOrganizer 2をダウンロードしてください。";
 
 "APPLE_APPS" = "システムアプリ";

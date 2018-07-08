@@ -3,7 +3,7 @@
 "ERROR" = "ERROR";
 
 "APT_DETAIL_1" = "You seem to have installed PreferenceOrganizer 2 from an APT repository that is not cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).";
-"APT_DETAIL_2" = "If someone other than Karen／明美 (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are lying.";
+"APT_DETAIL_2" = "If someone other than Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (gary19930520) is taking credit for the development of this tweak, they are lying.";
 "APT_DETAIL_3" = "Please only download PreferenceOrganizer 2 from the official repository to ensure file integrity and reliability.";
 
 "APPLE_APPS" = "System Apps";

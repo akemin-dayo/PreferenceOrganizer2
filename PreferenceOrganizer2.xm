@@ -150,6 +150,9 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
+	if (!MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers")) {
+		return specifiers;
+	}
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Save the original, unorganised specifiers
@@ -179,6 +182,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 		// organizableSpecifiers array. This currently compares identifiers to prevent issues
 		// with extra groups (such as the single "Developer" group).
 		// CASTLE -> STORE -> ... -> DEVELOPER_SETTINGS -> ...
+		// NSLog(@"%@", specifiers);
 		for (int i = 0; i < specifiers.count; i++) { // We can't fast enumerate when order matters
 			PSSpecifier *s = (PSSpecifier *) specifiers[i];
 			NSString *identifier = s.identifier ?: @"";
@@ -197,7 +201,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 
 				// If we're in the first item of the iCloud/Mail/Notes... group, setup the key string, 
 				// grab the group from the previously enumerated specifier, and get ready to shift things into it. 
-				else if ([identifier isEqualToString:@"CASTLE"] ) {
+				else if ([identifier isEqualToString:(kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) ? @"CASTLE" : @"STORE"] ) {
 					currentOrganizableGroup = identifier;
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
@@ -214,7 +218,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
 					// we don't need this, so that CASTLE and STORE can be in the same group
-					//[newSavedGroup addObject:specifiers[i - 1]];
+					// [newSavedGroup addObject:specifiers[i - 1]];
 					[newSavedGroup addObject:s];
 
 					[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
@@ -269,6 +273,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 				}
 
 				[newSavedGroup addObject:s];
+				// NSLog(@"Adding %@ to %@", s.identifier, currentOrganizableGroup);
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
 			if (i == specifiers.count - 1 && groupID != 4 + ddiIsMounted) {
@@ -281,8 +286,8 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
 		}
-		AppleAppSpecifiers = [organizableSpecifiers[@"CASTLE"] retain];
-		[AppleAppSpecifiers addObjectsFromArray:organizableSpecifiers[@"STORE"]];
+		AppleAppSpecifiers = [organizableSpecifiers[@"STORE"] retain];
+		// [AppleAppSpecifiers addObjectsFromArray:organizableSpecifiers[@"STORE"]];
 
 		SocialAppSpecifiers = [organizableSpecifiers[@"SOCIAL_ACCOUNTS"] retain];
 
