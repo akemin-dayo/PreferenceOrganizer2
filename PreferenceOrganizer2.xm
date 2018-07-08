@@ -150,7 +150,8 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-	if (!MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers")) {
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
+		// Causes crashing when resuming Preferences from suspend state
 		return specifiers;
 	}
 	static dispatch_once_t onceToken;
@@ -201,7 +202,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 
 				// If we're in the first item of the iCloud/Mail/Notes... group, setup the key string, 
 				// grab the group from the previously enumerated specifier, and get ready to shift things into it. 
-				else if ([identifier isEqualToString:(kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) ? @"CASTLE" : @"STORE"] ) {
+				else if ([identifier isEqualToString:(kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) ? @"CASTLE" : @"STORE"] ) {
 					currentOrganizableGroup = identifier;
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
