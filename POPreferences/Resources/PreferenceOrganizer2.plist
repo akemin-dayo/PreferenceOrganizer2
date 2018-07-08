@@ -82,6 +82,14 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>SOCIAL_APPS</string>
+			<key>pl_filter</key>
+			<dict>
+				<key>CoreFoundationVersion</key>
+				<array>
+					<string>793.00</string>
+					<string>1443.00</string>
+				</array>
+			</dict>
 		</dict>
 
 		<dict>
@@ -99,6 +107,14 @@
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
 			<key>cellClass</key>
 			<string>POSwitchCell</string>
+			<key>pl_filter</key>
+			<dict>
+				<key>CoreFoundationVersion</key>
+				<array>
+					<string>793.00</string>
+					<string>1443.00</string>
+				</array>
+			</dict>
 		</dict>
 
 		<dict>

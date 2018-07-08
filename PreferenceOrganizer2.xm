@@ -64,7 +64,11 @@ static void PO2InitPrefs() {
 	PO2BoolPref(shouldShowAppleApps, ShowAppleApps, 1);
 	PO2BoolPref(shouldShowTweaks, ShowTweaks, 1);
 	PO2BoolPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
-	PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) {
+		shouldShowSocialApps = 0;
+	} else {
+		PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
+	}
 	karenLocalizer = [[KarenLocalizer alloc] initWithKarenLocalizerBundle:@"PreferenceOrganizer2"];
 	PO2StringPref(appleAppsLabel, AppleAppsName, [karenLocalizer karenLocalizeString:@"APPLE_APPS"]);
 	PO2StringPref(socialAppsLabel, SocialAppsName, [karenLocalizer karenLocalizeString:@"SOCIAL_APPS"]);
@@ -373,9 +377,8 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 }
 
 // This method may add some Apple's third party specifiers with respect to restriction settings and results in duplicate entries, so fix it here
--(void) updateRestrictedSettings
-{
-	%orig;
+-(void) updateRestrictedSettings {
+	%orig();
 	if (shouldShowAppStoreApps) {
 		[((PSListController *)self).specifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
 		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
@@ -398,10 +401,8 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 %group iOS9Up
 // Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
-	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
-		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			removeOldAppleGroupSpecifiers([self specifiers]);
-		}
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) && (shouldShowAppleApps && AppleAppSpecifiers)) {
+		removeOldAppleGroupSpecifiers([self specifiers]);
 	}
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
 		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
