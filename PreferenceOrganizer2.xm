@@ -154,10 +154,10 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
-		// Causes crashing when resuming Preferences from suspend state
+	/*if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
+		// While this /does/ make the Tweaks specifier appear, it also causes all tweak preference panes to completely disappear, and causes the Preferences app to crash when resuming it from a suspended state
 		return specifiers;
-	}
+	}*/
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Save the original, unorganised specifiers
