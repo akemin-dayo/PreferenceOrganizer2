@@ -158,6 +158,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
 		return specifiers;
 	}
+	PO2InitPrefs();
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Save the original, unorganised specifiers
@@ -358,21 +359,23 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 		}
 
 		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
-			// Move deleted group specifiers to last..
+			// Move deleted group specifiers to the end...
 			for (int i = 0; i < specifiers.count; i++) {
 				PSSpecifier *specifier = (PSSpecifier *) specifiers[i];
 				NSString *identifier = specifier.identifier ?: @"";
 				if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
 					[specifiers removeObject:specifier];
-					// Move to last
-					[specifiers addObject:specifier];
+					// Move to the end only on iOS < 11 (doing this on >= 11 will cause extraneous spaces to be left over)
+					if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_11_0) {
+						[specifiers addObject:specifier];
+					}
 				}
 			}
 		}
 		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
 	
-	// If we found Apple's third party apps, we really won't add them because this would mess up with UITableView rows count check after the update
+	// If we found Apple's third party apps, we really won't add them because this would mess up the UITableView row count check after the update
 	if (shouldShowAppleApps) {
 		[specifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
 	}
@@ -494,6 +497,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
+	PO2InitPrefs();
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		NSMutableDictionary *savedSpecifiers = [NSMutableDictionary dictionary];

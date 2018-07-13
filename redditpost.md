@@ -8,13 +8,19 @@
 
 Due to limited time and other personal circumstances, progress on my projects will be a bit slower than usual. Don't worry, new releases are still coming ;P
 
-#**Changelog ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* **[3.7] [iOS 10]** Fixed a crash that would occur on some iOS 10 devices when Apple Apps were attempted to be sorted.
+* Removed Social Apps group on iOS 11, as iOS no longer has system integration with social networking services.
+
+* Fixed all iOS 11-specific issues — PreferenceOrganiser 2 is now fully compatible with iOS 11!
+
+* Fixed a rare issue related to preferences loading affecting a small subset of device configurations that could lead to crashing.
+
+* Fixed a rare issue on iOS 10.x where resuming the Preferences app from a suspended state will sometimes cause it to crash.
 
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
-If you think PreferenceOrganizer 2 made your device crash, install CrashReporter and send me an email using its app.
+If you think PreferenceOrganizer 2 is causing crashes, install CrashReporter and send me an email using its app.
 
 Otherwise, please report all other issues here in this reddit thread so others will be able to share knowledge.
 
@@ -26,9 +32,9 @@ Your device is now violating... *several* laws of thermodynamics. Congratulation
 
 #**For new users: So what *is* PreferenceOrganizer 2?**
 
-A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, 9, and 10.
+A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, 9, 10, and 11.
 
-PreferenceOrganizer 2 organises your Settings app by separating your Settings app into 4 configurable categories: Apple Apps, Social Apps, Tweaks, and App Store Apps.
+PreferenceOrganiser 2 organises and de-clutters your Preferences app into several configurable categories for ease of navigation.
 
 Uses [KarenPrefs](https://github.com/angelXwind/KarenPrefs) and [KarenLocalizer](https://github.com/angelXwind/KarenLocalizer).
 
