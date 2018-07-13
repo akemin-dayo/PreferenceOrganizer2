@@ -4,10 +4,6 @@
 
 [**Donate Using PayPal (`rei@angelxwind.net`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Important Announcement**
-
-Due to limited time and other personal circumstances, progress on my projects will be a bit slower than usual. Don't worry, new releases are still coming ;P
-
 #**Changelog for 4.0 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
 * Removed Social Apps group on iOS 11, as iOS no longer has system integration with social networking services.
