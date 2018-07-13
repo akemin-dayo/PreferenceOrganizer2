@@ -132,6 +132,14 @@
 			<string>SOCIAL_APPS</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>pl_filter</key>
+			<dict>
+				<key>CoreFoundationVersion</key>
+				<array>
+					<string>793.00</string>
+					<string>1443.00</string>
+				</array>
+			</dict>
 		</dict>
 
 		<dict>
