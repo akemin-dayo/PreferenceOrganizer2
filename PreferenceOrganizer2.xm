@@ -49,6 +49,7 @@ static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
 static BOOL ddiIsMounted = 0;
+static BOOL deviceShowsTVProviders = 0;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -193,7 +194,6 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 
 			// If we're not a group cell...
 			if (s->cellType != 0) {
-
 				// If we're hitting the Developer settings area, regardless of position, we need to steal 
 				// its group specifier from the previous group and leave it out of everything.
 				if ([identifier isEqualToString:@"DEVELOPER_SETTINGS"]) {
@@ -251,11 +251,17 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 			// So, it must either be the Tweaks or Apps section.
 			else if (currentOrganizableGroup) {
 				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
+					// NSLog(@"currentOrganizableGroup = %@", currentOrganizableGroup);
+					// NSLog(@"identifier = %@", identifier);
+					if ([identifier isEqualToString:@"VIDEO_SUBSCRIBER_GROUP"]) {
+						deviceShowsTVProviders = 1;
+					}
 					// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
-					if (groupID < 2 + ddiIsMounted) {
+					// If an iOS 11 device is in a locale where the TV Provider option will show, groupID must be adjusted
+					if (groupID < 2 + ddiIsMounted + deviceShowsTVProviders) {
 						groupID++;
 						currentOrganizableGroup = @"STORE";
-					} else if (groupID == 2 + ddiIsMounted) {
+					} else if (groupID == 2 + ddiIsMounted + deviceShowsTVProviders) {
 						groupID++;
 						currentOrganizableGroup = @"TWEAKS";
 					} else {
