@@ -1,6 +1,6 @@
 "APPLY" = "Apply (Quit Settings)";
 
-"ENABLE" = "Show Section";
+"ENABLE" = "Show This Section";
 "NAME" = "Section Name";
 
 "APPLE_APPS" = "System Apps";
@@ -12,7 +12,7 @@
 "DEBUG" = "Debug Logging";
 
 "DONATE_GROUPCELL" = "Donations";
-"DONATE_GROUPCELL_DETAIL" = "PayPal Address: rei@angelxwind.net\n\nDonations are greatly appreciated — thank you to everyone who has donated so far!";
+"DONATE_GROUPCELL_DETAIL" = "PayPal Address: rei@angelxwind.net\n\nDonations are not required but greatly appreciated! Thank you to all those who have donated so far!";
 "DONATE" = "Donate Using PayPal";
 
 "RESET" = "Reset Settings";

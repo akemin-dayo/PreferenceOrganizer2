@@ -1,6 +1,6 @@
-"APPLY" = "適用する";
+"APPLY" = "適用する（設定アプリを閉じる）";
 
-"ENABLE" = "セクションを表示";
+"ENABLE" = "このセクションを表示する";
 "NAME" = "セクション名";
 
 "APPLE_APPS" = "システムアプリ";
@@ -8,11 +8,11 @@
 "TWEAKS" = "Tweaks";
 "APP_STORE_APPS" = "App Storeのアプリ";
 
-"DEBUG_DETAIL" = "/var/tmp/net.angelxwind.preferenceorganizer2.logにデバッグログを残します";
-"DEBUG" = "デバッグログ";
+"DEBUG_DETAIL" = "/var/tmp/net.angelxwind.preferenceorganizer2.logにいくつかのデバッグ情報をログする。";
+"DEBUG" = "デバッグ情報をログする";
 
 "DONATE_GROUPCELL" = "寄付";
-"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス: rei@angelxwind.net\n\n寄付は大歓迎です、これまでに寄付してくれた方々ありがとうございます！";
+"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス：rei@angelxwind.net\n\n寄付するのは全然必要はないけど大歓迎です！これまでに寄付してくれた方々本当にありがとうございます！";
 "DONATE" = "PayPalを使用して寄付する";
 
 "RESET" = "設定をリセットする";

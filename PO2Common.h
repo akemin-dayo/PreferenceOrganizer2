@@ -1,5 +1,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
+#import <version.h>
 
 #define DPKG_PATH "/var/lib/dpkg/info/net.angelxwind.preferenceorganizer2.list"
 
@@ -41,4 +42,4 @@
 #define PO2SyncPrefs()\
 	NSDictionary *PO2Settings = [NSDictionary dictionaryWithContentsOfFile:PO2PreferencePath];
 
-#define isJonyIve() (kCFCoreFoundationVersionNumber > 793.00)
+#define isJonyIve() (kCFCoreFoundationVersionNumber > kCFCoreFoundationVersionNumber_iOS_6_1)

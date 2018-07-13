@@ -3,7 +3,7 @@
 "ERROR" = "错误";
 
 "APT_DETAIL_1" = "您看起来从非原始 Cydia 源 cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2) 安装了 PreferenceOrganizer 2";
-"APT_DETAIL_2" = "如果除了 Karen Tsai (angelXwind)、Eliz、Julian Weiss (insanj)、ilendemli、Hiraku (hirakujira) 或 Gary Lin (gary19930520) 以外，有任何人声称了他们参与了此插件的开发，请不用怀疑，他们是在说谎。";
+"APT_DETAIL_2" = "如果除了 Karen/あけみ (angelXwind)、Eliz、Julian Weiss (insanj)、ilendemli、Hiraku (hirakujira) 或 Gary Lin (gary19930520) 以外，有任何人声称了他们参与了此插件的开发，请不用怀疑，他们是在说谎。";
 "APT_DETAIL_3" = "请只从原始 Cydia 源下载、安装 PreferenceOrganizer 2 以保证您系统文档的完整性与稳定性";
 
 "APPLE_APPS" = "系统设置";
