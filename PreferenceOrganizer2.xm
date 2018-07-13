@@ -154,10 +154,9 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-	/*if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
-		// While this /does/ make the Tweaks specifier appear, it also causes all tweak preference panes to completely disappear, and causes the Preferences app to crash when resuming it from a suspended state
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
 		return specifiers;
-	}*/
+	}
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Save the original, unorganised specifiers
@@ -401,7 +400,8 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 %group iOS9Up
 // Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
-	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) && (shouldShowAppleApps && AppleAppSpecifiers)) {
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) && (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_11_0) && (shouldShowAppleApps && AppleAppSpecifiers)) {
+		// Appears to be the cause behind the resume-from-suspend crash on iOS 11 (as long as the _thirdPartySpecifiers condition in -(NSMutableArray *) specifiers is present)
 		removeOldAppleGroupSpecifiers([self specifiers]);
 	}
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
@@ -693,7 +693,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 		if (tweakPathRange.location != NSNotFound) {
 			NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
 			// If specified tweak was found, don't call the original method;
-			if ( [self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]] ) {
+			if ([self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]]) {
 				return;
 			}
 		}
