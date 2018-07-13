@@ -154,10 +154,16 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
-	/*if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
 		// While this /does/ make the Tweaks specifier appear, it also causes all tweak preference panes to completely disappear, and causes the Preferences app to crash when resuming it from a suspended state
 		return specifiers;
-	}*/
+	}
+
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) ) {
+		// PO2 will lose preference at here, so we load again preventing label such as @appleAppsLabel is null then crashing .......
+		PO2InitPrefs();
+	}
+
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Save the original, unorganised specifiers
@@ -401,7 +407,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 %group iOS9Up
 // Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
-	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) && (shouldShowAppleApps && AppleAppSpecifiers)) {
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) && (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_11_0) && (shouldShowAppleApps && AppleAppSpecifiers)) {
 		removeOldAppleGroupSpecifiers([self specifiers]);
 	}
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
