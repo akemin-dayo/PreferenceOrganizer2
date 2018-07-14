@@ -360,17 +360,16 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 
 		if ((shouldShowAppleApps && AppleAppSpecifiers) && (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0)) {
 			// Move deleted group specifiers to the end...
+			NSMutableArray *removeObjects = [[NSMutableArray alloc] init];
 			for (int i = 0; i < specifiers.count; i++) {
 				PSSpecifier *specifier = (PSSpecifier *) specifiers[i];
 				NSString *identifier = specifier.identifier ?: @"";
+				// NSLog(@"iKeywi 3 %@",specifier.identifier);
 				if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
-					[specifiers removeObject:specifier];
-					// Move to the end only on iOS < 11 (doing this on >= 11 will cause extraneous spaces to be left over)
-					if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_11_0) {
-						[specifiers addObject:specifier];
-					}
+					[removeObjects addObject:specifier];
 				}
 			}
+			[specifiers removeObjectsInArray:removeObjects];
 		}
 		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
