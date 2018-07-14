@@ -358,7 +358,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 			[specifiers addObject:appstoreSpecifier];
 		}
 
-		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
+		if ((shouldShowAppleApps && AppleAppSpecifiers) && (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0)) {
 			// Move deleted group specifiers to the end...
 			for (int i = 0; i < specifiers.count; i++) {
 				PSSpecifier *specifier = (PSSpecifier *) specifiers[i];

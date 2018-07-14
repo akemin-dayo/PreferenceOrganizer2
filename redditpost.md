@@ -4,7 +4,9 @@
 
 [**Donate Using PayPal (`rei@angelxwind.net`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Changelog for 4.0 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0 and 4.0.1 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+
+* Fixed an issue where system apps group cells would entirely disappear on iOS 11 if the System Apps section was disabled in PreferenceOrganiser 2.
 
 * Removed Social Apps group on iOS 11, as iOS no longer has system integration with social networking services.
 
