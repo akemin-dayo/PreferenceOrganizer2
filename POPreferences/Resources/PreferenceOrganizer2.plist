@@ -6,11 +6,34 @@
 	<array>
 		<dict>
 			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>© 2013-2018 Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku Wang (hirakujira), Gary Lin (garynil)</string>
+		</dict>
+		
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>cellClass</key>
+			<string>POBannerCell</string>
+			<key>height</key>
+			<integer>205</integer>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>action</key>
 			<string>closeSettings</string>
 			<key>label</key>
 			<string>APPLY</string>
+			<key>cellClass</key>
+			<string>POButtonCell</string>
 		</dict>
 
 		<dict>
@@ -33,6 +56,8 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -57,6 +82,14 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>SOCIAL_APPS</string>
+			<key>pl_filter</key>
+			<dict>
+				<key>CoreFoundationVersion</key>
+				<array>
+					<string>793.00</string>
+					<string>1443.00</string>
+				</array>
+			</dict>
 		</dict>
 
 		<dict>
@@ -72,6 +105,16 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
+			<key>pl_filter</key>
+			<dict>
+				<key>CoreFoundationVersion</key>
+				<array>
+					<string>793.00</string>
+					<string>1443.00</string>
+				</array>
+			</dict>
 		</dict>
 
 		<dict>
@@ -89,6 +132,14 @@
 			<string>SOCIAL_APPS</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>pl_filter</key>
+			<dict>
+				<key>CoreFoundationVersion</key>
+				<array>
+					<string>793.00</string>
+					<string>1443.00</string>
+				</array>
+			</dict>
 		</dict>
 
 		<dict>
@@ -111,6 +162,8 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -150,6 +203,8 @@
 			<string>ENABLE</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-preferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -210,6 +265,8 @@
 			<string>DEBUG</string>
 			<key>PostNotification</key>
 			<string>net.angelxwind.preferenceorganizer2-PreferencesChanged</string>
+			<key>cellClass</key>
+			<string>POSwitchCell</string>
 		</dict>
 
 		<dict>
@@ -226,13 +283,8 @@
 			<string>RESET</string>
 			<key>action</key>
 			<string>resetSettings</string>
-		</dict>
-
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>© 2013-2017 Karen Tsai (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), Gary Lin (gary19930520).</string>
+			<key>icon</key>
+			<string>resetIcon.png</string>
 		</dict>
 	</array>
 	<key>title</key>

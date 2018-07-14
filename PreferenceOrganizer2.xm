@@ -1,27 +1,4 @@
 #import "PreferenceOrganizer2.h"
-#import "PO2Common.h"
-#import "PO2Log.h"
-#import <KarenLocalizer/KarenLocalizer.h>
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_7_0
-#define kCFCoreFoundationVersionNumber_iOS_7_0 847.20
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_8_0
-#define kCFCoreFoundationVersionNumber_iOS_8_0 1140.10
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_9_0
-#define kCFCoreFoundationVersionNumber_iOS_9_0 1240.10
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_9_2
-#define kCFCoreFoundationVersionNumber_iOS_9_2 1242.13
-#endif
-
-#ifndef kCFCoreFoundationVersionNumber_iOS_10_0
-#define kCFCoreFoundationVersionNumber_iOS_10_0 1348.00
-#endif
 
 @interface PrefsListController : PSListController
 @end
@@ -72,6 +49,7 @@ static BOOL shouldShowAppStoreApps;
 static BOOL shouldShowSocialApps;
 static BOOL shouldSyslogSpam;
 static BOOL ddiIsMounted = 0;
+static BOOL deviceShowsTVProviders = 0;
 static NSString *appleAppsLabel;
 static NSString *socialAppsLabel;
 static NSString *tweaksLabel;
@@ -87,7 +65,11 @@ static void PO2InitPrefs() {
 	PO2BoolPref(shouldShowAppleApps, ShowAppleApps, 1);
 	PO2BoolPref(shouldShowTweaks, ShowTweaks, 1);
 	PO2BoolPref(shouldShowAppStoreApps, ShowAppStoreApps, 1);
-	PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
+	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) {
+		shouldShowSocialApps = 0;
+	} else {
+		PO2BoolPref(shouldShowSocialApps, ShowSocialApps, 1);
+	}
 	karenLocalizer = [[KarenLocalizer alloc] initWithKarenLocalizerBundle:@"PreferenceOrganizer2"];
 	PO2StringPref(appleAppsLabel, AppleAppsName, [karenLocalizer karenLocalizeString:@"APPLE_APPS"]);
 	PO2StringPref(socialAppsLabel, SocialAppsName, [karenLocalizer karenLocalizeString:@"SOCIAL_APPS"]);
@@ -173,6 +155,10 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) && !(MSHookIvar<NSArray *>(self, "_thirdPartySpecifiers"))) {
+		return specifiers;
+	}
+	PO2InitPrefs();
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		// Save the original, unorganised specifiers
@@ -202,13 +188,13 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 		// organizableSpecifiers array. This currently compares identifiers to prevent issues
 		// with extra groups (such as the single "Developer" group).
 		// CASTLE -> STORE -> ... -> DEVELOPER_SETTINGS -> ...
+		// NSLog(@"%@", specifiers);
 		for (int i = 0; i < specifiers.count; i++) { // We can't fast enumerate when order matters
 			PSSpecifier *s = (PSSpecifier *) specifiers[i];
 			NSString *identifier = s.identifier ?: @"";
 
 			// If we're not a group cell...
 			if (s->cellType != 0) {
-
 				// If we're hitting the Developer settings area, regardless of position, we need to steal 
 				// its group specifier from the previous group and leave it out of everything.
 				if ([identifier isEqualToString:@"DEVELOPER_SETTINGS"]) {
@@ -220,7 +206,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 
 				// If we're in the first item of the iCloud/Mail/Notes... group, setup the key string, 
 				// grab the group from the previously enumerated specifier, and get ready to shift things into it. 
-				else if ([identifier isEqualToString:@"CASTLE"] ) {
+				else if ([identifier isEqualToString:(kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_11_0) ? @"CASTLE" : @"STORE"] ) {
 					currentOrganizableGroup = identifier;
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
@@ -237,7 +223,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 					
 					NSMutableArray *newSavedGroup = [[NSMutableArray alloc] init];
 					// we don't need this, so that CASTLE and STORE can be in the same group
-					//[newSavedGroup addObject:specifiers[i - 1]];
+					// [newSavedGroup addObject:specifiers[i - 1]];
 					[newSavedGroup addObject:s];
 
 					[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
@@ -266,11 +252,17 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 			// So, it must either be the Tweaks or Apps section.
 			else if (currentOrganizableGroup) {
 				if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_8_0) {
+					// NSLog(@"currentOrganizableGroup = %@", currentOrganizableGroup);
+					// NSLog(@"identifier = %@", identifier);
+					if ([identifier isEqualToString:@"VIDEO_SUBSCRIBER_GROUP"]) {
+						deviceShowsTVProviders = 1;
+					}
 					// If the DDI is mounted, groupIDs will all shift down by 1, causing the categories to be sorted incorrectly.
-					if (groupID < 2 + ddiIsMounted) {
+					// If an iOS 11 device is in a locale where the TV Provider option will show, groupID must be adjusted
+					if (groupID < 2 + ddiIsMounted + deviceShowsTVProviders) {
 						groupID++;
 						currentOrganizableGroup = @"STORE";
-					} else if (groupID == 2 + ddiIsMounted) {
+					} else if (groupID == 2 + ddiIsMounted + deviceShowsTVProviders) {
 						groupID++;
 						currentOrganizableGroup = @"TWEAKS";
 					} else {
@@ -292,6 +284,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 				}
 
 				[newSavedGroup addObject:s];
+				// NSLog(@"Adding %@ to %@", s.identifier, currentOrganizableGroup);
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
 			if (i == specifiers.count - 1 && groupID != 4 + ddiIsMounted) {
@@ -304,8 +297,8 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 				[organizableSpecifiers setObject:newSavedGroup forKey:currentOrganizableGroup];
 			}
 		}
-		AppleAppSpecifiers = [organizableSpecifiers[@"CASTLE"] retain];
-		[AppleAppSpecifiers addObjectsFromArray:organizableSpecifiers[@"STORE"]];
+		AppleAppSpecifiers = [organizableSpecifiers[@"STORE"] retain];
+		// [AppleAppSpecifiers addObjectsFromArray:organizableSpecifiers[@"STORE"]];
 
 		SocialAppSpecifiers = [organizableSpecifiers[@"SOCIAL_ACCOUNTS"] retain];
 
@@ -365,22 +358,24 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 			[specifiers addObject:appstoreSpecifier];
 		}
 
-		if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
-			// Move deleted group specifiers to last..
+		if ((shouldShowAppleApps && AppleAppSpecifiers) && (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0)) {
+			// Move deleted group specifiers to the end...
 			for (int i = 0; i < specifiers.count; i++) {
 				PSSpecifier *specifier = (PSSpecifier *) specifiers[i];
 				NSString *identifier = specifier.identifier ?: @"";
 				if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
 					[specifiers removeObject:specifier];
-					// Move to last
-					[specifiers addObject:specifier];
+					// Move to the end only on iOS < 11 (doing this on >= 11 will cause extraneous spaces to be left over)
+					if (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_11_0) {
+						[specifiers addObject:specifier];
+					}
 				}
 			}
 		}
 		PO2Log([NSString stringWithFormat:@"organizableSpecifiers = %@", organizableSpecifiers], shouldSyslogSpam);
 	});
 	
-	// If we found Apple's third party apps, we really won't add them because this would mess up with UITableView rows count check after the update
+	// If we found Apple's third party apps, we really won't add them because this would mess up the UITableView row count check after the update
 	if (shouldShowAppleApps) {
 		[specifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
 	}
@@ -390,9 +385,8 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 }
 
 // This method may add some Apple's third party specifiers with respect to restriction settings and results in duplicate entries, so fix it here
--(void) updateRestrictedSettings
-{
-	%orig;
+-(void) updateRestrictedSettings {
+	%orig();
 	if (shouldShowAppStoreApps) {
 		[((PSListController *)self).specifiers removeObjectsInArray:[MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues]];
 		removeOldAppleThirdPartySpecifiers(AppleAppSpecifiers);
@@ -415,10 +409,9 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 %group iOS9Up
 // Redirect all of Apple's third party specifiers to AppleAppSpecifiers
 -(void) insertMovedThirdPartySpecifiersAnimated:(BOOL)animated {
-	if (kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) {
-		if (shouldShowAppleApps && AppleAppSpecifiers) {
-			removeOldAppleGroupSpecifiers([self specifiers]);
-		}
+	if ((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) && (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_11_0) && (shouldShowAppleApps && AppleAppSpecifiers)) {
+		// Appears to be the cause behind the resume-from-suspend crash on iOS 11 (as long as the _thirdPartySpecifiers condition in -(NSMutableArray *) specifiers is present)
+		removeOldAppleGroupSpecifiers([self specifiers]);
 	}
 	if (shouldShowAppleApps && AppleAppSpecifiers.count) {
 		NSArray <PSSpecifier *> *movedThirdPartySpecifiers = [MSHookIvar<NSMutableDictionary *>(self, "_movedThirdPartySpecifiers") allValues];
@@ -477,6 +470,10 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 	};
 	%orig(apps, newCompletion);
 }
+
+-(void) reloadSpecifiers {
+	return;
+}
 %end
 %end
 
@@ -500,6 +497,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 -(NSMutableArray *) specifiers {
 	NSMutableArray *specifiers = %orig();
 	PO2Log([NSString stringWithFormat:@"originalSpecifiers = %@", specifiers], shouldSyslogSpam);
+	PO2InitPrefs();
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		NSMutableDictionary *savedSpecifiers = [NSMutableDictionary dictionary];
@@ -705,7 +703,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 		if (tweakPathRange.location != NSNotFound) {
 			NSInteger tweakPathOrigin = tweakPathRange.location + tweakPathRange.length;
 			// If specified tweak was found, don't call the original method;
-			if ( [self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]] ) {
+			if ([self preferenceOrganizerOpenTweakPane:[parsableURL substringWithRange:NSMakeRange(tweakPathOrigin, parsableURL.length - tweakPathOrigin)]]) {
 				return;
 			}
 		}
