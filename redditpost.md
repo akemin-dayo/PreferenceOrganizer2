@@ -8,6 +8,8 @@
 
 * Fixed an issue on iOS 10 and 11 where an extraneous space would appear above PreferenceOrganiser 2's categories.
 
+* Fixed an issue on iOS 10 and 11 where the "Wallet and Apple Pay" button would erroneously appear underneath PreferenceOrganiser 2's categories.
+
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
 If you think PreferenceOrganizer 2 is causing crashes, install CrashReporter and send me an email using its app.
