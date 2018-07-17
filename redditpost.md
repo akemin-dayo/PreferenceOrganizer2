@@ -4,17 +4,9 @@
 
 [**Donate Using PayPal (`rei@angelxwind.net`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Changelog for 4.0 and 4.0.1 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0.2 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* Fixed an issue where system apps group cells would entirely disappear on iOS 11 if the System Apps section was disabled in PreferenceOrganiser 2.
-
-* Removed Social Apps group on iOS 11, as iOS no longer has system integration with social networking services.
-
-* Fixed all iOS 11-specific issues — PreferenceOrganiser 2 is now fully compatible with iOS 11!
-
-* Fixed a rare issue related to preferences loading affecting a small subset of device configurations that could lead to crashing.
-
-* Fixed a rare issue on iOS 10.x where resuming the Preferences app from a suspended state will sometimes cause it to crash.
+* Fixed an issue on iOS 10 and 11 where an extraneous space would appear above PreferenceOrganiser 2's categories.
 
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
