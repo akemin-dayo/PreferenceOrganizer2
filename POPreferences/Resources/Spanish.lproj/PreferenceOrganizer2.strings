@@ -1,0 +1,18 @@
+"APPLY" = "Aplicar (Cierra Ajustes)";
+
+"ENABLE" = "Mostrar esta sección";
+"NAME" = "Nombre de la sección";
+
+"APPLE_APPS" = "Aplicaciones de sistema";
+"SOCIAL_APPS" = "Aplicaciones sociales";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "Aplicaciones de AppStore";
+
+"DEBUG_DETAIL" = "Los registros de depuración se guardan en /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "Registrar depuración";
+
+"DONATE_GROUPCELL" = "Donativos";
+"DONATE_GROUPCELL_DETAIL" = "Dirección de Paypal: rei@angelxwind.net\n\n¡Las donaciones no son necesarias, pero son muy apreciadas! ¡Gracias a todos los que habéis donado!";
+"DONATE" = "Donar usando PayPal";
+
+"RESET" = "Reiniciar configuración";

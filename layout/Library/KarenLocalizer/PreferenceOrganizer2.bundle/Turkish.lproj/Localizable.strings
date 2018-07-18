@@ -3,7 +3,7 @@
 "ERROR" = "HATA";
 
 "APT_DETAIL_1" = "PreferenceOrganizer 2'yi bir APT kaynağından kurmuşsunuz gibi görünüyor; cydia.angelxwind.net (paket kimliği net.angelxwind.preferenceorganizer2) üzerinden değil.";
-"APT_DETAIL_2" = "Karen/あけみ (angelXwind)'dan başkaları, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), ya da Gary Lin (gary19930520) bu uygulamanın geliştirilmesi için kredi alıyor ve onlar yalan söylüyor.";
+"APT_DETAIL_2" = "Karen/あけみ (angelXwind)'dan başkaları, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), ya da Gary Lin (garynil) bu uygulamanın geliştirilmesi için kredi alıyor ve onlar yalan söylüyor.";
 "APT_DETAIL_3" = "Dosya bütünlüğü ve güvenilirliği için PreferenceOrganizer 2'yi lütfen yalnızca resmi kaynaktan indirin.";
 
 "APPLE_APPS" = "Sistem Uygulamaları";

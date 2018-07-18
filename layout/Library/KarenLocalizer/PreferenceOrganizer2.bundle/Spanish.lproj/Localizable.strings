@@ -1,0 +1,25 @@
+"NOTICE" = "AVISO";
+"WARNING" = "ADVERTENCIA";
+"ERROR" = "ERROR";
+
+"APT_DETAIL_1" = "Parece que has instalado el Tweak PreferenceOrganizer 2 desde un repositorio que no es cydia.angelxwind.net (ID de paquete net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Si alguien además de Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) o Gary Lin (garynil) dice ser el desarrollador del Tweak, está mintiendo.";
+"APT_DETAIL_3" = "Por favor descarga PreferenceOrganizer 2 solamente del repositorio oficial para asegurar su seguridad e integridad.";
+
+"APPLE_APPS" = "Aplicaciones de sistema";
+"SOCIAL_APPS" = "Aplicaciones Sociales";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "Aplicaciones de AppStore";
+
+"PREFS_RESET_SUCCESS" = "Configuración reiniciada con éxito";
+"PREFS_RESET_SUCCESS_DETAIL" = "La configuración de PreferenceOrganizer 2 ha sido reseteada a sus valores predeterminados con éxito.";
+
+"OK" = "VALE";
+"OK_WINK" = "VALE (^_-)-☆";
+"OK_SAD" = "VALE (・へ・)";
+"NEVER_SHOW_AGAIN" = "No volver a mostrar";
+"ERROR" = "Error ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "¡PreferenceOrganizer 2 no ha podido resetear la configuración! NSError info:";
+
+"PREFS_CLOSE" = "Aviso";
+"PREFS_CLOSE_DETAIL" = "La aplicación de Ajustes se cerrará de forma automática para aplicar los cambios.";
