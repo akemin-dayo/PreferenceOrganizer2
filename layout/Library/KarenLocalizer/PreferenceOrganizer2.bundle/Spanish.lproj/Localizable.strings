@@ -1,6 +1,4 @@
-"NOTICE" = "AVISO";
 "WARNING" = "ADVERTENCIA";
-"ERROR" = "ERROR";
 
 "APT_DETAIL_1" = "Parece que has instalado el Tweak PreferenceOrganizer 2 desde un repositorio que no es cydia.angelxwind.net (ID de paquete net.angelxwind.preferenceorganizer2).";
 "APT_DETAIL_2" = "Si alguien además de Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) o Gary Lin (garynil) dice ser el desarrollador del Tweak, está mintiendo.";

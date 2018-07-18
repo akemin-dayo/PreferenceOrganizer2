@@ -8,7 +8,7 @@ Author: Karen/あけみ (angelXwind) <karen@angelxwind.net>
 Section: Tweaks
 Depends: mobilesubstrate, preferenceloader (>= 2.2.3), firmware (>= 6.0), net.angelxwind.karenprefs (>= 1.3), net.angelxwind.karenlocalizer
 Conflicts: com.phillipt.noappsettings, jp.r-plus.cloaky, me.qusic.preferenceorganizer, com.sull.preferenceorganizer, com.sull.preferenceorganizer2, com.sull.preferenceorganizer7
-Version: 4.0.3
+Version: 4.0.4
 Maintainer: Karen/あけみ (angelXwind) <karen@angelxwind.net>
 Replaces: org.ilendsoft.preferenceorganizer, com.eliz.preferenceorganizer7
 Icon: file:///Library/KarenRepoIcons/net.angelxwind.preferenceorganizer2.png

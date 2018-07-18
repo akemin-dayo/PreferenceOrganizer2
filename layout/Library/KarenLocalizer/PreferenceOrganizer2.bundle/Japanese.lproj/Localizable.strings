@@ -1,6 +1,4 @@
-"NOTICE" = "お知らせ";
 "WARNING" = "注意";
-"ERROR" = "エラー";
 
 "APT_DETAIL_1" = "cydia.angelxwind.net (パッケージID net.angelxwind.preferenceorganizer2)からPreferenceOrganizer 2をインストールしていません。";
 "APT_DETAIL_2" = "Karen/あけみ (angelXwind)、Eliz、Julian Weiss (insanj)、ilendemli、Hiraku (hirakujira)、またはGary Lin (garynil)の4名のみがPreferenceOrganizer 2の開発に関わっています。それ以外の人は開発には関わっていないので、もし関わっていると他の人が言っていてもその人は関わっていないです。";

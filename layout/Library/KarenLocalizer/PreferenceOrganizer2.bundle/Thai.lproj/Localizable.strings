@@ -1,6 +1,4 @@
-"NOTICE" = "ประกาศ";
 "WARNING" = "คำเตือน";
-"ERROR" = "ผิดพลาด";
 
 "APT_DETAIL_1" = "คุณติดตั้งแอพพลิเคชั่น PreferenceOrganizer 2 จากแหล่งที่มา APT ที่ไม่ใช่จาก cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2)";
 "APT_DETAIL_2" = "หากแอบอ้างว่าเป็นผู้พัฒนาแอพพลิเคชั่นนอกจาก Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) หรือ Gary Lin (garynil) โปรดอย่าหลงเชื่อว่าเป็นผู้พัฒนาแอพพลิเคชั่น";

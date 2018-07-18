@@ -1,0 +1,23 @@
+"WARNING" = "AMARAN";
+
+"APT_DETAIL_1" = "Anda sepatutnya memasang PreferenceOrganizer 2 dari repositori APT dan bukan selain daripada cydia.angelxwind.net (paket ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Jika seseorang selain daripada Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), atau Gary Lin (garynil) mengambil kredit untuk perkembangan tweak ini, mereka berbohong.";
+"APT_DETAIL_3" = "Sila muat turun PreferenceOrganizer 2 dari repositori rasmi untuk memastikan integriti dan kebolehpercayaan fail.";
+
+"APPLE_APPS" = "Sistem Aplikasi";
+"SOCIAL_APPS" = "Aplikasi Rangkaian Sosial";
+"TWEAKS" = "Tweak";
+"APP_STORE_APPS" = "Aplikasi App Store";
+
+"PREFS_RESET_SUCCESS" = "Pilihan Reset Berjaya";
+"PREFS_RESET_SUCCESS_DETAIL" = "Tetapan PreferenceOrganizer 2 telah berjaya diset semula ke nilai lalai.";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"NEVER_SHOW_AGAIN" = "Jangan tunjukkan lagi";
+"ERROR" = "Ralat ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 tidak dapat menetapkan semula tetapan! Maklumat NSError:";
+
+"PREFS_CLOSE" = "Notis";
+"PREFS_CLOSE_DETAIL" = "Aplikasi Tetapan kini akan menutup sendiri untuk menerapkan perubahan.";

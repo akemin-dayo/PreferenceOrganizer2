@@ -1,0 +1,23 @@
+"WARNING" = "WARNUNG";
+
+"APT_DETAIL_1" = "Sie scheinen PreferenceOrganizer 2 von einer APT-Repository installiert zu haben, welche nicht cydia.angelxwind.net ist (Paket-ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Wenn jemand anders als Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) oder Gary Lin (garynil) die Entwicklung des Tweaks für sich in Anspruch nimmt, lügen sie.";
+"APT_DETAIL_3" = "Bitte laden Sie PreferenceOrganizer 2 nur aus der offiziellen Repository herunter, um Dateiintegrität und -zuverlässigkeit sicherzustellen.";
+
+"APPLE_APPS" = "System-Apps";
+"SOCIAL_APPS" = "Apps von sozialen Netzwerken";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Store-Apps";
+
+"PREFS_RESET_SUCCESS" = "Einstellungen erfolgreich zurückgesetzt";
+"PREFS_RESET_SUCCESS_DETAIL" = "Die Einstellungen von PreferenceOrganizer 2 wurden erfolgreich auf die Standardwerte zurückgesetzt.";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"NEVER_SHOW_AGAIN" = "Nicht mehr anzeigen";
+"ERROR" = "Error ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 konnte die Einstellungen nicht zurücksetzen! NSError Info:";
+
+"PREFS_CLOSE" = "Hinweis";
+"PREFS_CLOSE_DETAIL" = "Die Einstellungen-App wird jetzt geschlossen, um die Änderungen zu übernehmen.";

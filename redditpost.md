@@ -4,9 +4,13 @@
 
 [**Donate Using PayPal (`rei@angelxwind.net`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Changelog for 4.0.2 and 4.0.3 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0.2, 4.0.3, 4.0.4 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
 * Added Spanish translation — special thanks goes to Guillermo Penarando for offering to translate!
+
+* Added German translation — special thanks goes to EPSYLON for offering to translate!
+
+* Added Malay translation — special thanks goes to Antman_Avengers for offering to translate!
 
 * Fixed an issue on iOS 10 and 11 where an extraneous space would appear above PreferenceOrganiser 2's categories.
 

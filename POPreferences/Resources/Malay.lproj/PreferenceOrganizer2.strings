@@ -1,0 +1,18 @@
+"APPLY" = "Terapkan (Tetapan Berhenti)";
+
+"ENABLE" = "Tunjukkan Seksyen Ini";
+"NAME" = "Nama Bahagian";
+
+"APPLE_APPS" = "Sistem Aplikasi";
+"SOCIAL_APPS" = "Aplikasi Rangkaian Sosial";
+"TWEAKS" = "Tweak";
+"APP_STORE_APPS" = "Aplikasi App Store";
+
+"DEBUG_DETAIL" = "Log beberapa maklumat debug ke /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "Log masuk Debug";
+
+"DONATE_GROUPCELL" = "Derma";
+"DONATE_GROUPCELL_DETAIL" = "Alamat PayPal: rei@angelxwind.net\n\nDerma tidak diperlukan tetapi sangat dihargai! Terima kasih kepada semua orang yang telah menyumbang setakat ini!";
+"DONATE" = "Menderma Menggunakan PayPal";
+
+"RESET" = "Aturan semula";
