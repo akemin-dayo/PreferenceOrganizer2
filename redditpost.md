@@ -12,6 +12,8 @@
 
 * Added Malay translation — special thanks goes to Antman_Avengers for offering to translate!
 
+* Added Italian translation — special thanks goes to Giacomo Menchi for offering to translate!
+
 * Fixed an issue on iOS 10 and 11 where an extraneous space would appear above PreferenceOrganiser 2's categories.
 
 * Fixed an issue on iOS 10 and 11 where the "Wallet and Apple Pay" button would erroneously appear underneath PreferenceOrganiser 2's categories.
