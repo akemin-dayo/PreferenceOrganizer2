@@ -1,0 +1,18 @@
+"APPLY" = "تطبيق (انهاء الاعدادات)";
+
+"ENABLE" = "اظهار هذا القسم";
+"NAME" = "تسمية القسم";
+
+"APPLE_APPS" = "تطبيقات النظام";
+"SOCIAL_APPS" = "تطبيقات التواصل الاجتماعي";
+"TWEAKS" = "الادوات";
+"APP_STORE_APPS" = "التطبيقات";
+
+"DEBUG_DETAIL" = "تسجيل بعض معلومات التعديل الى /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "تسجيل التعديلات";
+
+"DONATE_GROUPCELL" = "الدعم";
+"DONATE_GROUPCELL_DETAIL" = "عنوان PayPal: rei@angelxwind.net\n\nالدعم ليس الزاميا وانما تقدير منك لي! شكرا لكل من قام بدعمي حتى الان!";
+"DONATE" = "دعم بواسطة PayPal";
+
+"RESET" = "اعادة تعيين الاعدادات";

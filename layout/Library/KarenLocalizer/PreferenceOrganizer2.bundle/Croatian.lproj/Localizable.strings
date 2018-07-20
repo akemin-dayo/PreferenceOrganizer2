@@ -1,0 +1,23 @@
+"WARNING" = "UPOZORENJE";
+
+"APT_DETAIL_1" = "Čini se kako si instalirao/la PreferenceOrganizer 2 sa APT izvora koji nije cydia.angelxwind.net (ID Paketa net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Ukoliko netko drugi, a da nije Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), ili Gary Lin (garynil) uzme kredite za razvoj ovog proširenja, laže Vas.";
+"APT_DETAIL_3" = "Molim Vas, preuzmite PreferenceOrganizer 2 sa službenog izvora kako bi se osigurala cjelovitost i pouzdanost datoteka.";
+
+"APPLE_APPS" = "Sistemske Aplikacije";
+"SOCIAL_APPS" = "Aplikacije Društvenih Mreža";
+"TWEAKS" = "Proširenja";
+"APP_STORE_APPS" = "App Store Aplikacije";
+
+"PREFS_RESET_SUCCESS" = "Postavke Uspješno Poništene";
+"PREFS_RESET_SUCCESS_DETAIL" = "PreferenceOrganizer 2 postavke su uspješno vraćene na zadane vrijednosti.";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"NEVER_SHOW_AGAIN" = "Nemoj više prikazivati";
+"ERROR" = "Pogreška ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 nije uspio vratiti postavke na zadane vrijednosti! NSInformacije o pogrešci:";
+
+"PREFS_CLOSE" = "Obavijest";
+"PREFS_CLOSE_DETAIL" = "Aplikacija Postavke će se sada zatvoriti kako bi primjenila izmjenu.";

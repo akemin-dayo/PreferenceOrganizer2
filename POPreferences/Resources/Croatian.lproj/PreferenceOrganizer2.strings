@@ -1,0 +1,18 @@
+"APPLY" = "Primijeni (Zatvori Postavke)";
+
+"ENABLE" = "Prikaži Ovu Sekciju";
+"NAME" = "Ime Sekcije";
+
+"APPLE_APPS" = "Sistemske Aplikacije";
+"SOCIAL_APPS" = "Aplikacije Društvenih Mreža";
+"TWEAKS" = "Proširenja";
+"APP_STORE_APPS" = "App Store Aplikacije";
+
+"DEBUG_DETAIL" = "Pohraniti zapisnik o pojedinim pogreškama u /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "Zapisnik Pogrešaka";
+
+"DONATE_GROUPCELL" = "Donacije";
+"DONATE_GROUPCELL_DETAIL" = "PayPal Adresa: rei@angelxwind.net\n\nDonacije nisu potrebne, ali su izuzetno cijenjene! Hvala svima koji su donirali do sada!";
+"DONATE" = "Doniraj koristeći PayPal";
+
+"RESET" = "Poništi Postavke";

@@ -1,0 +1,23 @@
+"WARNING" = "تحذير";
+
+"APT_DETAIL_1" = "يبدو انك قمت بتنزيل PreferenceOrganizer 2 من مكان اخر وليس cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "اذا كان هناك اشخاص غير  Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (garynil) ينسبون الفضل لهم في تطوير هذه الاداة, فهم كاذبون.";
+"APT_DETAIL_3" = "يرجى تنزيل PreferenceOrganizer 2 من السورس الرسمي لها لضمان سلامة وموثوقية الملفات.";
+
+"APPLE_APPS" = "تطبيقات النظام";
+"SOCIAL_APPS" = "تطبيقات التواصل الاجتماعي";
+"TWEAKS" = "الادوات";
+"APP_STORE_APPS" = "التطبيقات";
+
+"PREFS_RESET_SUCCESS" = "نجاح اعادة تعيين الاعدادات";
+"PREFS_RESET_SUCCESS_DETAIL" = "تم اعادة تعيين اعدادات PreferenceOrganizer 2 بنجاح الى الاعدادات الاولية.";
+
+"OK" = "حسنا";
+"OK_WINK" = "حسنا (^_-)-☆";
+"OK_SAD" = "حسنا (・へ・)";
+"NEVER_SHOW_AGAIN" = "لا تظهر مرة اخرى";
+"ERROR" = "خطأ ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 غير قادر على اعادة تعيين الاعدادات! NSمعلومات الخطأ:";
+
+"PREFS_CLOSE" = "تنبيه";
+"PREFS_CLOSE_DETAIL" = "سيقوم تطبيق الاعدادات باغلاق نفسه الان لتطبيق التغييرات.";
