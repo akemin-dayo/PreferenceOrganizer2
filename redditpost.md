@@ -4,9 +4,13 @@
 
 [**Donate Using PayPal (`rei@angelxwind.net`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Changelog for 4.0.2, 4.0.3, 4.0.4 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0.4 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* Added Spanish translation — special thanks goes to Guillermo Penarando for offering to translate!
+* Fixed a bug on iOS 7 where the System Apps settings would be duplicated outside its category.
+
+* Fixed a benign and unsymptomatic bug on iOS 11 caused by a typo.
+
+* Added Turkish translation — special thanks goes to /u/puyzzem for offering to translate! (/u/puyzzem tarafından Türkçe’ye çevrilmiştir)
 
 * Added German translation — special thanks goes to EPSYLON for offering to translate!
 
