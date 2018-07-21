@@ -8,7 +8,7 @@
 
 * Fixed a bug on iOS 7 where the System Apps settings would be duplicated outside its category.
 
-* Fixed a benign and unsymptomatic bug on iOS 11 caused by a typo.
+* Fixed a benign and otherwise asymptomatic bug on iOS 11 caused by a typo.
 
 * Added Turkish translation — special thanks goes to /u/puyzzem for offering to translate! (/u/puyzzem tarafından Türkçe’ye çevrilmiştir)
 
@@ -21,10 +21,6 @@
 * Added Arabic translation — special thanks goes to iA7myd for offering to translate!
 
 * Added Croatian translation — special thanks goes to Luka iDroid for offering to translate!
-
-* Fixed an issue on iOS 10 and 11 where an extraneous space would appear above PreferenceOrganiser 2's categories.
-
-* Fixed an issue on iOS 10 and 11 where the "Wallet and Apple Pay" button would erroneously appear underneath PreferenceOrganiser 2's categories.
 
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
