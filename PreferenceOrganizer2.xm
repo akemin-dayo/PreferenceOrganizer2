@@ -367,7 +367,14 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 				NSString *identifier = specifier.identifier ?: @"";
 				// NSLog(@"specifier.identifier = %@",specifier.identifier);
 				if ([specifier.identifier isEqualToString:@"MEDIA_GROUP"] || [specifier.identifier isEqualToString:@"ACCOUNTS_GROUP"] || [specifier.identifier isEqualToString:@"APPLE_ACCOUNT_GROUP"]) {
-					[specifiersToRemove addObject:specifier];
+					// Move to the end only if DDI is mounted on iOS 10 (otherwise, the Settings app will crash for… some reason)
+					// That being said, this fix DOES cause a minor layout issue where "Wallet and Apple Pay" ends up sticking to the bottom of the PreferenceOrganiser 2 group, so I'll need to find a better solution for this later
+					if (((kCFCoreFoundationVersionNumber >= kCFCoreFoundationVersionNumber_iOS_10_0) && (kCFCoreFoundationVersionNumber < kCFCoreFoundationVersionNumber_iOS_11_0)) && ddiIsMounted) {
+						[specifiers removeObject:specifier];
+						[specifiers addObject:specifier];
+					} else {
+						[specifiersToRemove addObject:specifier];
+					}
 				}
 			}
 			[specifiers removeObjectsInArray:specifiersToRemove];

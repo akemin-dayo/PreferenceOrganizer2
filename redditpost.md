@@ -4,7 +4,9 @@
 
 [**Donate Using PayPal (`rei@angelxwind.net`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Changelog for 4.0.4 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0.4 and 4.0.5 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+
+* Fixed a bug on iOS 10 where the Settings app would sometimes crash if the DeveloperDiskImage was mounted by Xcode.
 
 * Fixed a bug on iOS 7 where the System Apps settings would be duplicated outside its category.
 
