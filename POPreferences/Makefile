@@ -1,5 +1,5 @@
 TARGET =: clang
-ARCHS = armv7 armv7s arm64
+ARCHS = armv7 armv7s arm64e
 DEBUG = 0
 GO_EASY_ON_ME = 1
 

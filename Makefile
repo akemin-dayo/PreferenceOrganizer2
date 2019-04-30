@@ -1,7 +1,8 @@
 TARGET =: clang
-ARCHS = armv7 armv7s arm64
+ARCHS = armv7 armv7s arm64 arm64e
 DEBUG = 0
 GO_EASY_ON_ME = 1
+TARGET := iphone:clang:11.3:10.3
 
 THEOS_PACKAGE_DIR_NAME = debs
 PACKAGE_VERSION = $(THEOS_PACKAGE_BASE_VERSION)

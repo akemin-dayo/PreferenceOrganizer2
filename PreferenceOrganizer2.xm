@@ -193,7 +193,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 			NSString *identifier = s.identifier ?: @"";
 
 			// If we're not a group cell...
-			if (s->cellType != 0) {
+			if (s.cellType != 0) {
 				// If we're hitting the Developer settings area, regardless of position, we need to steal 
 				// its group specifier from the previous group and leave it out of everything.
 				if ([identifier isEqualToString:@"DEVELOPER_SETTINGS"]) {
@@ -304,7 +304,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 		SocialAppSpecifiers = [organizableSpecifiers[@"SOCIAL_ACCOUNTS"] retain];
 
 		NSMutableArray *tweaksGroup = organizableSpecifiers[@"TWEAKS"];
-		if ([tweaksGroup count] != 0 && ((PSSpecifier *)tweaksGroup[0])->cellType == 0 && ((PSSpecifier *)tweaksGroup[1])->cellType == 0) {
+		if ([tweaksGroup count] != 0 && ((PSSpecifier *)tweaksGroup[0]).cellType == 0 && ((PSSpecifier *)tweaksGroup[1]).cellType == 0) {
 			[tweaksGroup removeObjectAtIndex:0];
 		}
 		TweakSpecifiers = [tweaksGroup retain];
@@ -510,7 +510,7 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 		NSMutableDictionary *savedSpecifiers = [NSMutableDictionary dictionary];
 		NSInteger group = -1;
 		for (PSSpecifier *s in specifiers) {
-			if (s->cellType == 0) {
+			if (s.cellType == 0) {
 				group++;
 				if (group >= 3) {
 					[savedSpecifiers setObject:[NSMutableArray array] forKey:[NSNumber numberWithInteger:group]];
