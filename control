@@ -2,13 +2,13 @@ Package: net.angelxwind.preferenceorganizer2
 Name: PreferenceOrganizer 2
 Architecture: iphoneos-arm
 Description: Organises your Preferences app into several configurable categories for ease of navigation.
-Homepage: https://cydia.angelxwind.net/
-Depiction: https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2
-Author: Karen/あけみ (angelXwind) <karen@angelxwind.net>
+Homepage: https://cydia.akemi.ai/
+Depiction: https://cydia.akemi.ai/?page/net.angelxwind.preferenceorganizer2
+Author: Karen/あけみ <karen@akemi.ai>
 Section: Tweaks
 Depends: mobilesubstrate, preferenceloader (>= 2.2.3), firmware (>= 6.0), net.angelxwind.karenprefs (>= 1.3), net.angelxwind.karenlocalizer
 Conflicts: com.phillipt.noappsettings, jp.r-plus.cloaky, me.qusic.preferenceorganizer, com.sull.preferenceorganizer, com.sull.preferenceorganizer2, com.sull.preferenceorganizer7
-Version: 4.0.5
-Maintainer: Karen/あけみ (angelXwind) <karen@angelxwind.net>
+Version: 4.0.6
+Maintainer: Karen/あけみ <karen@akemi.ai>
 Replaces: org.ilendsoft.preferenceorganizer, com.eliz.preferenceorganizer7
 Icon: file:///Library/KarenRepoIcons/net.angelxwind.preferenceorganizer2.png

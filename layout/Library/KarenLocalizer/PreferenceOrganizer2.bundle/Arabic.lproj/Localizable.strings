@@ -1,7 +1,7 @@
 "WARNING" = "تحذير";
 
-"APT_DETAIL_1" = "يبدو انك قمت بتنزيل PreferenceOrganizer 2 من مكان اخر وليس cydia.angelxwind.net (package ID net.angelxwind.preferenceorganizer2).";
-"APT_DETAIL_2" = "اذا كان هناك اشخاص غير  Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (garynil) ينسبون الفضل لهم في تطوير هذه الاداة, فهم كاذبون.";
+"APT_DETAIL_1" = "يبدو انك قمت بتنزيل PreferenceOrganizer 2 من مكان اخر وليس cydia.akemi.ai (package ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "اذا كان هناك اشخاص غير  Karen/あけみ, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), or Gary Lin (garynil) ينسبون الفضل لهم في تطوير هذه الاداة, فهم كاذبون.";
 "APT_DETAIL_3" = "يرجى تنزيل PreferenceOrganizer 2 من السورس الرسمي لها لضمان سلامة وموثوقية الملفات.";
 
 "APPLE_APPS" = "تطبيقات النظام";

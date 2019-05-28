@@ -1,28 +1,14 @@
-**Cydia/APT Repo URL:** https://cydia.angelxwind.net/
+**Cydia/APT Repo URL:** https://cydia.akemi.ai/
 
-[**Tap here to add my repo directly to Cydia!**](https://cydia.angelxwind.net/add.php)
+[**Tap here to add my repo directly to Cydia!**](https://cydia.akemi.ai/add.php)
 
-[**Donate Using PayPal (`rei@angelxwind.net`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
+[**Donate Using PayPal (`rei@akemi.ai`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Changelog for 4.0.4 and 4.0.5 ([full changelog](https://cydia.angelxwind.net/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0.6 ([full changelog](https://cydia.akemi.ai/?page/net.angelxwind.preferenceorganizer2-changelog))**
 
-* Fixed a bug on iOS 10 where the Settings app would sometimes crash if the DeveloperDiskImage was mounted by Xcode.
+* Added compatibility with arm64e SoCs (A12/A12X).
 
-* Fixed a bug on iOS 7 where the System Apps settings would be duplicated outside its category.
-
-* Fixed a benign and otherwise asymptomatic bug on iOS 11 caused by a typo.
-
-* Added Turkish translation — special thanks goes to /u/puyzzem for offering to translate! (/u/puyzzem tarafından Türkçe’ye çevrilmiştir)
-
-* Added German translation — special thanks goes to EPSYLON for offering to translate!
-
-* Added Malay translation — special thanks goes to Antman_Avengers for offering to translate!
-
-* Added Italian translation — special thanks goes to Giacomo Menchi for offering to translate!
-
-* Added Arabic translation — special thanks goes to iA7myd for offering to translate!
-
-* Added Croatian translation — special thanks goes to Luka iDroid for offering to translate!
+* Updated URLs where relevant to reflect my new domain (akemi.ai).
 
 #**Help! My device caught fire and pineapples are coming out of the Lightning port!**
 
@@ -38,7 +24,7 @@ Your device is now violating... *several* laws of thermodynamics. Congratulation
 
 #**For new users: So what *is* PreferenceOrganizer 2?**
 
-A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, 9, 10, and 11.
+A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, 9, 10, 11, and 12.
 
 PreferenceOrganiser 2 organises and de-clutters your Preferences app into several configurable categories for ease of navigation.
 

@@ -1,7 +1,7 @@
 "WARNING" = "UPOZORENJE";
 
-"APT_DETAIL_1" = "Čini se kako si instalirao/la PreferenceOrganizer 2 sa APT izvora koji nije cydia.angelxwind.net (ID Paketa net.angelxwind.preferenceorganizer2).";
-"APT_DETAIL_2" = "Ukoliko netko drugi, a da nije Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), ili Gary Lin (garynil) uzme kredite za razvoj ovog proširenja, laže Vas.";
+"APT_DETAIL_1" = "Čini se kako si instalirao/la PreferenceOrganizer 2 sa APT izvora koji nije cydia.akemi.ai (ID Paketa net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Ukoliko netko drugi, a da nije Karen/あけみ, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), ili Gary Lin (garynil) uzme kredite za razvoj ovog proširenja, laže Vas.";
 "APT_DETAIL_3" = "Molim Vas, preuzmite PreferenceOrganizer 2 sa službenog izvora kako bi se osigurala cjelovitost i pouzdanost datoteka.";
 
 "APPLE_APPS" = "Sistemske Aplikacije";

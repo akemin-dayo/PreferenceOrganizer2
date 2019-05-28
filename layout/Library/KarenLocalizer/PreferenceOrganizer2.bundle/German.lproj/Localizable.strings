@@ -1,7 +1,7 @@
 "WARNING" = "WARNUNG";
 
-"APT_DETAIL_1" = "Sie scheinen PreferenceOrganizer 2 von einer APT-Repository installiert zu haben, welche nicht cydia.angelxwind.net ist (Paket-ID net.angelxwind.preferenceorganizer2).";
-"APT_DETAIL_2" = "Wenn jemand anders als Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) oder Gary Lin (garynil) die Entwicklung des Tweaks für sich in Anspruch nimmt, lügen sie.";
+"APT_DETAIL_1" = "Sie scheinen PreferenceOrganizer 2 von einer APT-Repository installiert zu haben, welche nicht cydia.akemi.ai ist (Paket-ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Wenn jemand anders als Karen/あけみ, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) oder Gary Lin (garynil) die Entwicklung des Tweaks für sich in Anspruch nimmt, lügen sie.";
 "APT_DETAIL_3" = "Bitte laden Sie PreferenceOrganizer 2 nur aus der offiziellen Repository herunter, um Dateiintegrität und -zuverlässigkeit sicherzustellen.";
 
 "APPLE_APPS" = "System-Apps";

@@ -2,8 +2,8 @@
 "WARNING" = "ATTENZIONE";
 "ERROR" = "ERRORE";
 
-"APT_DETAIL_1" = "Sembra che tu abbia installato PreferenceOrganizer 2 da una sorgente APT diversa da cydia.angelxwind.net (ID pacchetto net.angelxwind.preferenceorganizer2).";
-"APT_DETAIL_2" = "Se qualcun altro che non sia Karen/あけみ (angelXwind), Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), o Gary Lin (garynil) si sta prendendo il merito per lo sviluppo di questo tweak, sta mentendo.";
+"APT_DETAIL_1" = "Sembra che tu abbia installato PreferenceOrganizer 2 da una sorgente APT diversa da cydia.akemi.ai (ID pacchetto net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Se qualcun altro che non sia Karen/あけみ, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira), o Gary Lin (garynil) si sta prendendo il merito per lo sviluppo di questo tweak, sta mentendo.";
 "APT_DETAIL_3" = "Per favore, scarica PreferenceOrganizer 2 solo dalla sorgente ufficiale per essere sicuro dell'integrità e dell'affidabilità dei file.";
 
 "APPLE_APPS" = "App di Sistema";
