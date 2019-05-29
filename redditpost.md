@@ -4,7 +4,9 @@
 
 [**Donate Using PayPal (`rei@akemi.ai`)**](https://paypal.me/angelXwind) (donations are greatly appreciated, *but are not (and never will be) necessary!*)
 
-#**Changelog for 4.0.6 ([full changelog](https://cydia.akemi.ai/?page/net.angelxwind.preferenceorganizer2-changelog))**
+#**Changelog for 4.0.6 ~ 4.0.7 ([full changelog](https://cydia.akemi.ai/?page/net.angelxwind.preferenceorganizer2-changelog))**
+
+* Fixed an issue where the preference pane would fail to load on devices with arm64e SoCs (A12/A12X).
 
 * Added compatibility with arm64e SoCs (A12/A12X).
 
