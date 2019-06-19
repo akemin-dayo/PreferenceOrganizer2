@@ -1,0 +1,23 @@
+"WARNING" = "ADVARSEL";
+
+"APT_DETAIL_1" = "Det ser ud som om du har installeret PreferenceOrganiser 2 fra et APT repository, som ikke er cydia.akemi.ai (pakke ID net.angelxwind.preferenceorganizer2).";
+"APT_DETAIL_2" = "Hvis nogen andre end Karen/あけみ, Eliz, Julian Weiss (insanj), ilendemli, Hiraku (hirakujira) eller Gary Lin (garynil) tager æren for udviklingen af dette tweak, lyver de.";
+"APT_DETAIL_3" = "Download kun PreferenceOrganizer 2 fra det officielle repository for at være sikker på, at filerne ikke er modificerede.";
+
+"APPLE_APPS" = "System apps";
+"SOCIAL_APPS" = "Sociale-medier";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Store apps";
+
+"PREFS_RESET_SUCCESS" = "Indstillingerne er gendannet!";
+"PREFS_RESET_SUCCESS_DETAIL" = "PreferenceOrganizer 2's indstillinger er succesfuldt blevet gendannet.";
+
+"OK" = "OK";
+"OK_WINK" = "OK (^_-)-☆";
+"OK_SAD" = "OK (・へ・)";
+"NEVER_SHOW_AGAIN" = "Vis ikke igen";
+"ERROR" = "Fejl ━Σ(ﾟДﾟ|||)━";
+"ERROR_DETAIL" = "PreferenceOrganizer 2 kunne ikke gendanne indstillingerne! NSError info:";
+
+"PREFS_CLOSE" = "Varsel";
+"PREFS_CLOSE_DETAIL" = "Indstillinger vil nu lukke, for at anvende ændringerne.";

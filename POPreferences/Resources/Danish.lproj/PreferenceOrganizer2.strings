@@ -1,0 +1,18 @@
+"APPLY" = "Anvend (Luk Indstillinger)";
+
+"ENABLE" = "Vis denne sektion";
+"NAME" = "Navn på sektion";
+
+"APPLE_APPS" = "System apps";
+"SOCIAL_APPS" = "Sociale-medier";
+"TWEAKS" = "Tweaks";
+"APP_STORE_APPS" = "App Store apps";
+
+"DEBUG_DETAIL" = "Logger nogle debug informationer til /var/tmp/net.angelxwind.preferenceorganizer2.log.";
+"DEBUG" = "Debug logging";
+
+"DONATE_GROUPCELL" = "Donationer";
+"DONATE_GROUPCELL_DETAIL" = "PayPal adresse: rei@akemi.ai\n\nDonationer er ikke nødvendige, men meget værdsat! Tak til alle jer, der har doneret indtil videre!";
+"DONATE" = "Donér via PayPal";
+
+"RESET" = "Gendan indstillinger";
