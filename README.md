@@ -1,7 +1,7 @@
 PreferenceOrganizer 2
 =====================
 
-A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, 9, 10, 11, and 12.
+A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8, 9, 10, 11, 12, and 13.
 
 PreferenceOrganiser 2 organises and de-clutters your Preferences app into several configurable categories for ease of navigation.
 

@@ -12,7 +12,7 @@
 "DEBUG" = "デバッグ情報をログする";
 
 "DONATE_GROUPCELL" = "寄付";
-"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス：rei@akemi.ai\n\n寄付するのは全然必要はないけど大歓迎です！これまでに寄付してくれた方々本当にありがとうございます！";
+"DONATE_GROUPCELL_DETAIL" = "PayPalアドレス：karen@akemi.ai\n\n寄付するのは全然必要はないけど大歓迎です！これまでに寄付してくれた方々本当にありがとうございます！";
 "DONATE" = "PayPalを使用して寄付する";
 
 "RESET" = "設定をリセットする";

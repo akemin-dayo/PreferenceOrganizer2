@@ -7,7 +7,7 @@
 #import <KarenPrefs/KarenPrefsCustomTextColorButtonCell.h>
 #import <UIKit/UIKit.h>
 
-NSString *paypalURL = @"https://paypal.me/angelXwind";
+NSString *paypalURL = @"https://paypal.me/akemindayo";
 UIColor *POColor = [UIColor colorWithRed:255.0f/255.0f green:168.0f/255.0f blue:0.0f/255.0f alpha:1.0];
 
 KarenLocalizer *karenLocalizer;

@@ -12,7 +12,7 @@
 "DEBUG" = "调试信息";
 
 "DONATE_GROUPCELL" = "捐献赞助";
-"DONATE_GROUPCELL_DETAIL" = "PayPal 捐献地址: rei@akemi.ai\n\nDonations 欢迎捐献赞助以支持本插件开发，并在此感谢所有赞助者的支持！";
+"DONATE_GROUPCELL_DETAIL" = "PayPal 捐献地址: karen@akemi.ai\n\nDonations 欢迎捐献赞助以支持本插件开发，并在此感谢所有赞助者的支持！";
 "DONATE" = "使用 PayPal 捐献";
 
 "RESET" = "恢复为默许设置";
