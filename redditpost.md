@@ -2,9 +2,9 @@
 
 #### Support me with [Patreon](https://patreon.com/akemin_dayo), [PayPal (`karen@akemi.ai`)](https://paypal.me/akemindayo), or [Cryptocurrency](https://akemi.ai/?page/links#crypto)
 
-Any support is _greatly_ appreciated, but donations are *not* and will *never* be necessary to use my software!
+(A full list of all available donation methods can be found [here](https://akemi.ai/?page/links#donate).)
 
-(I also have a [Ko-fi](https://ko-fi.com/akemin_dayo) page, but I would prefer you only use that if you _must_ for some reason, because transactions processed through Ko-fi have a fee deducted from them and can sometimes even be delayed.)
+Any support is _greatly_ appreciated, but donations are *not* and will *never* be necessary to use my software!
 
 ---
 
@@ -42,6 +42,6 @@ A simple and free alternative to PreferenceFolders, compatible with iOS 6, 7, 8,
 
 PreferenceOrganiser 2 organises and de-clutters your Preferences app into several configurable categories for ease of navigation.
 
-Uses [KarenPrefs](https://github.com/angelXwind/KarenPrefs) and [KarenLocalizer](https://github.com/angelXwind/KarenLocalizer).
+Uses [KarenPrefs](https://github.com/akemin-dayo/KarenPrefs) and [KarenLocalizer](https://github.com/akemin-dayo/KarenLocalizer).
 
 All features are configurable through PreferenceOrganizer 2's preference pane in the Settings app.
