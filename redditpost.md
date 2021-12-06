@@ -12,7 +12,7 @@ Any support is _greatly_ appreciated, but donations are *not* and will *never* b
 
 * _Finally_ added full iOS 14 support. (Sorry for the horrible delay, everyone…)
 * Updated all relevant graphic assets to match my new design language.
-* Made a proper icon that wasn't just the "PO2" text after _8 whole years_…!!
+* Made a proper icon that wasn't just the "PO2" text after *8 whole years*…!!
 * PreferenceOrganiser 2 now triggers the installation of the `bash` shell on devices using the Procurus jailbreak bootstrap which… apparently does not ship it by default anymore.
 * Added a Danish localisation — thanks [@viggou](https://github.com/viggou)!
 
