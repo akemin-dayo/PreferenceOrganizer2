@@ -32,9 +32,7 @@ All features are configurable through PreferenceOrganizer 2's preferences.
 
 # Help! My device caught fire and pineapples are coming out of the Lightning port!
 
-If you think PreferenceOrganizer 2 is causing crashes, please install CrashReporter and Cr4shed (only available on iOS 9 or higher) and send me an email with the output from both apps.
-
-Otherwise, please report all other issues here in this reddit thread so others will be able to share knowledge.
+If you think PreferenceOrganizer 2 is causing crashes, please install CrashReporter and Cr4shed (only available on iOS 9 or higher) and [create a GitHub issue](https://github.com/akemin-dayo/PreferenceOrganizer2/issues) including the output from both apps.
 
 Also, **please state which version of PreferenceOrganizer 2 you are using, in _addition_ to which iOS version and even the specific jailbreak you are using.**
 
