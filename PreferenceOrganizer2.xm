@@ -454,6 +454,20 @@ void removeOldAppleGroupSpecifiers(NSMutableArray <PSSpecifier *> *specifiers) {
 	};
 	%orig(apps, newCompletion);
 }
+
+// Turns out that Apple renamed the method /again/ in iOS 14…
+// https://developer.limneos.net/?ios=14.4&framework=PreferencesUI.framework&header=PSUIPrefsListController.h
+-(void) _reallyLoadThirdPartySpecifiersForApps:(NSArray *)apps shouldAddAppClipSpecifier:(BOOL)specifier withCompletion:(void (^)(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty))completion {
+	// thirdParty - self->_thirdPartySpecifiers
+	// appleThirdParty - self->_movedThirdPartySpecifiers
+	void (^newCompletion)(NSArray <PSSpecifier *> *, NSDictionary *) = ^(NSArray <PSSpecifier *> *thirdParty, NSDictionary *appleThirdParty) {
+		if (completion) {
+			completion(thirdParty, appleThirdParty);
+		}
+		fixupThirdPartySpecifiers(self, thirdParty, appleThirdParty);
+	};
+	%orig(apps, specifier, newCompletion);
+}
 %end
 
 %group iOS78
